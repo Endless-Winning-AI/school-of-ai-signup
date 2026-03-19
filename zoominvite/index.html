@@ -1,10 +1,687 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta http-equiv="refresh" content="0;url=https://us06web.zoom.us/meeting/tZUscO2vrDkoE9znBx0v3vdu101_PHiH25mF/ics?icsToken=DA6K9090v1X3Kl3AmAAALAAAAAmQfL-rmHu0itBtSigJPo9nYgJhC2Vl3kQzkF4eqHBEXCTeBxqWZ4uAp0lh5hAwlqq_K8ToBTEvaLjVBTAwMDAwMQ&meetingMasterEventId=7QuEU_daTBWS-oqhqqW4Qw">
-  <title>Redirecting...</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School of AI - Join Zoom Meeting</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('assets/fonts/gilroy-regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('assets/fonts/gilroy-bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Gilroy', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    body {
+      background: #0a0e1e;
+      min-height: 100vh;
+    }
+
+    .gradient-title {
+      background: linear-gradient(4.67deg, #389ABF 4.69%, #8BF1F1 51.21%, #5FFCC0 95.94%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Ghost container (base) ── */
+    .ghost-card {
+      position: relative;
+      background: rgba(8, 12, 28, 0.72);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    /* Corner-fading border (ew-ghost-container style) */
+    .ghost-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px solid rgba(138, 178, 178, 0.2);
+      pointer-events: none;
+      z-index: 1;
+      -webkit-mask-image:
+        radial-gradient(ellipse 65% 80% at 100% 0%, black, transparent),
+        radial-gradient(ellipse 65% 80% at 0% 100%, black, transparent);
+      -webkit-mask-composite: source-over;
+      mask-image:
+        radial-gradient(ellipse 65% 80% at 100% 0%, black, transparent),
+        radial-gradient(ellipse 65% 80% at 0% 100%, black, transparent);
+      mask-composite: add;
+    }
+
+    /* ── Tinted inner cards ── */
+    .tint-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* Teal tint (countdown) */
+    .tint-teal {
+      background: rgba(91, 163, 181, 0.08);
+      border: 1px solid rgba(91, 163, 181, 0.18);
+    }
+    .tint-teal::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(ellipse at 30% 20%, #5BA3B5 0%, transparent 70%);
+      opacity: 0.10;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Primary blue tint (details) */
+    .tint-blue {
+      background: rgba(74, 143, 212, 0.06);
+      border: 1px solid rgba(74, 143, 212, 0.15);
+    }
+    .tint-blue::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(ellipse at 70% 80%, #4A8FD4 0%, transparent 70%);
+      opacity: 0.08;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Rose tint (form) */
+    .tint-rose {
+      background: rgba(200, 100, 140, 0.06);
+      border: 1px solid rgba(200, 100, 140, 0.15);
+    }
+    .tint-rose::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(ellipse at 50% 30%, #c8648c 0%, transparent 70%);
+      opacity: 0.08;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Etched glass inputs ── */
+    .field-input {
+      background: transparent;
+      border: 1px solid transparent;
+      border-top-color: rgba(255, 255, 255, 0.25);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.08), inset 0 -1px 2px rgba(0, 0, 0, 0.12), inset 1px 0 2px rgba(255, 255, 255, 0.04), inset -1px 0 2px rgba(0, 0, 0, 0.08);
+      border-left-color: rgba(255, 255, 255, 0.08);
+      border-right-color: rgba(255, 255, 255, 0.03);
+      border-bottom-color: rgba(255, 255, 255, 0.01);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: 16px;
+      color: white;
+      width: 100%;
+      height: 52px;
+      outline: none;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+
+    .field-input::placeholder {
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .field-input:focus {
+      border-color: rgba(139, 241, 241, 0.5);
+    }
+
+    /* ── Rainbow glow button ── */
+    .btn-glow-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .btn-glow-outer {
+      position: absolute;
+      inset: -3px;
+      border-radius: 9999px;
+      background: conic-gradient(from 180deg,
+        #AF52DE 0deg, #FF2D92 52deg, #FF6482 82deg, #FF9500 94deg,
+        #FFD60A 124deg, #30D158 180deg, #2EC4B6 236deg, #40CBF0 266deg,
+        #007AFF 278deg, #5856D6 308deg, #AF52DE 360deg
+      );
+      filter: blur(14px);
+      opacity: 0.44;
+      pointer-events: none;
+      z-index: 0;
+      transition: opacity 0.3s, filter 0.3s;
+    }
+
+    .btn-glow-wrapper:hover .btn-glow-outer {
+      opacity: 0.56;
+      filter: blur(18px);
+    }
+
+    .btn-glow {
+      position: relative;
+      z-index: 1;
+      border: none !important;
+    }
+
+    .btn-glow::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      padding: 1.5px;
+      background: conic-gradient(from 180deg,
+        #AF52DE 0deg, #FF2D92 52deg, #FF6482 82deg, #FF9500 94deg,
+        #FFD60A 124deg, #30D158 180deg, #2EC4B6 236deg, #40CBF0 266deg,
+        #007AFF 278deg, #5856D6 308deg, #AF52DE 360deg
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    /* ── Status dots ── */
+    .pulse-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .pulse-dot.live {
+      background: #30D158;
+      animation: pulse-green 2s ease-in-out infinite;
+    }
+
+    .pulse-dot.upcoming {
+      background: #FF453A;
+      animation: pulse-red 2s ease-in-out infinite;
+    }
+
+    .pulse-dot.ended {
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    @keyframes pulse-red {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(255, 69, 58, 0.5); }
+      50% { opacity: 0.85; box-shadow: 0 0 0 10px rgba(255, 69, 58, 0); }
+    }
+
+    @keyframes pulse-green {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.5); }
+      50% { opacity: 0.85; box-shadow: 0 0 0 10px rgba(48, 209, 88, 0); }
+    }
+
+    /* ── Countdown ── */
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .countdown-unit {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 14px;
+      padding: 18px 8px 14px;
+    }
+
+    .countdown-value {
+      font-size: 2.5rem;
+      font-weight: 700;
+      line-height: 1;
+      color: white;
+    }
+
+    .countdown-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: rgba(255, 255, 255, 0.50);
+      margin-top: 6px;
+    }
+
+    /* ── Live badge ── */
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(48, 209, 88, 0.1);
+      border: 1px solid rgba(48, 209, 88, 0.25);
+      border-radius: 9999px;
+      padding: 8px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #30D158;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── Button states ── */
+    .btn-waiting {
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .btn-waiting .btn-glow-outer {
+      opacity: 0.12 !important;
+      filter: blur(10px) !important;
+    }
+
+    /* ── Detail rows ── */
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .detail-row:last-child {
+      border-bottom: none;
+    }
+
+    .copy-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 4px 12px;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    /* ── Form submit ── */
+    .form-submit {
+      background: rgba(139, 241, 241, 0.06);
+      border: 1px solid rgba(139, 241, 241, 0.18);
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #8BF1F1;
+      width: 100%;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .form-submit:hover {
+      background: rgba(139, 241, 241, 0.12);
+    }
+
+    .form-submit:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .form-success { color: #5FFCC0; font-size: 14px; font-weight: 600; }
+    .form-error { color: #FF453A; font-size: 14px; }
+  </style>
 </head>
-<body>
-  <p>Redirecting to calendar invite... <a href="https://us06web.zoom.us/meeting/tZUscO2vrDkoE9znBx0v3vdu101_PHiH25mF/ics?icsToken=DA6K9090v1X3Kl3AmAAALAAAAAmQfL-rmHu0itBtSigJPo9nYgJhC2Vl3kQzkF4eqHBEXCTeBxqWZ4uAp0lh5hAwlqq_K8ToBTEvaLjVBTAwMDAwMQ&meetingMasterEventId=7QuEU_daTBWS-oqhqqW4Qw">Click here</a> if not redirected.</p>
+<body class="font-sans text-white overflow-x-hidden">
+
+  <!-- Background -->
+  <div class="fixed inset-0">
+    <img src="assets/background.png" alt="" class="w-full h-full object-cover opacity-50 pointer-events-none">
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10 min-h-screen flex items-center justify-center px-4 py-10">
+
+    <!-- Main Ghost Container -->
+    <div class="ghost-card w-full max-w-[500px] px-6 sm:px-10 py-10">
+      <div class="relative z-10 flex flex-col items-center gap-8">
+
+        <!-- Title -->
+        <div class="text-center space-y-2">
+          <h1 class="gradient-title font-bold text-[32px] sm:text-[40px] leading-tight">School of AI</h1>
+          <p class="text-white/60 text-[15px] font-medium">with Troy Brave</p>
+        </div>
+
+        <!-- ━━ Countdown Card (teal tint) ━━ -->
+        <div id="countdown-section" class="tint-card tint-teal w-full p-5 sm:p-6 text-center space-y-5">
+          <div class="relative z-10 space-y-5">
+            <div class="flex items-center justify-center gap-2.5">
+              <div id="status-dot" class="pulse-dot upcoming"></div>
+              <p id="status-label" class="text-white/90 text-[15px] font-bold uppercase tracking-widest">Going Live In</p>
+            </div>
+
+            <div id="countdown-grid" class="countdown-grid">
+              <div class="countdown-unit">
+                <div class="countdown-value" id="cd-days">--</div>
+                <div class="countdown-label">Days</div>
+              </div>
+              <div class="countdown-unit">
+                <div class="countdown-value" id="cd-hours">--</div>
+                <div class="countdown-label">Hours</div>
+              </div>
+              <div class="countdown-unit">
+                <div class="countdown-value" id="cd-mins">--</div>
+                <div class="countdown-label">Min</div>
+              </div>
+              <div class="countdown-unit">
+                <div class="countdown-value" id="cd-secs">--</div>
+                <div class="countdown-label">Sec</div>
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <p id="next-session-info" class="text-white/60 text-[14px]"></p>
+              <p id="session-number" class="text-white/45 text-[12px] uppercase tracking-widest"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ━━ Live State (hidden) ━━ -->
+        <div id="live-section" class="hidden w-full text-center space-y-4">
+          <div class="live-badge mx-auto">
+            <div class="pulse-dot live" style="width:9px;height:9px;"></div>
+            LIVE NOW
+          </div>
+          <p id="live-ends" class="text-white/45 text-[14px]"></p>
+        </div>
+
+        <!-- ━━ Ended State (hidden) ━━ -->
+        <div id="ended-section" class="hidden w-full text-center space-y-3">
+          <div class="flex items-center justify-center gap-2">
+            <div class="pulse-dot ended"></div>
+            <p class="text-white/60 text-[15px] font-semibold">Series Complete</p>
+          </div>
+          <p class="text-white/35 text-[14px]">The March 2026 series has concluded.<br>Stay tuned for future sessions.</p>
+        </div>
+
+        <!-- ━━ Join Button ━━ -->
+        <div id="join-wrapper" class="flex justify-center w-full">
+          <div class="btn-glow-wrapper w-full max-w-[300px] btn-waiting" id="join-btn-wrapper">
+            <div class="btn-glow-outer"></div>
+            <a href="https://us06web.zoom.us/j/81174722298?pwd=7PGXQ9F8SSo3nlaaTGSTqGOnkx900O.1"
+               id="join-btn"
+               class="btn-glow block w-full text-white font-bold text-[17px] py-[16px] px-8 rounded-full text-center transition-transform hover:scale-[1.02] active:scale-[0.98]"
+               style="background: rgba(10, 14, 30, 0.5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
+              <span id="join-btn-text">Join Meeting Soon</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- ━━ Updates Form (rose tint) ━━ -->
+        <div class="tint-card tint-rose w-full p-5 sm:p-6">
+          <div class="relative z-10 space-y-4">
+            <div class="text-center space-y-1">
+              <p class="text-white/80 text-[15px] font-bold uppercase tracking-widest">Get Session Updates</p>
+              <p class="text-white/50 text-[13px]">We'll remind you before we go live</p>
+            </div>
+            <form id="updates-form" class="space-y-3" novalidate>
+              <div class="flex gap-3">
+                <input type="text" name="firstName" placeholder="First name" class="field-input" required>
+                <input type="text" name="lastName" placeholder="Last name" class="field-input" required>
+              </div>
+              <input type="email" name="email" placeholder="Email address" class="field-input" required>
+              <button type="submit" id="form-submit-btn" class="form-submit">Notify Me</button>
+              <p id="form-message" class="text-center hidden"></p>
+            </form>
+          </div>
+        </div>
+
+        <!-- ━━ Meeting Details (blue tint) ━━ -->
+        <div class="tint-card tint-blue w-full p-5 sm:p-6">
+          <div class="relative z-10">
+            <p class="text-white/60 text-[12px] font-bold uppercase tracking-widest mb-3">Meeting Details</p>
+
+            <div class="detail-row">
+              <div>
+                <p class="text-white/55 text-[12px]">Meeting ID</p>
+                <p class="text-white/90 font-medium text-[15px]">811 7472 2298</p>
+              </div>
+              <button class="copy-btn" onclick="copyText('81174722298', this)">Copy</button>
+            </div>
+
+            <div class="detail-row">
+              <div>
+                <p class="text-white/55 text-[12px]">Passcode</p>
+                <p class="text-white/90 font-medium text-[15px]">Eip2i7</p>
+              </div>
+              <button class="copy-btn" onclick="copyText('Eip2i7', this)">Copy</button>
+            </div>
+
+            <div class="detail-row">
+              <div>
+                <p class="text-white/55 text-[12px]">Schedule</p>
+                <p class="text-white/90 font-medium text-[15px]">Tonight @ 7 PM ET (Special Thursday Session)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ━━ Dial In ━━ -->
+        <div class="w-full space-y-3">
+          <p class="text-white/55 text-[12px] font-bold uppercase tracking-widest">Dial In</p>
+          <a href="tel:+13052241968,,81174722298#,,,,*708829#" class="flex items-center gap-3 text-[14px] text-white/60 hover:text-white/90 transition-colors">
+            <svg class="w-4 h-4 flex-shrink-0 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            +1 (305) 224-1968 <span class="text-white/40">US</span>
+          </a>
+          <a href="tel:+13126266799,,81174722298#,,,,*708829#" class="flex items-center gap-3 text-[14px] text-white/60 hover:text-white/90 transition-colors">
+            <svg class="w-4 h-4 flex-shrink-0 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+            +1 (312) 626-6799 <span class="text-white/40">US (Chicago)</span>
+          </a>
+        </div>
+
+        <!-- Footer -->
+        <p class="text-white/25 text-[11px] tracking-wider uppercase">Endless Winning Agency</p>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const sessions = [
+      { start: new Date('2026-03-09T23:00:00Z'), end: new Date('2026-03-10T00:00:00Z') },
+      { start: new Date('2026-03-16T23:00:00Z'), end: new Date('2026-03-17T00:00:00Z') },
+      { start: new Date('2026-03-19T23:00:00Z'), end: new Date('2026-03-20T00:00:00Z') },
+      { start: new Date('2026-03-23T23:00:00Z'), end: new Date('2026-03-24T00:00:00Z') },
+      { start: new Date('2026-03-30T23:00:00Z'), end: new Date('2026-03-31T00:00:00Z') },
+    ];
+
+    const statusDot = document.getElementById('status-dot');
+    const statusLabel = document.getElementById('status-label');
+    const countdownSection = document.getElementById('countdown-section');
+    const liveSection = document.getElementById('live-section');
+    const endedSection = document.getElementById('ended-section');
+    const joinWrapper = document.getElementById('join-btn-wrapper');
+    const joinBtnText = document.getElementById('join-btn-text');
+    const nextInfo = document.getElementById('next-session-info');
+    const sessionNumber = document.getElementById('session-number');
+    const liveEnds = document.getElementById('live-ends');
+
+    const cdDays = document.getElementById('cd-days');
+    const cdHours = document.getElementById('cd-hours');
+    const cdMins = document.getElementById('cd-mins');
+    const cdSecs = document.getElementById('cd-secs');
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function formatSessionDate(d) {
+      return d.toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric',
+        timeZone: 'America/New_York'
+      }) + ' at 7:00 PM ET';
+    }
+
+    function getSessionIndex(session) {
+      return sessions.findIndex(s => s.start.getTime() === session.start.getTime()) + 1;
+    }
+
+    function tick() {
+      const now = new Date();
+
+      let currentSession = null;
+      let nextSession = null;
+
+      for (const s of sessions) {
+        if (now >= s.start && now < s.end) {
+          currentSession = s;
+          break;
+        }
+        if (now < s.start) {
+          nextSession = s;
+          break;
+        }
+      }
+
+      if (currentSession) {
+        countdownSection.classList.add('hidden');
+        liveSection.classList.remove('hidden');
+        endedSection.classList.add('hidden');
+        joinWrapper.classList.remove('btn-waiting');
+        joinBtnText.textContent = 'Join Meeting';
+        const num = getSessionIndex(currentSession);
+        liveEnds.textContent = `Session ${num} of ${sessions.length} \u2022 Ends at 8:00 PM ET`;
+
+      } else if (nextSession) {
+        const diff = nextSession.start - now;
+        const days = Math.floor(diff / 86400000);
+        const hours = Math.floor((diff % 86400000) / 3600000);
+        const mins = Math.floor((diff % 3600000) / 60000);
+        const secs = Math.floor((diff % 60000) / 1000);
+
+        cdDays.textContent = pad(days);
+        cdHours.textContent = pad(hours);
+        cdMins.textContent = pad(mins);
+        cdSecs.textContent = pad(secs);
+
+        countdownSection.classList.remove('hidden');
+        liveSection.classList.add('hidden');
+        endedSection.classList.add('hidden');
+
+        const num = getSessionIndex(nextSession);
+        nextInfo.textContent = formatSessionDate(nextSession.start);
+        sessionNumber.textContent = `Session ${num} of ${sessions.length}`;
+
+        if (diff <= 300000) {
+          joinWrapper.classList.remove('btn-waiting');
+          joinBtnText.textContent = 'Join Meeting';
+          statusLabel.textContent = 'Starting Now';
+          statusDot.className = 'pulse-dot live';
+        } else if (diff <= 3600000) {
+          joinWrapper.classList.add('btn-waiting');
+          joinBtnText.textContent = 'Join Meeting Soon';
+          statusLabel.textContent = 'Almost Showtime';
+          statusDot.className = 'pulse-dot upcoming';
+        } else {
+          joinWrapper.classList.add('btn-waiting');
+          joinBtnText.textContent = 'Join Meeting Soon';
+          statusLabel.textContent = 'Going Live In';
+          statusDot.className = 'pulse-dot upcoming';
+        }
+
+      } else {
+        countdownSection.classList.add('hidden');
+        liveSection.classList.add('hidden');
+        endedSection.classList.remove('hidden');
+        joinWrapper.classList.add('btn-waiting');
+        joinBtnText.textContent = 'Series Ended';
+      }
+    }
+
+    tick();
+    setInterval(tick, 1000);
+
+    // Form
+    const updatesForm = document.getElementById('updates-form');
+    const formSubmitBtn = document.getElementById('form-submit-btn');
+    const formMessage = document.getElementById('form-message');
+
+    updatesForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const firstName = updatesForm.querySelector('input[name="firstName"]').value.trim();
+      const lastName = updatesForm.querySelector('input[name="lastName"]').value.trim();
+      const email = updatesForm.querySelector('input[name="email"]').value.trim();
+
+      if (!firstName || !email) return;
+
+      formSubmitBtn.disabled = true;
+      formSubmitBtn.textContent = 'Submitting...';
+
+      try {
+        const response = await fetch('https://lrwvooucggciazmzxqlb.supabase.co/functions/v1/school-of-ai-signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            name: `${firstName} ${lastName}`.trim(),
+            email,
+            source: 'School of AI Zoom Page',
+            tags: ['school of ai - form'],
+          }),
+        });
+
+        if (!response.ok) throw new Error('Failed');
+
+        formMessage.textContent = "You're in! We'll remind you before the next session.";
+        formMessage.className = 'text-center form-success';
+        formMessage.classList.remove('hidden');
+        updatesForm.reset();
+      } catch (err) {
+        formMessage.textContent = 'Something went wrong. Please try again.';
+        formMessage.className = 'text-center form-error';
+        formMessage.classList.remove('hidden');
+      } finally {
+        formSubmitBtn.disabled = false;
+        formSubmitBtn.textContent = 'Notify Me';
+      }
+    });
+
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const original = btn.textContent;
+        btn.textContent = 'Copied!';
+        btn.style.color = '#5FFCC0';
+        setTimeout(() => {
+          btn.textContent = original;
+          btn.style.color = '';
+        }, 1500);
+      });
+    }
+  </script>
+
 </body>
 </html>
