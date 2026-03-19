@@ -248,8 +248,13 @@
           Only 3 sessions left!
         </div>
 
+        <!-- Email Input -->
+        <div class="w-full">
+          <input id="email-input" type="email" placeholder="Enter your email" class="w-full h-[52px] rounded-full px-6 text-white text-[15px] font-medium outline-none placeholder:text-white/40" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);" />
+        </div>
+
         <!-- Buttons -->
-        <div class="w-full flex flex-col gap-[12px] mt-2">
+        <div class="w-full flex flex-col gap-[12px]">
           <!-- I'll Be There -->
           <div class="btn-glow-wrapper">
             <div class="btn-glow-outer"></div>
@@ -308,53 +313,24 @@
   </div>
 
   <script>
-    // Get contact ID from URL path or query param
-    const params = new URLSearchParams(window.location.search);
-    const pathId = window.location.pathname.replace(/^\/+/, '').replace(/\/+$/, '');
-    const contactId = params.get('id') || (pathId && /^[a-zA-Z0-9]+$/.test(pathId) ? pathId : '') || '';
-    let phone = '';
-
-    // If no contact ID, redirect to signup (only on production)
-    const isLocal = window.location.protocol === 'file:' || window.location.hostname === 'localhost';
-    if (!contactId && !isLocal) {
-      window.location.href = 'https://school.endlesswinning.com';
-    }
-
     // Supabase config
     const SUPABASE_URL = 'https://lrwvooucggciazmzxqlb.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxyd3Zvb3VjZ2djaWF6bXp4cWxiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU3ODc5MjAsImV4cCI6MjA3MTM2MzkyMH0.xEnYGKLz2kql5ZK1xQnxq_BpkfoZMj6jBbhDpU5I-RI';
 
-    // GHL contact lookup — personalize or redirect
-    (async function() {
-      try {
-        const res = await fetch(`${SUPABASE_URL}/functions/v1/school-rsvp-lookup?id=${encodeURIComponent(contactId)}`, {
-          headers: { 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` }
-        });
-        const data = await res.json();
+    function getEmail() {
+      return document.getElementById('email-input').value.trim();
+    }
 
-        if (!data.found && !isLocal) {
-          window.location.href = 'https://school.endlesswinning.com';
-          return;
-        }
-
-        // Store phone from lookup for RSVP logging
-        if (data.phone) phone = data.phone;
-
-        // Personalize the subtitle
-        if (data.firstName) {
-          const name = data.firstName.charAt(0).toUpperCase() + data.firstName.slice(1).toLowerCase();
-          document.getElementById('subtitle').textContent = `Hey ${name}, will you be there?`;
-        }
-
-        // Set referral share link
-        if (data.referralCode) {
-          document.getElementById('share-link').value = `https://school.endlesswinning.com?ref=${data.referralCode}`;
-        }
-      } catch (err) {
-        console.error('Lookup failed:', err);
-        // On error, still show the page (graceful degradation)
+    function validateEmail() {
+      const email = getEmail();
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('email-input').style.borderColor = 'rgba(255, 45, 146, 0.6)';
+        document.getElementById('email-input').focus();
+        return false;
       }
-    })();
+      document.getElementById('email-input').style.borderColor = 'rgba(255,255,255,0.12)';
+      return true;
+    }
 
     // Event details for calendar
     const EVENT = {
@@ -405,7 +381,7 @@
     // Log RSVP to Supabase
     async function logRSVP(response) {
       try {
-        await fetch(`${SUPABASE_URL}/rest/v1/rsvp_responses?on_conflict=phone,event_date`, {
+        await fetch(`${SUPABASE_URL}/rest/v1/rsvp_responses?on_conflict=email,event_date`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -414,7 +390,7 @@
             'Prefer': 'resolution=merge-duplicates'
           },
           body: JSON.stringify({
-            phone: phone || contactId,
+            email: getEmail(),
             response: response,
             event_date: '2026-03-19',
             responded_at: new Date().toISOString()
@@ -427,11 +403,13 @@
 
     // Button handlers
     document.getElementById('btn-yes').addEventListener('click', async () => {
+      if (!validateEmail()) return;
       await logRSVP('yes');
       document.getElementById('yes-overlay').classList.add('visible');
     });
 
     document.getElementById('btn-no').addEventListener('click', async () => {
+      if (!validateEmail()) return;
       await logRSVP('no');
       document.getElementById('no-overlay').classList.add('visible');
     });
