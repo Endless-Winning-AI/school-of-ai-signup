@@ -222,7 +222,7 @@
                 <rect x="3" y="4" width="18" height="18" rx="2"/>
                 <path d="M16 2v4M8 2v4M3 10h18"/>
               </svg>
-              <span>TONIGHT - Thursday, March 19th</span>
+              <span>TONIGHT - Monday, March 23rd</span>
             </div>
             <div class="flex items-center gap-2 text-white/80 text-[14px]">
               <svg class="w-[18px] h-[18px] flex-shrink-0 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
@@ -335,11 +335,11 @@
     // Event details for calendar
     const EVENT = {
       title: 'School of AI',
-      date: '20260319',       // YYYYMMDD
+      date: '20260323',       // YYYYMMDD
       startTime: '190000',    // HHMMSS in EST (UTC-4 in March = EDT)
       endTime: '203000',      // 90 min session
-      utcStart: '20260319T230000Z',
-      utcEnd: '20260320T003000Z',
+      utcStart: '20260323T230000Z',
+      utcEnd: '20260324T003000Z',
       location: 'Zoom',
       description: 'School of AI - Live Tonight!\\nhttps://schoolzoom.endlesswinning.com',
       url: 'https://schoolzoom.endlesswinning.com'
@@ -378,22 +378,15 @@
     // Set calendar link
     document.getElementById('ical-link').href = buildICSLink();
 
-    // Log RSVP to Supabase
+    // Log RSVP and upsert to GHL
     async function logRSVP(response) {
       try {
-        await fetch(`${SUPABASE_URL}/rest/v1/rsvp_responses?on_conflict=email,event_date`, {
+        await fetch(`${SUPABASE_URL}/functions/v1/school-rsvp`, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': SUPABASE_ANON_KEY,
-            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
-            'Prefer': 'resolution=merge-duplicates'
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             email: getEmail(),
-            response: response,
-            event_date: '2026-03-19',
-            responded_at: new Date().toISOString()
+            response: response
           })
         });
       } catch (err) {

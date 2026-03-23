@@ -230,7 +230,7 @@
       color: rgba(255, 255, 255, 0.8);
     }
 
-    .success-overlay {
+    .success-overlay, .error-overlay {
       display: none;
       position: fixed;
       inset: 0;
@@ -240,7 +240,7 @@
       justify-content: center;
     }
 
-    .success-overlay.visible {
+    .success-overlay.visible, .error-overlay.visible {
       display: flex;
     }
   </style>
@@ -264,15 +264,46 @@
       <!-- Card Content -->
       <div class="relative z-10 flex flex-col items-center gap-[24px]">
 
+        <!-- Sign Up Pill -->
+        <div class="px-4 py-1 rounded-full text-[14px] font-bold uppercase tracking-[0.15em]" style="background: linear-gradient(135deg, rgba(139, 241, 241, 0.15), rgba(95, 252, 192, 0.15)); border: 1px solid rgba(139, 241, 241, 0.3); color: #8BF1F1;">
+          Sign Up
+        </div>
+
         <!-- Title -->
-        <h1 class="gradient-title font-semibold text-[26px] sm:text-[36px] text-center w-full leading-tight">
-          Sign Up<br>The School of AI
+        <h1 class="gradient-title font-semibold text-[26px] sm:text-[36px] text-center w-full leading-tight -mt-2">
+          The School of AI
         </h1>
 
-        <!-- Subtitle -->
-        <p class="text-white text-[16px] text-center w-full">
-          Enter your personal data to create your account for FREE.
-        </p>
+        <!-- Event Details -->
+        <div class="w-full flex flex-col gap-[12px] py-1">
+          <!-- 2-column: Date + Time -->
+          <div class="flex gap-[24px] justify-center">
+            <div class="flex items-center gap-2 text-white/80 text-[14px]">
+              <svg class="w-[18px] h-[18px] flex-shrink-0 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <path d="M16 2v4M8 2v4M3 10h18"/>
+              </svg>
+              <span>Tonight, Monday March 23</span>
+            </div>
+            <div class="flex items-center gap-2 text-white/80 text-[14px]">
+              <svg class="w-[18px] h-[18px] flex-shrink-0 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+              <span>7:00 PM EST</span>
+            </div>
+          </div>
+          <!-- Zoom row centered -->
+          <div class="flex items-center justify-center gap-2 text-white/80 text-[14px] py-1">
+            <!-- Zoom logo -->
+            <svg class="w-[18px] h-[18px] flex-shrink-0" viewBox="0 0 24 24" fill="none">
+              <rect width="24" height="24" rx="5" fill="#2D8CFF"/>
+              <path d="M5 8.5C5 7.67 5.67 7 6.5 7H13.5C14.33 7 15 7.67 15 8.5V15.5C15 16.33 14.33 17 13.5 17H6.5C5.67 17 5 16.33 5 15.5V8.5Z" fill="white"/>
+              <path d="M15.5 10L19 7.5V16.5L15.5 14V10Z" fill="white"/>
+            </svg>
+            <span>Live on Zoom</span>
+          </div>
+        </div>
 
         <!-- Form -->
         <form id="signup-form" class="w-full flex flex-col gap-[16px]" novalidate>
@@ -343,14 +374,58 @@
 
   <!-- Success Message -->
   <div class="success-overlay" id="success-overlay">
-    <div class="text-center p-8">
+    <div class="text-center p-8 max-w-md">
       <div class="text-[48px] mb-4">&#10003;</div>
       <h2 class="gradient-title font-semibold text-[28px] sm:text-[36px] mb-4">You're In!</h2>
-      <p class="text-white text-[16px]">Welcome to the School of AI. Check your email for next steps.</p>
+      <p class="text-white text-[16px] mb-6">Welcome to the School of AI. Check your email for next steps.</p>
+
+      <!-- Share Section -->
+      <div id="share-section" style="display:none;" class="mt-8 p-6 rounded-2xl" style="background: rgba(12, 16, 32, 0.6); border: 1px solid rgba(139, 241, 241, 0.1);">
+        <p class="text-[#8BF1F1] text-sm uppercase tracking-wider font-bold mb-3">Share with a friend</p>
+        <div class="flex items-center gap-2 rounded-full px-4 py-3" style="background: rgba(0,0,0,0.4);">
+          <input id="share-link" type="text" readonly class="bg-transparent text-white text-sm flex-1 outline-none min-w-0" value="">
+          <button id="copy-btn" onclick="copyShareLink()" class="text-[#5FFCC0] text-sm font-bold whitespace-nowrap cursor-pointer" style="background:none;border:none;">Copy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div class="error-overlay" id="error-overlay">
+    <div class="text-center p-8">
+      <div class="text-[48px] mb-4">&#9888;</div>
+      <h2 class="gradient-title font-semibold text-[28px] sm:text-[36px] mb-4">Something Went Wrong</h2>
+      <p class="text-white text-[16px] mb-6">Your submission didn't go through. Please try again.</p>
+      <button id="try-again-btn" class="px-8 py-3 rounded-full font-semibold text-white text-[16px]" style="background: linear-gradient(135deg, #6366f1, #8b5cf6); cursor: pointer; border: none;">Try Again</button>
     </div>
   </div>
 
   <script>
+    // ── Referral capture ──
+    (function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const refCode = urlParams.get('ref');
+      if (refCode) {
+        document.cookie = `school_ai_ref=${encodeURIComponent(refCode)};max-age=${60*60*24*30};path=/;SameSite=Lax`;
+        localStorage.setItem('school_ai_ref', refCode);
+      }
+    })();
+
+    function getReferralCode() {
+      const fromUrl = new URLSearchParams(window.location.search).get('ref');
+      if (fromUrl) return fromUrl;
+      const fromCookie = document.cookie.match(/school_ai_ref=([^;]+)/)?.[1];
+      if (fromCookie) return decodeURIComponent(fromCookie);
+      return localStorage.getItem('school_ai_ref');
+    }
+
+    function copyShareLink() {
+      const input = document.getElementById('share-link');
+      navigator.clipboard.writeText(input.value);
+      document.getElementById('copy-btn').textContent = 'Copied!';
+      setTimeout(() => document.getElementById('copy-btn').textContent = 'Copy', 2000);
+    }
+
     const form = document.getElementById('signup-form');
     const submitBtn = document.getElementById('submit-btn');
 
@@ -498,6 +573,7 @@
 
       const phoneDigits = phone.value.replace(/\D/g, '');
 
+      const refCode = getReferralCode();
       const payload = {
         firstName: firstName.value.trim(),
         lastName: lastName.value.trim(),
@@ -506,12 +582,13 @@
         phone: `${countrySelect.value}${phoneDigits}`,
         companyName: organization.value.trim(),
         source: 'School of AI Signup Page',
-        tags: ['school of ai - form']
+        tags: ['school of ai - form'],
+        ...(refCode ? { referralCode: refCode } : {})
       };
 
       try {
         // GHL contact upsert via Supabase Edge Function proxy
-        const WEBHOOK_URL = 'https://pgvpokmguzsnzagksavu.supabase.co/functions/v1/school-of-ai-signup';
+        const WEBHOOK_URL = 'https://lrwvooucggciazmzxqlb.supabase.co/functions/v1/school-of-ai-signup';
 
         const response = await fetch(WEBHOOK_URL, {
           method: 'POST',
@@ -521,18 +598,32 @@
 
         if (!response.ok) throw new Error('Submission failed');
 
+        // Parse response for referral code
+        try {
+          const data = await response.json();
+          if (data.referralCode) {
+            localStorage.setItem('school_ai_my_code', data.referralCode);
+            const shareUrl = `https://school.endlesswinning.com?ref=${data.referralCode}`;
+            document.getElementById('share-link').value = shareUrl;
+            document.getElementById('share-section').style.display = 'block';
+          }
+        } catch (_) { /* response parsing is best-effort */ }
+
         // Show success
         document.getElementById('success-overlay').classList.add('visible');
         form.reset();
       } catch (err) {
         console.error('Form submission error:', err);
-        // Still show success for now (webhook URL not yet configured)
-        document.getElementById('success-overlay').classList.add('visible');
-        form.reset();
+        document.getElementById('error-overlay').classList.add('visible');
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalContent;
       }
+    });
+
+    // Try Again button — dismiss error overlay, keep form data
+    document.getElementById('try-again-btn').addEventListener('click', () => {
+      document.getElementById('error-overlay').classList.remove('visible');
     });
   </script>
 </body>
