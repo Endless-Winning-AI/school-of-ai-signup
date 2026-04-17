@@ -11,6 +11,8 @@
     { "source": "/live/projects", "destination": "/live/projects/index.html" },
     { "source": "/live/portfolio", "destination": "/live/portfolio/index.html" },
     { "source": "/live/book/cfo", "destination": "/live/book/cfo/index.html" },
-    { "source": "/live/book/audit", "destination": "/live/book/audit/index.html" }
+    { "source": "/live/book/audit", "destination": "/live/book/audit/index.html" },
+    { "source": "/course", "destination": "/course/index.html" },
+    { "source": "/course/", "destination": "/course/index.html" }
   ]
 }
