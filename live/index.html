@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School of AI — Live Session Resources</title>
+  <meta name="description" content="Your live session resources from the School of AI. Prompts, projects, and more — from Endless Winning.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../assets/fonts/gilroy-regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../assets/fonts/gilroy-regular.woff2') format('woff2');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../assets/fonts/gilroy-bold.woff2') format('woff2');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../assets/fonts/gilroy-bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Gilroy', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    .gradient-title {
+      background: linear-gradient(4.67deg, #389ABF 4.69%, #8BF1F1 51.21%, #5FFCC0 95.94%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .welcome-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      background: linear-gradient(135deg, rgba(139, 241, 241, 0.15), rgba(95, 252, 192, 0.15));
+      border: 1px solid rgba(139, 241, 241, 0.3);
+      color: #8BF1F1;
+    }
+
+    .welcome-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background: #8BF1F1;
+      box-shadow: 0 0 8px rgba(139, 241, 241, 0.8);
+    }
+
+    .link-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      border-radius: 16px;
+      background: rgba(10, 14, 30, 0.45);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid transparent;
+      border-top-color: rgba(255, 255, 255, 0.18);
+      border-left-color: rgba(255, 255, 255, 0.08);
+      border-right-color: rgba(255, 255, 255, 0.03);
+      border-bottom-color: rgba(255, 255, 255, 0.02);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.2);
+      text-decoration: none;
+      color: white;
+      transition: transform 0.2s, border-top-color 0.2s, background 0.2s;
+    }
+
+    .link-row:hover {
+      transform: translateY(-2px);
+      border-top-color: rgba(139, 241, 241, 0.55);
+      background: rgba(10, 14, 30, 0.62);
+    }
+
+    .link-row:hover .link-arrow {
+      transform: translateX(4px);
+      color: #8BF1F1;
+    }
+
+    .link-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      background: linear-gradient(135deg, rgba(139, 241, 241, 0.12), rgba(95, 252, 192, 0.08));
+      border: 1px solid rgba(139, 241, 241, 0.18);
+    }
+
+    .link-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .link-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: white;
+      letter-spacing: -0.01em;
+      margin-bottom: 2px;
+    }
+
+    .link-sub {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.4;
+    }
+
+    .link-arrow {
+      flex-shrink: 0;
+      color: rgba(255, 255, 255, 0.45);
+      transition: transform 0.2s, color 0.2s;
+    }
+
+    .divider-glow {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139, 241, 241, 0.35), transparent);
+      margin: 0 auto;
+      width: 80%;
+    }
+  </style>
+</head>
+<body class="bg-black min-h-screen font-sans overflow-x-hidden">
+
+  <!-- Background Image -->
+  <div class="fixed inset-0">
+    <img src="../assets/background.png" alt="" class="w-full h-full object-cover opacity-55 pointer-events-none">
+  </div>
+
+  <!-- Main Content -->
+  <div class="relative z-10 min-h-screen px-4 py-12 sm:py-16">
+
+    <div class="max-w-[720px] mx-auto">
+
+      <!-- Header -->
+      <div class="flex flex-col items-center gap-5 text-center mb-10">
+        <div class="welcome-pill">
+          <span class="welcome-dot"></span>
+          Welcome to the School of AI
+        </div>
+        <h1 class="gradient-title font-semibold text-[34px] sm:text-[48px] leading-[1.05] max-w-[600px]">
+          Your Live Session Resources
+        </h1>
+        <p class="text-white/70 text-[15px] sm:text-[17px] leading-relaxed max-w-[520px]">
+          Everything from today's session — plus what comes next.
+        </p>
+      </div>
+
+      <!-- Linktree Buttons -->
+      <div class="flex flex-col gap-3">
+
+        <a href="/vocab" class="link-row">
+          <div class="link-icon">📘</div>
+          <div class="link-text">
+            <div class="link-title">AI Vocab Sheet</div>
+            <div class="link-sub">The language of AI, tiered by level</div>
+          </div>
+          <svg class="link-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M9 6C9 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+
+        <a href="/live/prompts" class="link-row">
+          <div class="link-icon">💬</div>
+          <div class="link-text">
+            <div class="link-title">Prompt Library</div>
+            <div class="link-sub">Copy-paste prompts you can use today</div>
+          </div>
+          <svg class="link-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M9 6C9 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+
+        <a href="/live/projects" class="link-row">
+          <div class="link-icon">🧱</div>
+          <div class="link-text">
+            <div class="link-title">Project Library</div>
+            <div class="link-sub">Ready-made ChatGPT + Claude projects</div>
+          </div>
+          <svg class="link-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M9 6C9 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+
+        <a href="/live/portfolio" class="link-row">
+          <div class="link-icon">🎯</div>
+          <div class="link-text">
+            <div class="link-title">Portfolio of Ideas</div>
+            <div class="link-sub">AI use cases, real examples</div>
+          </div>
+          <svg class="link-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M9 6C9 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+
+        <a href="/live/book/cfo" class="link-row">
+          <div class="link-icon">📊</div>
+          <div class="link-text">
+            <div class="link-title">CFO + Power Bookkeeping</div>
+            <div class="link-sub">Get your finance AI system</div>
+          </div>
+          <svg class="link-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M9 6C9 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+
+        <a href="/live/book/audit" class="link-row">
+          <div class="link-icon">🔍</div>
+          <div class="link-text">
+            <div class="link-title">AI Audit</div>
+            <div class="link-sub">Discover your top AI opportunities</div>
+          </div>
+          <svg class="link-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M9 6C9 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="flex flex-col items-center gap-5 text-center py-12">
+        <div class="divider-glow"></div>
+        <p class="text-white/40 text-[12px]">
+          An <a href="https://endlesswinning.com" class="text-[#8BF1F1] hover:underline">Endless Winning</a> resource
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/live/assets/live-gate.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The School of AI — AI Audit</title>
+  <meta name="description" content="Request an AI Audit with Troy — discover your top 3 AI opportunities.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../../../assets/fonts/gilroy-regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../../../assets/fonts/gilroy-regular.woff2') format('woff2');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../../../assets/fonts/gilroy-bold.woff2') format('woff2');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../../../assets/fonts/gilroy-bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Gilroy', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    .gradient-title {
+      background: linear-gradient(4.67deg, #389ABF 4.69%, #8BF1F1 51.21%, #5FFCC0 95.94%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tier-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      background: linear-gradient(135deg, rgba(139, 241, 241, 0.15), rgba(95, 252, 192, 0.15));
+      border: 1px solid rgba(139, 241, 241, 0.3);
+      color: #8BF1F1;
+    }
+
+    .tier-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background: #8BF1F1;
+      box-shadow: 0 0 8px rgba(139, 241, 241, 0.8);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: #8BF1F1;
+    }
+
+    .btn-glow-wrapper {
+      position: relative;
+      width: 100%;
+    }
+
+    .btn-glow-outer {
+      position: absolute;
+      inset: -3px;
+      border-radius: 9999px;
+      background: conic-gradient(from 180deg,
+        #AF52DE 0deg,
+        #FF2D92 52deg,
+        #FF6482 82deg,
+        #FF9500 94deg,
+        #FFD60A 124deg,
+        #30D158 180deg,
+        #2EC4B6 236deg,
+        #40CBF0 266deg,
+        #007AFF 278deg,
+        #5856D6 308deg,
+        #AF52DE 360deg
+      );
+      filter: blur(14px);
+      opacity: 0.44;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .btn-glow-wrapper:hover .btn-glow-outer {
+      opacity: 0.56;
+      filter: blur(18px);
+    }
+
+    .btn-glow {
+      position: relative;
+      z-index: 1;
+      border: none !important;
+    }
+
+    .btn-glow::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      padding: 1px;
+      background: conic-gradient(from 180deg,
+        #AF52DE 0deg,
+        #FF2D92 52deg,
+        #FF6482 82deg,
+        #FF9500 94deg,
+        #FFD60A 124deg,
+        #30D158 180deg,
+        #2EC4B6 236deg,
+        #40CBF0 266deg,
+        #007AFF 278deg,
+        #5856D6 308deg,
+        #AF52DE 360deg
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .field-input, .field-textarea {
+      background: transparent;
+      border: 1px solid transparent;
+      border-top-color: rgba(255, 255, 255, 0.3);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.12), inset 1px 0 2px rgba(255, 255, 255, 0.05), inset -1px 0 2px rgba(0, 0, 0, 0.08);
+      border-left-color: rgba(255, 255, 255, 0.1);
+      border-right-color: rgba(255, 255, 255, 0.04);
+      border-bottom-color: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 16px;
+      color: white;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s;
+      font-family: inherit;
+    }
+
+    .field-input {
+      height: 56px;
+    }
+
+    .field-textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.5;
+    }
+
+    .field-input::placeholder,
+    .field-textarea::placeholder {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .field-input:focus,
+    .field-textarea:focus {
+      border-color: rgba(139, 241, 241, 0.6);
+    }
+
+    .field-input.error,
+    .field-textarea.error {
+      border-color: #ff4d4d;
+    }
+
+    .error-message {
+      color: #ff4d4d;
+      font-size: 12px;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .error-message.visible {
+      display: block;
+    }
+
+    .phone-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: transparent;
+      border: 1px solid transparent;
+      border-top-color: rgba(255, 255, 255, 0.3);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.12), inset 1px 0 2px rgba(255, 255, 255, 0.05), inset -1px 0 2px rgba(0, 0, 0, 0.08);
+      border-left-color: rgba(255, 255, 255, 0.1);
+      border-right-color: rgba(255, 255, 255, 0.04);
+      border-bottom-color: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      height: 56px;
+      transition: border-color 0.2s;
+    }
+
+    .phone-wrapper:focus-within {
+      border-color: rgba(139, 241, 241, 0.6);
+    }
+
+    .phone-wrapper.error {
+      border-color: #ff4d4d;
+    }
+
+    .phone-prefix {
+      display: flex;
+      align-items: center;
+      padding-left: 12px;
+      flex-shrink: 0;
+    }
+
+    .country-select {
+      appearance: none;
+      -webkit-appearance: none;
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 16px;
+      font-family: inherit;
+      cursor: pointer;
+      outline: none;
+      padding: 0 4px 0 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18 9C18 9 13.5811 15 12 15C10.4188 15 6 9 6 9' stroke='rgba(255,255,255,0.8)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right center;
+      padding-right: 16px;
+    }
+
+    .country-select option {
+      background: #1a1a2e;
+      color: white;
+    }
+
+    .phone-input {
+      background: transparent;
+      border: none;
+      padding: 16px 16px 16px 8px;
+      font-size: 16px;
+      color: white;
+      width: 100%;
+      height: 100%;
+      outline: none;
+    }
+
+    .phone-input::placeholder {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .success-overlay, .error-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 50;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .success-overlay.visible, .error-overlay.visible {
+      display: flex;
+    }
+
+    .success-card {
+      background: rgba(12, 16, 32, 0.7);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid transparent;
+      border-top-color: rgba(255, 255, 255, 0.25);
+      border-left-color: rgba(255, 255, 255, 0.14);
+      border-right-color: rgba(255, 255, 255, 0.05);
+      border-bottom-color: rgba(255, 255, 255, 0.02);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+      border-radius: 24px;
+      padding: 32px 28px;
+      max-width: 460px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .success-check {
+      width: 64px;
+      height: 64px;
+      border-radius: 9999px;
+      background: rgba(95, 252, 192, 0.15);
+      border: 1px solid rgba(95, 252, 192, 0.5);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      color: #5FFCC0;
+    }
+  </style>
+</head>
+<body class="bg-black min-h-screen font-sans overflow-x-hidden" data-service="audit">
+
+  <!-- Background Image -->
+  <div class="fixed inset-0">
+    <img src="../../../assets/background.png" alt="" class="w-full h-full object-cover opacity-55 pointer-events-none">
+  </div>
+
+  <!-- Main Content -->
+  <div class="relative z-10 min-h-screen px-4 py-8 sm:py-12">
+
+    <div class="max-w-[620px] mx-auto">
+
+      <!-- Back to hub -->
+      <div class="mb-6">
+        <a href="/live" class="back-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M15 6C15 6 9 10.4189 9 12C9 13.5812 15 18 15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Back to hub</span>
+        </a>
+      </div>
+
+      <!-- Header -->
+      <div class="flex flex-col items-center gap-5 text-center mb-8">
+        <div class="tier-pill">
+          <span class="tier-dot"></span>
+          Request a Meeting
+        </div>
+        <h1 class="gradient-title font-semibold text-[32px] sm:text-[44px] leading-[1.05] max-w-[560px]">
+          AI Audit
+        </h1>
+        <p class="text-white/70 text-[15px] sm:text-[17px] leading-relaxed max-w-[520px]">
+          Discover your top 3 AI opportunities. Tell us about your business — Troy reaches out within 24 hours.
+        </p>
+      </div>
+
+      <!-- Form Card -->
+      <div class="relative w-full rounded-[24px] overflow-hidden px-6 sm:px-[44px] py-[28px]" style="background: rgba(12, 16, 32, 0.35); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid transparent; border-top-color: rgba(255, 255, 255, 0.25); border-left-color: rgba(255, 255, 255, 0.14); border-right-color: rgba(255, 255, 255, 0.05); border-bottom-color: rgba(255, 255, 255, 0.02); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);">
+
+        <img src="../../../assets/form-texture.png" alt="" class="absolute inset-0 w-full h-full object-cover opacity-5 pointer-events-none rounded-[24px]">
+
+        <div class="relative z-10">
+          <form id="meeting-form" class="w-full flex flex-col gap-[16px]" novalidate>
+
+            <div class="flex flex-col sm:flex-row gap-[16px]">
+              <div class="flex-1">
+                <input type="text" name="firstName" class="field-input" placeholder="First Name" required>
+                <div class="error-message">First name is required</div>
+              </div>
+              <div class="flex-1">
+                <input type="text" name="lastName" class="field-input" placeholder="Last Name" required>
+                <div class="error-message">Last name is required</div>
+              </div>
+            </div>
+
+            <div>
+              <input type="email" name="email" class="field-input" placeholder="Email Address" required>
+              <div class="error-message">Please enter a valid email address</div>
+            </div>
+
+            <div>
+              <div class="phone-wrapper" id="phone-wrapper">
+                <div class="phone-prefix">
+                  <select id="country-code" class="country-select" aria-label="Country code"></select>
+                </div>
+                <input type="tel" name="phone" class="phone-input" placeholder="Phone Number" required>
+              </div>
+              <div class="error-message" id="phone-error">Please enter a valid phone number</div>
+            </div>
+
+            <div>
+              <input type="text" name="organization" class="field-input" placeholder="Organization / Business Name">
+            </div>
+
+            <div>
+              <textarea name="notes" class="field-textarea" rows="4" placeholder="What would you like help with?"></textarea>
+            </div>
+
+            <div class="h-[16px]"></div>
+
+            <div class="flex justify-center">
+              <div class="btn-glow-wrapper">
+                <div class="btn-glow-outer"></div>
+                <button type="submit" id="submit-btn" class="btn-glow w-full h-[56px] rounded-full flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98]" style="background: rgba(10, 14, 30, 0.35); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);">
+                  <span class="text-white font-semibold text-[18px]">Request a Meeting</span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M9 6C9 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <p class="text-white/40 text-[12px] text-center mt-10">
+        An <a href="https://endlesswinning.com" class="text-[#8BF1F1] hover:underline">Endless Winning</a> resource
+      </p>
+
+    </div>
+  </div>
+
+  <!-- Success Message -->
+  <div class="success-overlay" id="success-overlay">
+    <div class="success-card">
+      <div class="success-check">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12L10 17L20 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2 class="gradient-title font-semibold text-[26px] sm:text-[32px] mb-3">Got it</h2>
+      <p class="text-white/85 text-[16px] mb-6 leading-relaxed">Troy will reach out within 24 hours.</p>
+      <a href="/live" class="back-link justify-center">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <path d="M15 6C15 6 9 10.4189 9 12C9 13.5812 15 18 15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span>Back to hub</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div class="error-overlay" id="error-overlay">
+    <div class="success-card">
+      <div class="text-[48px] mb-2">&#9888;</div>
+      <h2 class="gradient-title font-semibold text-[26px] sm:text-[32px] mb-3">Something Went Wrong</h2>
+      <p class="text-white/85 text-[16px] mb-6">Your request didn't go through. Please try again.</p>
+      <button id="try-again-btn" class="px-8 py-3 rounded-full font-semibold text-white text-[16px]" style="background: linear-gradient(135deg, #6366f1, #8b5cf6); cursor: pointer; border: none;">Try Again</button>
+    </div>
+  </div>
+
+  <script>
+    const SERVICE = document.body.dataset.service; // 'cfo' or 'audit'
+    const ENDPOINT = 'https://lrwvooucggciazmzxqlb.supabase.co/functions/v1/school-of-ai-meeting-request';
+
+    const form = document.getElementById('meeting-form');
+    const submitBtn = document.getElementById('submit-btn');
+
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    }
+
+    function isValidPhone(phone) {
+      const digits = phone.replace(/\D/g, '');
+      return digits.length >= 7 && digits.length <= 15;
+    }
+
+    function showError(input) {
+      input.classList.add('error');
+      const errorDiv = input.closest('div').querySelector('.error-message') ||
+                       (input.name === 'phone' ? document.getElementById('phone-error') : null);
+      if (errorDiv) errorDiv.classList.add('visible');
+      if (input.name === 'phone') {
+        document.getElementById('phone-wrapper').classList.add('error');
+      }
+    }
+
+    function clearError(input) {
+      input.classList.remove('error');
+      const errorDiv = input.closest('div').querySelector('.error-message') ||
+                       (input.name === 'phone' ? document.getElementById('phone-error') : null);
+      if (errorDiv) errorDiv.classList.remove('visible');
+      if (input.name === 'phone') {
+        document.getElementById('phone-wrapper').classList.remove('error');
+      }
+    }
+
+    form.querySelectorAll('input, textarea').forEach(input => {
+      input.addEventListener('input', () => clearError(input));
+    });
+
+    const countryCodes = [
+      { code: '+1', label: '🇺🇸 +1' },
+      { code: '+1', label: '🇨🇦 +1' },
+      { code: '+44', label: '🇬🇧 +44' },
+      { code: '+61', label: '🇦🇺 +61' },
+      { code: '+49', label: '🇩🇪 +49' },
+      { code: '+33', label: '🇫🇷 +33' },
+      { code: '+91', label: '🇮🇳 +91' },
+      { code: '+81', label: '🇯🇵 +81' },
+      { code: '+86', label: '🇨🇳 +86' },
+      { code: '+82', label: '🇰🇷 +82' },
+      { code: '+55', label: '🇧🇷 +55' },
+      { code: '+52', label: '🇲🇽 +52' },
+      { code: '+234', label: '🇳🇬 +234' },
+      { code: '+27', label: '🇿🇦 +27' },
+      { code: '+254', label: '🇰🇪 +254' },
+      { code: '+971', label: '🇦🇪 +971' },
+      { code: '+966', label: '🇸🇦 +966' },
+      { code: '+65', label: '🇸🇬 +65' },
+      { code: '+31', label: '🇳🇱 +31' },
+      { code: '+46', label: '🇸🇪 +46' },
+      { code: '+47', label: '🇳🇴 +47' },
+      { code: '+34', label: '🇪🇸 +34' },
+      { code: '+39', label: '🇮🇹 +39' },
+      { code: '+41', label: '🇨🇭 +41' },
+      { code: '+48', label: '🇵🇱 +48' },
+      { code: '+63', label: '🇵🇭 +63' },
+      { code: '+60', label: '🇲🇾 +60' },
+      { code: '+66', label: '🇹🇭 +66' },
+      { code: '+62', label: '🇮🇩 +62' },
+      { code: '+84', label: '🇻🇳 +84' },
+      { code: '+20', label: '🇪🇬 +20' },
+      { code: '+233', label: '🇬🇭 +233' },
+      { code: '+256', label: '🇺🇬 +256' },
+      { code: '+255', label: '🇹🇿 +255' },
+      { code: '+353', label: '🇮🇪 +353' },
+      { code: '+64', label: '🇳🇿 +64' },
+      { code: '+972', label: '🇮🇱 +972' },
+      { code: '+90', label: '🇹🇷 +90' },
+      { code: '+7', label: '🇷🇺 +7' },
+      { code: '+380', label: '🇺🇦 +380' },
+      { code: '+57', label: '🇨🇴 +57' },
+      { code: '+56', label: '🇨🇱 +56' },
+      { code: '+54', label: '🇦🇷 +54' },
+      { code: '+51', label: '🇵🇪 +51' },
+      { code: '+880', label: '🇧🇩 +880' },
+      { code: '+92', label: '🇵🇰 +92' },
+      { code: '+94', label: '🇱🇰 +94' },
+      { code: '+977', label: '🇳🇵 +977' },
+    ];
+
+    const countrySelect = document.getElementById('country-code');
+    countryCodes.forEach((c, i) => {
+      const opt = document.createElement('option');
+      opt.value = c.code;
+      opt.textContent = c.label;
+      if (i === 0) opt.selected = true;
+      countrySelect.appendChild(opt);
+    });
+
+    const phoneInput = form.querySelector('input[name="phone"]');
+    phoneInput.addEventListener('input', (e) => {
+      let digits = e.target.value.replace(/\D/g, '');
+      if (countrySelect.value === '+1') {
+        if (digits.length > 10) digits = digits.slice(0, 10);
+        if (digits.length >= 7) {
+          e.target.value = `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`;
+        } else if (digits.length >= 4) {
+          e.target.value = `(${digits.slice(0,3)}) ${digits.slice(3)}`;
+        } else if (digits.length > 0) {
+          e.target.value = digits;
+        }
+      } else {
+        if (digits.length > 15) digits = digits.slice(0, 15);
+        e.target.value = digits;
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      let isValid = true;
+
+      const firstName = form.querySelector('input[name="firstName"]');
+      const lastName = form.querySelector('input[name="lastName"]');
+      const email = form.querySelector('input[name="email"]');
+      const phone = form.querySelector('input[name="phone"]');
+      const organization = form.querySelector('input[name="organization"]');
+      const notes = form.querySelector('textarea[name="notes"]');
+
+      if (!firstName.value.trim()) { showError(firstName); isValid = false; }
+      if (!lastName.value.trim()) { showError(lastName); isValid = false; }
+      if (!email.value.trim() || !isValidEmail(email.value)) { showError(email); isValid = false; }
+      if (!phone.value.trim() || !isValidPhone(phone.value)) { showError(phone); isValid = false; }
+
+      if (!isValid) return;
+
+      const originalContent = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="text-white font-semibold text-[18px]">Sending...</span>';
+
+      const phoneDigits = phone.value.replace(/\D/g, '');
+
+      const payload = {
+        firstName: firstName.value.trim(),
+        lastName: lastName.value.trim(),
+        email: email.value.trim(),
+        phone: `${countrySelect.value}${phoneDigits}`,
+        organization: organization.value.trim(),
+        notes: notes.value.trim(),
+        service: SERVICE
+      };
+
+      try {
+        const response = await fetch(ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) throw new Error('Submission failed');
+
+        document.getElementById('success-overlay').classList.add('visible');
+        form.reset();
+      } catch (err) {
+        console.error('Form submission error:', err);
+        document.getElementById('error-overlay').classList.add('visible');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalContent;
+      }
+    });
+
+    document.getElementById('try-again-btn').addEventListener('click', () => {
+      document.getElementById('error-overlay').classList.remove('visible');
+    });
+  </script>
+
+  <script src="/live/assets/live-gate.js" defer></script>
+</body>
+</html>

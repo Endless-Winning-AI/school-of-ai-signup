@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    { "source": "/ref/:code", "destination": "/?ref=:code" },
+    { "source": "/foundation-one", "destination": "/foundation/foundation-one/index.html" },
+    { "source": "/foundation-one/:path*", "destination": "/foundation/foundation-one/:path*" },
+    { "source": "/foundation-survey", "destination": "/foundation/foundation-survey/index.html" },
+    { "source": "/foundation-survey/:path*", "destination": "/foundation/foundation-survey/:path*" },
+    { "source": "/live", "destination": "/live/index.html" },
+    { "source": "/live/", "destination": "/live/index.html" },
+    { "source": "/live/prompts", "destination": "/live/prompts/index.html" },
+    { "source": "/live/projects", "destination": "/live/projects/index.html" },
+    { "source": "/live/portfolio", "destination": "/live/portfolio/index.html" },
+    { "source": "/live/book/cfo", "destination": "/live/book/cfo/index.html" },
+    { "source": "/live/book/audit", "destination": "/live/book/audit/index.html" }
+  ]
+}
