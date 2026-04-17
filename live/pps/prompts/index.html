@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The School of AI — Prompts Library</title>
-  <meta name="description" content="Copy-paste prompts ready to use in any AI — from the PPS Library at the School of AI.">
+  <meta name="description" content="15 copy-paste prompts and prompt architectures you can use with any AI. From the School of AI.">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @font-face { font-family: 'Gilroy'; src: url('../../../assets/fonts/gilroy-regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
@@ -28,22 +28,141 @@
       border: 1px solid rgba(139,241,241,0.3); color: #8BF1F1;
     }
     .tier-dot { width: 8px; height: 8px; border-radius: 9999px; background: #8BF1F1; box-shadow: 0 0 8px rgba(139,241,241,0.8); }
-    .glass-card {
-      background: rgba(12,16,32,0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 500; text-decoration: none; transition: color 0.2s; }
+    .back-link:hover { color: #8BF1F1; }
+
+    .filter-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 14px; border-radius: 9999px;
+      background: rgba(10, 14, 30, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 12px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+      user-select: none;
+    }
+    .filter-pill:hover { color: #8BF1F1; border-color: rgba(139, 241, 241, 0.4); }
+    .filter-pill.active {
+      background: linear-gradient(135deg, rgba(139,241,241,0.18), rgba(95,252,192,0.14));
+      border-color: rgba(139, 241, 241, 0.55);
+      color: #8BF1F1;
+    }
+    .filter-pill .count {
+      font-size: 10px; font-weight: 700;
+      opacity: 0.6; margin-left: 2px;
+    }
+
+    .prompt-card {
+      background: rgba(12,16,32,0.5);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       border: 1px solid transparent;
       border-top-color: rgba(255,255,255,0.22); border-left-color: rgba(255,255,255,0.1);
       border-right-color: rgba(255,255,255,0.04); border-bottom-color: rgba(255,255,255,0.02);
-      box-shadow: 0 8px 30px rgba(0,0,0,0.28); border-radius: 22px;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.25);
+      border-radius: 18px;
+      overflow: hidden;
+      transition: border-top-color 0.2s, background 0.2s;
     }
-    .back-link {
+    .prompt-card[open] { border-top-color: rgba(139, 241, 241, 0.5); background: rgba(12, 16, 32, 0.7); }
+    .prompt-card.hidden { display: none; }
+
+    .prompt-summary {
+      list-style: none;
+      padding: 18px 20px;
+      cursor: pointer;
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .prompt-summary::-webkit-details-marker { display: none; }
+
+    .prompt-icon {
+      flex-shrink: 0;
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      background: linear-gradient(135deg, rgba(139,241,241,0.12), rgba(95,252,192,0.08));
+      border: 1px solid rgba(139,241,241,0.18);
+    }
+
+    .prompt-head { flex: 1; min-width: 0; }
+
+    .prompt-title {
+      font-size: 16px; font-weight: 700; color: white;
+      letter-spacing: -0.01em; line-height: 1.3;
+      display: inline-flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    }
+
+    .prompt-tag {
+      display: inline-flex; align-items: center;
+      padding: 2px 9px; border-radius: 9999px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .prompt-tag.architecture { background: rgba(139, 241, 241, 0.1); border: 1px solid rgba(139, 241, 241, 0.3); color: #8BF1F1; }
+    .prompt-tag.business { background: rgba(95, 252, 192, 0.1); border: 1px solid rgba(95, 252, 192, 0.3); color: #5FFCC0; }
+    .prompt-tag.marketing { background: rgba(255, 149, 0, 0.1); border: 1px solid rgba(255, 149, 0, 0.35); color: #FFB547; }
+    .prompt-tag.ops { background: rgba(175, 82, 222, 0.12); border: 1px solid rgba(175, 82, 222, 0.35); color: #D5A3F5; }
+    .prompt-tag.strategy { background: rgba(255, 45, 146, 0.1); border: 1px solid rgba(255, 45, 146, 0.35); color: #FF8AB8; }
+
+    .prompt-desc { color: rgba(255, 255, 255, 0.65); font-size: 13px; line-height: 1.5; margin-top: 6px; }
+
+    .prompt-chevron { flex-shrink: 0; color: rgba(255,255,255,0.45); transition: transform 0.2s, color 0.2s; margin-top: 6px; }
+    .prompt-card[open] .prompt-chevron { transform: rotate(180deg); color: #8BF1F1; }
+
+    .prompt-body { padding: 0 20px 20px 20px; }
+
+    .how-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: #8BF1F1; margin-bottom: 6px;
+    }
+    .how-text { color: rgba(255,255,255,0.8); font-size: 13px; line-height: 1.55; margin-bottom: 14px; }
+
+    .code-wrapper {
+      position: relative; border-radius: 14px;
+      background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+    }
+    .code-wrapper pre {
+      margin: 0;
+      padding: 52px 16px 18px 18px;
+      color: rgba(255, 255, 255, 0.92);
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, monospace;
+      font-size: 12.5px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+    .code-toolbar {
+      position: absolute; top: 0; left: 0; right: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 12px;
+      background: linear-gradient(180deg, rgba(12,16,32,0.92), rgba(12,16,32,0.4));
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+    .code-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.45); padding-left: 4px; }
+
+    .copy-btn {
       display: inline-flex; align-items: center; gap: 6px;
-      color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 500;
-      text-decoration: none; transition: color 0.2s;
+      padding: 7px 12px; border-radius: 9999px;
+      background: rgba(139, 241, 241, 0.15); border: 1px solid rgba(139, 241, 241, 0.4);
+      color: #8BF1F1; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
     }
-    .back-link:hover { color: #8BF1F1; }
-    .divider-glow {
-      height: 1px; background: linear-gradient(90deg, transparent, rgba(139,241,241,0.35), transparent);
-      margin: 0 auto; width: 80%;
+    .copy-btn:hover { background: rgba(139, 241, 241, 0.22); transform: translateY(-1px); }
+    .copy-btn:active { transform: translateY(0); }
+    .copy-btn.copied { background: rgba(95, 252, 192, 0.22); border-color: rgba(95, 252, 192, 0.7); color: #5FFCC0; }
+
+    .divider-glow { height: 1px; background: linear-gradient(90deg, transparent, rgba(139,241,241,0.35), transparent); margin: 0 auto; width: 80%; }
+
+    @media (max-width: 480px) {
+      .prompt-summary { padding: 16px; gap: 12px; }
+      .prompt-title { font-size: 15px; }
+      .prompt-icon { width: 36px; height: 36px; font-size: 18px; }
+      .code-wrapper pre { font-size: 11.5px; padding: 48px 14px 16px 14px; max-height: 360px; }
     }
   </style>
 </head>
@@ -54,7 +173,7 @@
   </div>
 
   <div class="relative z-10 min-h-screen px-4 py-8 sm:py-12">
-    <div class="max-w-[720px] mx-auto">
+    <div class="max-w-[760px] mx-auto">
 
       <div class="mb-6">
         <a href="/live/pps" class="back-link">
@@ -74,24 +193,614 @@
           Copy-Paste Prompts
         </h1>
         <p class="text-white/70 text-[15px] sm:text-[17px] leading-relaxed max-w-[520px]">
-          Open an item to review it. Then copy and paste into any AI &mdash; ChatGPT, Claude, Gemini, or anywhere you work.
+          15 prompts and prompt architectures you can drop into any AI — ChatGPT, Claude, Gemini, wherever you work.
         </p>
       </div>
 
-      <div class="glass-card p-6 sm:p-8 text-center">
-        <div class="text-[44px] mb-3">💬</div>
-        <div class="text-white text-[18px] font-bold mb-2">Library launches soon</div>
-        <p class="text-white/65 text-[14px] leading-relaxed max-w-[440px] mx-auto">
-          The first wave of prompts &mdash; the meta-prompts, the role scaffolds, the tight snippets from the live sessions &mdash; land here as soon as they're polished. Check back shortly.
-        </p>
-        <div class="mt-6">
-          <a href="/live/prompts" class="inline-block px-5 py-2.5 rounded-full text-[13px] font-bold tracking-wide text-[#8BF1F1] border border-[#8BF1F1]/40 hover:bg-[#8BF1F1]/10 transition">
-            See the current prompt page
-          </a>
-        </div>
+      <!-- Filters -->
+      <div class="flex flex-wrap justify-center gap-2 mb-6" id="filter-bar">
+        <button class="filter-pill active" data-filter="all">All <span class="count">15</span></button>
+        <button class="filter-pill" data-filter="architecture">Architecture <span class="count">5</span></button>
+        <button class="filter-pill" data-filter="business">Business <span class="count">4</span></button>
+        <button class="filter-pill" data-filter="marketing">Marketing <span class="count">3</span></button>
+        <button class="filter-pill" data-filter="ops">Ops <span class="count">2</span></button>
+        <button class="filter-pill" data-filter="strategy">Strategy <span class="count">1</span></button>
       </div>
 
-      <div class="flex flex-col items-center gap-5 text-center py-12">
+      <!-- Prompts list -->
+      <div class="flex flex-col gap-3" id="prompts-list">
+
+        <!-- 01 · PROMPT ARCHITECT -->
+        <details class="prompt-card" data-category="architecture">
+          <summary class="prompt-summary">
+            <div class="prompt-icon">🏗️</div>
+            <div class="prompt-head">
+              <div class="prompt-title">Prompt Architect <span class="prompt-tag architecture">Architecture</span></div>
+              <div class="prompt-desc">Turns a rough idea into a fully structured, production-ready prompt. Use this first before any important AI task.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="prompt-body">
+            <div class="how-label">How to use</div>
+            <div class="how-text">Paste this prompt. Then tell the AI your rough idea ("I want a prompt that helps me...") and let it structure the full prompt for you. Copy the output and use it anywhere.</div>
+            <div class="code-wrapper">
+              <div class="code-toolbar">
+                <span class="code-label">Prompt</span>
+                <button class="copy-btn" data-copy-target="p01">Copy</button>
+              </div>
+              <pre id="p01">You are a world-class prompt engineer. I will give you a rough idea of what I want an AI to do. Your job is to return a fully structured, production-ready prompt using this architecture:
+
+1. ROLE — who the AI is (be specific about expertise, tone, worldview).
+2. CONTEXT — what the AI needs to know before starting the task.
+3. OBJECTIVE — the outcome, in one sentence.
+4. CONSTRAINTS — what it must and must not do.
+5. INPUTS — what the user will paste/provide, in {{placeholder}} form.
+6. PROCESS — step-by-step how the AI should think through the task.
+7. OUTPUT FORMAT — exact structure of the final response (headings, length, tone).
+8. EXAMPLES (if useful) — 1-2 input→output examples.
+
+Before writing the final prompt, ask me up to 3 clarifying questions if the intent is ambiguous. Then deliver the full structured prompt in a single code block I can copy.
+
+My rough idea: {{PASTE YOUR IDEA HERE}}</pre>
+            </div>
+          </div>
+        </details>
+
+        <!-- 02 · CHAIN OF THOUGHT -->
+        <details class="prompt-card" data-category="architecture">
+          <summary class="prompt-summary">
+            <div class="prompt-icon">🧠</div>
+            <div class="prompt-head">
+              <div class="prompt-title">Chain-of-Thought Booster <span class="prompt-tag architecture">Architecture</span></div>
+              <div class="prompt-desc">Forces the AI to reason out loud before answering. Lifts quality on any logic-heavy, math, or analysis task by 20-40%.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="prompt-body">
+            <div class="how-label">How to use</div>
+            <div class="how-text">Prepend this to any question that needs real reasoning. The explicit "show your work" section is the unlock.</div>
+            <div class="code-wrapper">
+              <div class="code-toolbar">
+                <span class="code-label">Prompt</span>
+                <button class="copy-btn" data-copy-target="p02">Copy</button>
+              </div>
+              <pre id="p02">Before you answer, think carefully step-by-step.
+
+1. Restate the task in your own words (one sentence).
+2. List the facts or inputs that matter.
+3. List the assumptions you're making.
+4. Work through the reasoning explicitly, showing each step.
+5. State the answer clearly.
+6. Sanity-check: "If I'm wrong, the most likely reason is ___."
+
+Now here is the task:
+{{YOUR TASK HERE}}</pre>
+            </div>
+          </div>
+        </details>
+
+        <!-- 03 · SELF-CRITIQUE LOOP -->
+        <details class="prompt-card" data-category="architecture">
+          <summary class="prompt-summary">
+            <div class="prompt-icon">🔁</div>
+            <div class="prompt-head">
+              <div class="prompt-title">Self-Critique &amp; Rewrite Loop <span class="prompt-tag architecture">Architecture</span></div>
+              <div class="prompt-desc">Generate → brutally critique → rewrite. Gets 80% of the quality of multi-agent systems in one prompt.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="prompt-body">
+            <div class="how-label">How to use</div>
+            <div class="how-text">Use when the first draft of anything matters — copywriting, strategy, code, emails. Works best on outputs longer than a paragraph.</div>
+            <div class="code-wrapper">
+              <div class="code-toolbar">
+                <span class="code-label">Prompt</span>
+                <button class="copy-btn" data-copy-target="p03">Copy</button>
+              </div>
+              <pre id="p03">You are going to answer this task THREE times, in order:
+
+TASK: {{YOUR TASK HERE}}
+
+PASS 1 — DRAFT
+Write your first attempt. Don't overthink it.
+
+PASS 2 — BRUTAL CRITIQUE
+Now put on the hat of the harshest, most competent reviewer in the world. Critique Pass 1. Find:
+- What's vague or generic
+- What claims aren't supported
+- What's missing that would make this 10x better
+- Where the reasoning is weak
+- What a real expert would say about this
+
+List at least 5 issues. Be specific. No compliments.
+
+PASS 3 — REWRITE
+Now rewrite the draft addressing every critique. This final version is what I'll actually use.
+
+Label each pass clearly and show all three.</pre>
+            </div>
+          </div>
+        </details>
+
+        <!-- 04 · FEW-SHOT PATTERN TEACHER -->
+        <details class="prompt-card" data-category="architecture">
+          <summary class="prompt-summary">
+            <div class="prompt-icon">🎯</div>
+            <div class="prompt-head">
+              <div class="prompt-title">Few-Shot Pattern Teacher <span class="prompt-tag architecture">Architecture</span></div>
+              <div class="prompt-desc">Show the AI 2-3 examples of the pattern you want. It locks onto your style and continues it on new inputs.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="prompt-body">
+            <div class="how-label">How to use</div>
+            <div class="how-text">The #1 way to control tone and format. Replace the placeholders with your own examples, then give it the new input.</div>
+            <div class="code-wrapper">
+              <div class="code-toolbar">
+                <span class="code-label">Prompt</span>
+                <button class="copy-btn" data-copy-target="p04">Copy</button>
+              </div>
+              <pre id="p04">You are a pattern-matcher. I'll show you examples of the exact pattern I want — input on one side, output on the other. Your job is to continue the pattern for new inputs, matching the tone, length, and structure exactly.
+
+Do not deviate. Do not add commentary. Just continue the pattern.
+
+EXAMPLES:
+
+Input: {{EXAMPLE_INPUT_1}}
+Output: {{EXAMPLE_OUTPUT_1}}
+
+Input: {{EXAMPLE_INPUT_2}}
+Output: {{EXAMPLE_OUTPUT_2}}
+
+Input: {{EXAMPLE_INPUT_3}}
+Output: {{EXAMPLE_OUTPUT_3}}
+
+NOW YOUR TURN:
+
+Input: {{NEW_INPUT}}
+Output:</pre>
+            </div>
+          </div>
+        </details>
+
+        <!-- 05 · REACT -->
+        <details class="prompt-card" data-category="architecture">
+          <summary class="prompt-summary">
+            <div class="prompt-icon">⚡</div>
+            <div class="prompt-head">
+              <div class="prompt-title">ReAct — Reason + Act <span class="prompt-tag architecture">Architecture</span></div>
+              <div class="prompt-desc">Interleaves thinking with tool use. The framework under every serious AI agent — now usable in a single-chat window.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="prompt-body">
+            <div class="how-label">How to use</div>
+            <div class="how-text">For any task where the AI needs to search, analyze, then act (research, troubleshooting, investigation). Especially powerful in ChatGPT with browsing on, or Claude with web search.</div>
+            <div class="code-wrapper">
+              <div class="code-toolbar">
+                <span class="code-label">Prompt</span>
+                <button class="copy-btn" data-copy-target="p05">Copy</button>
+              </div>
+              <pre id="p05">For the task below, work in this loop until you reach the answer:
+
+THOUGHT: [What do I need to figure out next? What's my current hypothesis?]
+ACTION: [What tool/search/check will I run? Describe exactly what you're doing.]
+OBSERVATION: [What did that reveal?]
+
+Repeat THOUGHT → ACTION → OBSERVATION until you have enough to answer confidently.
+
+End with:
+FINAL ANSWER: [The actual answer, with a confidence level 1-10 and one sentence on what would change it.]
+
+TASK:
+{{YOUR TASK HERE}}</pre>
+            </div>
+          </div>
+        </details>
+
+        <!-- 06 · CUSTOMER VOICE MINER -->
+        <details class="prompt-card" data-category="marketing">
+          <summary class="prompt-summary">
+            <div class="prompt-icon">🎙️</div>
+            <div class="prompt-head">
+              <div class="prompt-title">Customer Voice Miner <span class="prompt-tag marketing">Marketing</span></div>
+              <div class="prompt-desc">Paste reviews, testimonials, or survey answers. Out comes the exact language your customers use — perfect for headlines and ads.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="prompt-body">
+            <div class="how-label">How to use</div>
+            <div class="how-text">Collect 10-50 real customer quotes (Google reviews, support tickets, survey answers, DMs). Paste them in. The AI pulls the patterns.</div>
+            <div class="code-wrapper">
+              <div class="code-toolbar">
+                <span class="code-label">Prompt</span>
+                <button class="copy-btn" data-copy-target="p06">Copy</button>
+              </div>
+              <pre id="p06">You are a voice-of-customer researcher. I'll paste real quotes from my customers (reviews, testimonials, support messages, survey answers). Your job is to extract, in the customer's own words:
+
+1. PAIN POINTS — what they were struggling with before. Keep their exact phrases.
+2. DESIRED OUTCOMES — what they said they wanted. Keep their exact phrases.
+3. "AHA" MOMENTS — when they realized our product/service worked. Exact phrases.
+4. OBJECTIONS — what they almost didn't buy because of. Exact phrases.
+5. TOP 10 POWER PHRASES — the most emotionally loaded, specific, or unexpectedly vivid lines they used. Rank by copy-potential (how likely each is to crush as a headline or ad).
+
+Do not paraphrase in your own voice. Stay in the customer's voice. If a pattern appears in 3+ quotes, call that out.
+
+Here are the quotes:
+
+{{PASTE QUOTES HERE}}</pre>
+            </div>
+          </div>
+        </details>
+
+        <!-- 07 · COLD EMAIL ARCHITECT -->
+        <details class="prompt-card" data-category="marketing">
+          <summary class="prompt-summary">
+            <div class="prompt-icon">📧</div>
+            <div class="prompt-head">
+              <div class="prompt-title">Cold Email Architect <span class="prompt-tag marketing">Marketing</span></div>
+              <div class="prompt-desc">Value-first cold email that doesn't smell like a pitch. Hormozi-inspired framework: lead with specific value, earn the reply.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="prompt-body">
+            <div class="how-label">How to use</div>
+            <div class="how-text">Best if you know something specific about the recipient (their site, their LinkedIn, a recent post). Generic = dead. Specific = opens.</div>
+            <div class="code-wrapper">
+              <div class="code-toolbar">
+                <span class="code-label">Prompt</span>
+                <button class="copy-btn" data-copy-target="p07">Copy</button>
+              </div>
+              <pre id="p07">You write cold emails like a value-first operator, not a salesperson. No corporate fluff, no "I hope this email finds you well," no pitch in line 1.
+
+Write a cold email using this structure:
+
+1. SUBJECT — 3-5 words, pattern-interrupting. No emojis. Specific, not clever.
+2. LINE 1 — a concrete observation about the recipient (from their site/LinkedIn/post). Proves you actually looked.
+3. LINE 2 — the specific insight or value you want to hand them. Not a question, not a pitch. A gift.
+4. LINE 3 — a soft ask that's easy to say yes to. Never "hop on a call." Try "worth a 2-line reply?" or "want the full breakdown?"
+5. SIGN-OFF — first name only. No title, no company, no links.
+
+Total length: under 90 words. Punchy sentences. One idea per line.
+
+Recipient profile:
+{{NAME, ROLE, COMPANY, SPECIFIC DETAIL YOU KNOW}}
+
+Specific value you can offer them:
+{{WHAT YOU NOTICED + WHAT YOU'D DO ABOUT IT}}
+
+Write 3 subject-line options + 1 full email.</pre>
+            </div>
+          </div>
+        </details>
+
+        <!-- 08 · 1 TO 10 CONTENT ATOMIZER -->
+        <details class="prompt-card" data-category="marketing">
+          <summary class="prompt-summary">
+            <div class="prompt-icon">💥</div>
+            <div class="prompt-head">
+              <div class="prompt-title">1 → 10 Content Atomizer <span class="prompt-tag marketing">Marketing</span></div>
+              <div class="prompt-desc">Turn a single long-form piece into 10 channel-native repurposes. Podcast → tweets, video → carousel, blog → email.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="prompt-body">
+            <div class="how-label">How to use</div>
+            <div class="how-text">Paste a transcript, blog, or long doc. Tell it which 3-4 channels you want. It produces ready-to-post content for each.</div>
+            <div class="code-wrapper">
+              <div class="code-toolbar">
+                <span class="code-label">Prompt</span>
+                <button class="copy-btn" data-copy-target="p08">Copy</button>
+              </div>
+              <pre id="p08">You are a content atomizer. I'll give you one long-form piece. Pull the 3 sharpest insights, then repurpose them into the channels below, written in native style for each.
+
+LONG-FORM SOURCE:
+{{PASTE YOUR SOURCE — blog, transcript, doc, etc.}}
+
+CHANNELS TO CREATE:
+1. Twitter/X thread (7 tweets, first tweet a pattern-interrupt hook, no emojis, one tweet per point)
+2. LinkedIn post (5-7 line hook + 150-200 word body + 1-line CTA — NOT a question)
+3. Instagram carousel (8 slides: hook, 5 point slides, 1 summary slide, 1 CTA)
+4. YouTube Short / TikTok script (40 seconds: 3-second hook, the setup, the payoff, a loop-back line)
+5. Email newsletter (subject line + 200-300 word body, conversational, ending with the best quote from the source)
+
+Before generating: tell me the 3 core insights you pulled from the source. Then produce each channel in order.
+
+Native tone per channel. Not the same post reformatted.</pre>
+            </div>
+          </div>
+        </details>
+
+        <!-- 09 · CUSTOMER ONBOARDING GENIUS -->
+        <details class="prompt-card" data-category="business">
+          <summary class="prompt-summary">
+            <div class="prompt-icon">🎁</div>
+            <div class="prompt-head">
+              <div class="prompt-title">Customer Onboarding Genius <span class="prompt-tag business">Business</span></div>
+              <div class="prompt-desc">Designs the first 7 days of a new customer experience so they get a real win by day 3 and a habit by day 7.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="prompt-body">
+            <div class="how-label">How to use</div>
+            <div class="how-text">Drop in what you sell and who buys it. Out comes a sequence of emails, in-app nudges, or manual touchpoints — whichever you can actually execute.</div>
+            <div class="code-wrapper">
+              <div class="code-toolbar">
+                <span class="code-label">Prompt</span>
+                <button class="copy-btn" data-copy-target="p09">Copy</button>
+              </div>
+              <pre id="p09">You are a customer success architect. Your north star: a new customer must feel a real, specific win by day 3 and have formed a return-habit by day 7.
+
+Given the business below, design a 7-day onboarding sequence with:
+
+- DAY 0 (sign-up): one action that creates the first spark of "this is mine now"
+- DAY 1: the first tangible win they can get in under 10 minutes
+- DAY 3: the "holy crap" moment — something they didn't expect was possible
+- DAY 5: a proactive check-in that heads off the most common drop-off reason
+- DAY 7: a habit-forming cue that makes them return without being reminded
+
+For each day, specify:
+• The channel (email, in-app, SMS, human outreach)
+• The exact message or action (not a template — write the real thing)
+• What signal tells us it worked
+
+At the end, list the top 3 metrics I should track to know if this sequence is working.
+
+BUSINESS CONTEXT:
+What I sell: {{YOUR PRODUCT/SERVICE}}
+Who buys it: {{YOUR CUSTOMER TYPE}}
+The #1 reason new users drop off today: {{DROP-OFF CAUSE — or "unknown"}}</pre>
+            </div>
+          </div>
+        </details>
+
+        <!-- 10 · AI OPPORTUNITY SCANNER -->
+        <details class="prompt-card" data-category="business">
+          <summary class="prompt-summary">
+            <div class="prompt-icon">🔎</div>
+            <div class="prompt-head">
+              <div class="prompt-title">AI Opportunity Scanner <span class="prompt-tag business">Business</span></div>
+              <div class="prompt-desc">Describe your business. AI finds the top 5 places where AI could save the most time or money this quarter — ranked by ROI.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="prompt-body">
+            <div class="how-label">How to use</div>
+            <div class="how-text">The more specific you are about weekly time sinks and current tools, the better the ROI ranking. 200 words of context beats 20.</div>
+            <div class="code-wrapper">
+              <div class="code-toolbar">
+                <span class="code-label">Prompt</span>
+                <button class="copy-btn" data-copy-target="p10">Copy</button>
+              </div>
+              <pre id="p10">You are an AI integration consultant for small and mid-size businesses. Your job: given a business description, identify the top 5 AI opportunities with the highest ROI for THIS quarter (not 18 months from now).
+
+For each opportunity, output:
+1. THE OPPORTUNITY — one sentence, specific to their business
+2. CURRENT STATE — how it's done today (minutes/hours per week or per task)
+3. AI SOLUTION — exact tool or approach (ChatGPT, Claude, Zapier+AI, custom agent, etc.)
+4. EFFORT TO DEPLOY — hours of work, rough skill level
+5. PROJECTED RETURN — hours saved/week OR dollars saved/week OR revenue unlocked. Show your math.
+6. ROI SCORE — the return divided by the effort (higher = better). Use this to rank.
+
+Rank all 5 from highest ROI to lowest.
+At the end: identify the #1 opportunity to start with on Monday and the exact first step.
+
+BUSINESS CONTEXT:
+Industry: {{YOUR INDUSTRY}}
+Team size: {{HEADCOUNT}}
+Hourly rate of the team: {{AVG RATE}}
+Biggest weekly time drains (be specific): {{TIME DRAINS}}
+Tools you already use: {{YOUR STACK}}
+What's already working well: {{KEEP}}</pre>
+            </div>
+          </div>
+        </details>
+
+        <!-- 11 · OFFER DECONSTRUCTOR -->
+        <details class="prompt-card" data-category="business">
+          <summary class="prompt-summary">
+            <div class="prompt-icon">🎯</div>
+            <div class="prompt-head">
+              <div class="prompt-title">Offer Deconstructor <span class="prompt-tag business">Business</span></div>
+              <div class="prompt-desc">Paste a competitor's landing page or offer. Out comes their full positioning breakdown — promise, proof, price logic, gaps.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="prompt-body">
+            <div class="how-label">How to use</div>
+            <div class="how-text">Paste the full page text (or URL, if your model browses). Great for building your own differentiated offer in a crowded category.</div>
+            <div class="code-wrapper">
+              <div class="code-toolbar">
+                <span class="code-label">Prompt</span>
+                <button class="copy-btn" data-copy-target="p11">Copy</button>
+              </div>
+              <pre id="p11">You are a positioning strategist. I'll give you a competitor's landing page or offer. Break it down into its components and tell me what's working, what's weak, and where a new entrant could win.
+
+Deliver:
+
+1. THE PROMISE — what they say the customer will get. Exact language.
+2. THE AVATAR — who they're talking to, and what about that person is implicit in the copy.
+3. THE PROOF — every form of proof they use (testimonials, stats, logos, guarantees, credentials).
+4. THE PRICE LOGIC — how they anchor the price, the stack, any decoy tiers, what's inflated, what's missing.
+5. THE WEAKNESSES — 3 gaps or weak claims a skeptical prospect would catch.
+6. THE OPENING — the sharpest angle a new entrant could attack from. What's the differentiated promise, and what copy would they write to claim it?
+
+Be ruthless. Don't compliment. Be specific enough that I could use your output as a positioning brief.
+
+COMPETITOR PAGE TEXT OR URL:
+{{PASTE HERE}}</pre>
+            </div>
+          </div>
+        </details>
+
+        <!-- 12 · SOP EXTRACTOR -->
+        <details class="prompt-card" data-category="ops">
+          <summary class="prompt-summary">
+            <div class="prompt-icon">📋</div>
+            <div class="prompt-head">
+              <div class="prompt-title">SOP Extractor <span class="prompt-tag ops">Ops</span></div>
+              <div class="prompt-desc">You describe a messy process. AI asks smart questions, then hands you a clean, delegatable SOP with decision points.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="prompt-body">
+            <div class="how-label">How to use</div>
+            <div class="how-text">Pick a process you do 5+ times a month that lives in your head. Describe it in plain language. The AI interrogates you until it's written down properly.</div>
+            <div class="code-wrapper">
+              <div class="code-toolbar">
+                <span class="code-label">Prompt</span>
+                <button class="copy-btn" data-copy-target="p12">Copy</button>
+              </div>
+              <pre id="p12">You are an operations consultant who writes SOPs so clean that a new hire could execute them on day one without asking questions.
+
+I'll describe a process in messy, stream-of-consciousness detail. Your job is to:
+
+1. Ask me up to 6 clarifying questions — only ones you genuinely need answers to. No throwaways.
+2. After I answer, produce a clean SOP with:
+   • TITLE
+   • TRIGGER (what starts this process)
+   • OWNER (role, not person)
+   • INPUTS (what you need before you start)
+   • STEPS (numbered, action verbs, no more than 12)
+   • DECISION POINTS (where the path forks — "if X, do Y, otherwise Z")
+   • OUTPUTS (what exists when this is done)
+   • EDGE CASES & EXCEPTIONS (the 3 things that most commonly go wrong)
+   • SUCCESS CHECK (how we know the process worked)
+   • TIME ESTIMATE (rough)
+
+Keep language plain. No jargon. A smart 16-year-old should be able to follow it.
+
+HERE'S THE PROCESS:
+{{DESCRIBE IT MESSILY — just get the thoughts out}}</pre>
+            </div>
+          </div>
+        </details>
+
+        <!-- 13 · MEETING TO ACTION -->
+        <details class="prompt-card" data-category="ops">
+          <summary class="prompt-summary">
+            <div class="prompt-icon">🎤</div>
+            <div class="prompt-head">
+              <div class="prompt-title">Meeting-to-Action Converter <span class="prompt-tag ops">Ops</span></div>
+              <div class="prompt-desc">Paste a meeting transcript. Out comes decisions, owned action items, risks, and a clean follow-up email draft.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="prompt-body">
+            <div class="how-label">How to use</div>
+            <div class="how-text">Works with transcripts from Zoom, Otter, Fireflies, or even rough notes. The more names + quotes, the sharper the action-item attribution.</div>
+            <div class="code-wrapper">
+              <div class="code-toolbar">
+                <span class="code-label">Prompt</span>
+                <button class="copy-btn" data-copy-target="p13">Copy</button>
+              </div>
+              <pre id="p13">You are a chief-of-staff. I'll paste a raw meeting transcript. Turn it into a tight post-meeting package with these sections in this exact order:
+
+1. DECISIONS MADE — bullet list. Each one in one sentence, no fluff, names attached where the transcript supports it.
+2. ACTION ITEMS — table format: [Owner] · [Action — a concrete verb] · [Due]. If no due date was discussed, mark TBD and flag it.
+3. OPEN QUESTIONS — things surfaced but not resolved.
+4. RISKS & FLAGS — anything in the transcript that would worry a good operator (conflicts, unclear ownership, shaky assumptions, tight timelines).
+5. FOLLOW-UP EMAIL DRAFT — ready to send. Subject line + body. Friendly but crisp. Under 150 words. Bullet any action items with owners.
+
+Rules:
+- Never invent decisions or owners. If the transcript is ambiguous, say "UNCLEAR — recommend confirming."
+- Quote exact wording when a decision is nuanced.
+
+TRANSCRIPT:
+{{PASTE YOUR TRANSCRIPT HERE}}</pre>
+            </div>
+          </div>
+        </details>
+
+        <!-- 14 · NEGOTIATION COACH -->
+        <details class="prompt-card" data-category="business">
+          <summary class="prompt-summary">
+            <div class="prompt-icon">♟️</div>
+            <div class="prompt-head">
+              <div class="prompt-title">Negotiation Coach (Chris Voss mode) <span class="prompt-tag business">Business</span></div>
+              <div class="prompt-desc">Role-plays the other side of any deal you're about to walk into. Tactical empathy, labeling, calibrated questions — the full playbook.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="prompt-body">
+            <div class="how-label">How to use</div>
+            <div class="how-text">Describe the negotiation you're walking into. The AI first plays you the other side until you're prepared, then gives you the playbook.</div>
+            <div class="code-wrapper">
+              <div class="code-toolbar">
+                <span class="code-label">Prompt</span>
+                <button class="copy-btn" data-copy-target="p14">Copy</button>
+              </div>
+              <pre id="p14">You are a negotiation coach trained on Chris Voss's "Never Split the Difference." You use tactical empathy, mirroring, labeling, and calibrated "how" / "what" questions — never "why" (too accusatory).
+
+I'll describe a negotiation I'm about to walk into. Do this:
+
+STAGE 1 — Ask me 3 sharp questions to understand:
+  a) What I actually want (and what I'd walk away for)
+  b) What they actually want (your best read)
+  c) The implicit fears or pressures on their side
+
+STAGE 2 — Roleplay the other party. Open with a realistic hard line they might take. Let me respond. Push back on weak responses. Keep going for 3-4 rounds.
+
+STAGE 3 — Give me the playbook:
+  • The opening line I should use
+  • 3 labels to pre-position their emotions ("it sounds like...", "it seems like you're worried about...")
+  • 3 calibrated questions to get them to solve my problem for me
+  • The worst thing I could say (so I don't say it)
+  • One "black swan" — a surprise piece of info I should dig for
+
+HERE'S THE NEGOTIATION:
+{{DESCRIBE: what's at stake, who the other party is, where we are in the convo, what's already happened}}</pre>
+            </div>
+          </div>
+        </details>
+
+        <!-- 15 · FIRST PRINCIPLES STRATEGIST -->
+        <details class="prompt-card" data-category="strategy">
+          <summary class="prompt-summary">
+            <div class="prompt-icon">🪓</div>
+            <div class="prompt-head">
+              <div class="prompt-title">First-Principles Strategist <span class="prompt-tag strategy">Strategy</span></div>
+              <div class="prompt-desc">Strips an assumption-heavy decision back to physics. Useful when "everyone does it this way" needs to be challenged.</div>
+            </div>
+            <svg class="prompt-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </summary>
+          <div class="prompt-body">
+            <div class="how-label">How to use</div>
+            <div class="how-text">Use on decisions where the "industry standard" feels like a cop-out. Pricing, hiring, GTM, product architecture.</div>
+            <div class="code-wrapper">
+              <div class="code-toolbar">
+                <span class="code-label">Prompt</span>
+                <button class="copy-btn" data-copy-target="p15">Copy</button>
+              </div>
+              <pre id="p15">You are a first-principles strategist. Your job: take a decision I'm making by convention and rebuild it from scratch.
+
+DECISION I'M MAKING:
+{{DESCRIBE THE DECISION AND WHAT I'M LEANING TOWARD AND WHY}}
+
+Work in this order:
+
+1. LIST THE ASSUMPTIONS — every assumption baked into my current approach. Be ruthless. Include the ones I didn't state but am clearly making.
+
+2. SEPARATE — which assumptions are:
+   a) Physics / law (truly inviolable — can't change)
+   b) Convention (industry "just does it" — fully changeable)
+   c) My own preference (changeable if I'm willing)
+
+3. RE-DERIVE — if I threw out all convention-level assumptions, what does the decision actually look like? Design from scratch using only the physics and my preferences.
+
+4. COMPARE — what does the first-principles version get me that the default version doesn't? What would I lose?
+
+5. RECOMMENDATION — your honest read. Which version wins, and what's the bet you're making? Include one scenario where you'd be wrong.
+
+Don't hedge. Don't give me "it depends." Pick a side.</pre>
+            </div>
+          </div>
+        </details>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="flex flex-col items-center gap-5 text-center py-12 mt-6">
         <div class="divider-glow mb-2"></div>
         <p class="text-white/40 text-[12px]">
           An <a href="https://endlesswinning.com" class="text-[#8BF1F1] hover:underline">Endless Winning</a> resource
@@ -101,6 +810,63 @@
     </div>
   </div>
 
-  <script src="/live/assets/live-gate.js" defer></script>
+  <script>
+    (function () {
+      // Copy buttons
+      document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const targetId = btn.getAttribute('data-copy-target');
+          const pre = document.getElementById(targetId);
+          if (!pre) return;
+
+          const text = pre.textContent;
+          try {
+            await navigator.clipboard.writeText(text);
+          } catch {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            try { document.execCommand('copy'); } catch {}
+            document.body.removeChild(ta);
+          }
+
+          const originalText = btn.textContent;
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.textContent = originalText;
+            btn.classList.remove('copied');
+          }, 1800);
+        });
+      });
+
+      // Category filters
+      const pills = document.querySelectorAll('.filter-pill');
+      const cards = document.querySelectorAll('.prompt-card');
+
+      pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+          const filter = pill.getAttribute('data-filter');
+          pills.forEach(p => p.classList.remove('active'));
+          pill.classList.add('active');
+
+          cards.forEach(card => {
+            const category = card.getAttribute('data-category');
+            if (filter === 'all' || category === filter) {
+              card.classList.remove('hidden');
+            } else {
+              card.classList.add('hidden');
+            }
+          });
+        });
+      });
+    })();
+  </script>
+
 </body>
 </html>
