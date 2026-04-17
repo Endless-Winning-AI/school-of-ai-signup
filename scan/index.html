@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scan to Join — School of AI</title>
+  <meta name="description" content="Scan to join the School of AI — your AI resource library from Endless Winning.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <style>
+    @font-face { font-family: 'Gilroy'; src: url('../assets/fonts/gilroy-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Gilroy'; src: url('../assets/fonts/gilroy-regular.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Gilroy'; src: url('../assets/fonts/gilroy-bold.woff2') format('woff2'); font-weight: 600; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'Gilroy'; src: url('../assets/fonts/gilroy-bold.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+  </style>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Gilroy', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <style>
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .gradient-title {
+      background: linear-gradient(4.67deg, #389ABF 4.69%, #8BF1F1 51.21%, #5FFCC0 95.94%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .welcome-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 20px;
+      border-radius: 9999px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      background: linear-gradient(135deg, rgba(139, 241, 241, 0.15), rgba(95, 252, 192, 0.15));
+      border: 1px solid rgba(139, 241, 241, 0.35);
+      color: #8BF1F1;
+    }
+
+    .welcome-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 9999px;
+      background: #8BF1F1;
+      box-shadow: 0 0 12px rgba(139, 241, 241, 0.9);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.85); }
+    }
+
+    /* QR card with rainbow glow */
+    .qr-glow-wrapper {
+      position: relative;
+    }
+
+    .qr-glow-outer {
+      position: absolute;
+      inset: -12px;
+      border-radius: 36px;
+      background: conic-gradient(from 180deg,
+        #AF52DE 0deg, #FF2D92 52deg, #FF6482 82deg, #FF9500 94deg,
+        #FFD60A 124deg, #30D158 180deg, #2EC4B6 236deg, #40CBF0 266deg,
+        #007AFF 278deg, #5856D6 308deg, #AF52DE 360deg);
+      filter: blur(28px);
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 0;
+      animation: rotate 14s linear infinite;
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .qr-glow-border {
+      position: absolute;
+      inset: 0;
+      border-radius: 32px;
+      padding: 2px;
+      background: conic-gradient(from 180deg,
+        #AF52DE 0deg, #FF2D92 52deg, #FF6482 82deg, #FF9500 94deg,
+        #FFD60A 124deg, #30D158 180deg, #2EC4B6 236deg, #40CBF0 266deg,
+        #007AFF 278deg, #5856D6 308deg, #AF52DE 360deg);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .qr-card {
+      position: relative;
+      z-index: 1;
+      border-radius: 32px;
+      padding: 32px;
+      background: #ffffff;
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.55);
+    }
+
+    #qr-canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      image-rendering: pixelated;
+    }
+
+    .url-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 9999px;
+      background: rgba(10, 14, 30, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(139, 241, 241, 0.28);
+      font-size: 22px;
+      font-weight: 600;
+      color: white;
+      letter-spacing: -0.01em;
+    }
+
+    .url-pill .arrow {
+      color: #8BF1F1;
+    }
+
+    /* Responsive QR sizing — readable from across a room */
+    .qr-size {
+      width: min(520px, 52vh, 72vw);
+    }
+
+    @media (max-width: 640px) {
+      .qr-size { width: min(88vw, 64vh); }
+      .headline-responsive { font-size: clamp(32px, 9vw, 54px) !important; }
+      .url-pill { font-size: 16px; padding: 12px 20px; }
+    }
+
+    @media (min-height: 900px) {
+      .qr-size { width: min(620px, 55vh); }
+    }
+  </style>
+</head>
+<body class="bg-black font-sans">
+
+  <!-- Background image -->
+  <div class="fixed inset-0">
+    <img src="../assets/background.png" alt="" class="w-full h-full object-cover opacity-70 pointer-events-none">
+  </div>
+
+  <!-- Ambient branding glow (decorative) -->
+  <div class="fixed inset-0 pointer-events-none" aria-hidden="true">
+    <img src="../assets/design/branding-glow-wide.png" alt="" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] max-w-none opacity-40">
+  </div>
+
+  <!-- Main content -->
+  <div class="relative z-10 h-screen flex flex-col items-center justify-center px-4 py-6 gap-5 sm:gap-7">
+
+    <!-- Pill -->
+    <div class="welcome-pill">
+      <span class="welcome-dot"></span>
+      School of AI
+    </div>
+
+    <!-- Headline -->
+    <h1 class="gradient-title headline-responsive font-semibold text-center leading-[1.0]" style="font-size: clamp(40px, 6vw, 68px);">
+      Scan. Join. Win.
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="text-white/75 text-center max-w-[580px]" style="font-size: clamp(14px, 1.6vw, 18px);">
+      Your AI resource library — prompts, projects, vocabulary, and everything we just covered.
+    </p>
+
+    <!-- QR code card -->
+    <div class="qr-size mt-2">
+      <div class="qr-glow-wrapper">
+        <div class="qr-glow-outer"></div>
+        <div class="qr-card">
+          <div class="qr-glow-border"></div>
+          <canvas id="qr-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- URL pill -->
+    <div class="url-pill mt-1">
+      <span>school.endlesswinning.com</span>
+      <span class="arrow">→</span>
+    </div>
+
+  </div>
+
+  <script>
+    (function () {
+      const url = 'https://school.endlesswinning.com';
+      const canvas = document.getElementById('qr-canvas');
+
+      // Render QR at high resolution (scales down crisply for any screen)
+      QRCode.toCanvas(canvas, url, {
+        errorCorrectionLevel: 'H',
+        margin: 2,
+        width: 1200,
+        color: { dark: '#0C1020', light: '#ffffff' }
+      }, function (err) {
+        if (err) {
+          console.error('QR render failed:', err);
+          canvas.insertAdjacentHTML('afterend',
+            '<div style="color:#ff4d4d;text-align:center;padding:40px;">QR render failed. Go to ' + url + '</div>');
+        }
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -9,10 +9,22 @@
     { "source": "/live/", "destination": "/live/index.html" },
     { "source": "/live/prompts", "destination": "/live/prompts/index.html" },
     { "source": "/live/projects", "destination": "/live/projects/index.html" },
+    { "source": "/live/pps", "destination": "/live/pps/index.html" },
+    { "source": "/live/pps/", "destination": "/live/pps/index.html" },
+    { "source": "/live/pps/projects", "destination": "/live/pps/projects/index.html" },
+    { "source": "/live/pps/projects/", "destination": "/live/pps/projects/index.html" },
+    { "source": "/live/pps/projects/prompt-review", "destination": "/live/pps/projects/prompt-review.html" },
+    { "source": "/live/pps/projects/prompt-architect", "destination": "/live/pps/projects/prompt-architect.html" },
+    { "source": "/live/pps/prompts", "destination": "/live/pps/prompts/index.html" },
+    { "source": "/live/pps/prompts/", "destination": "/live/pps/prompts/index.html" },
+    { "source": "/live/pps/skills", "destination": "/live/pps/skills/index.html" },
+    { "source": "/live/pps/skills/", "destination": "/live/pps/skills/index.html" },
     { "source": "/live/portfolio", "destination": "/live/portfolio/index.html" },
     { "source": "/live/book/cfo", "destination": "/live/book/cfo/index.html" },
     { "source": "/live/book/audit", "destination": "/live/book/audit/index.html" },
     { "source": "/course", "destination": "/course/index.html" },
-    { "source": "/course/", "destination": "/course/index.html" }
+    { "source": "/course/", "destination": "/course/index.html" },
+    { "source": "/scan", "destination": "/scan/index.html" },
+    { "source": "/scan/", "destination": "/scan/index.html" }
   ]
 }
