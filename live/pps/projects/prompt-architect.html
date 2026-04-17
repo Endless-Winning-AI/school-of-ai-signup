@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prompt Architect for Claude Code | PPS Library</title>
+  <meta name="description" content="Describe any software project — this instruction generates a full, phased, paste-ready Claude Code implementation prompt. A ChatGPT Project Instruction from the School of AI.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../../../assets/fonts/gilroy-regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../../../assets/fonts/gilroy-regular.woff2') format('woff2');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../../../assets/fonts/gilroy-bold.woff2') format('woff2');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../../../assets/fonts/gilroy-bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Gilroy', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    .gradient-title {
+      background: linear-gradient(4.67deg, #389ABF 4.69%, #8BF1F1 51.21%, #5FFCC0 95.94%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tier-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      background: linear-gradient(135deg, rgba(139, 241, 241, 0.15), rgba(95, 252, 192, 0.15));
+      border: 1px solid rgba(139, 241, 241, 0.3);
+      color: #8BF1F1;
+    }
+
+    .tier-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background: #8BF1F1;
+      box-shadow: 0 0 8px rgba(139, 241, 241, 0.8);
+    }
+
+    .glass-card {
+      background: rgba(12, 16, 32, 0.4);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid transparent;
+      border-top-color: rgba(255, 255, 255, 0.22);
+      border-left-color: rgba(255, 255, 255, 0.1);
+      border-right-color: rgba(255, 255, 255, 0.04);
+      border-bottom-color: rgba(255, 255, 255, 0.02);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.28);
+      border-radius: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: #8BF1F1;
+    }
+
+    .how-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+    }
+
+    .how-step-num {
+      flex-shrink: 0;
+      width: 26px;
+      height: 26px;
+      border-radius: 9999px;
+      background: rgba(139, 241, 241, 0.14);
+      border: 1px solid rgba(139, 241, 241, 0.35);
+      color: #8BF1F1;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .how-step-body {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .how-step-body strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .code-wrapper {
+      position: relative;
+      border-radius: 16px;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
+
+    .code-wrapper pre {
+      margin: 0;
+      padding: 20px 16px 20px 20px;
+      padding-top: 60px;
+      color: rgba(255, 255, 255, 0.92);
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 460px;
+      overflow-y: auto;
+    }
+
+    .code-toolbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px;
+      background: linear-gradient(180deg, rgba(12, 16, 32, 0.9), rgba(12, 16, 32, 0.4));
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+
+    .code-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+      padding-left: 4px;
+    }
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 9999px;
+      background: rgba(139, 241, 241, 0.15);
+      border: 1px solid rgba(139, 241, 241, 0.4);
+      color: #8BF1F1;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+    }
+
+    .copy-btn:hover {
+      background: rgba(139, 241, 241, 0.22);
+      transform: translateY(-1px);
+    }
+
+    .copy-btn:active {
+      transform: translateY(0);
+    }
+
+    .copy-btn.copied {
+      background: rgba(95, 252, 192, 0.22);
+      border-color: rgba(95, 252, 192, 0.7);
+      color: #5FFCC0;
+    }
+
+    .sticky-copy {
+      position: sticky;
+      bottom: 16px;
+      z-index: 20;
+      display: flex;
+      justify-content: center;
+      margin-top: 24px;
+      pointer-events: none;
+    }
+
+    .sticky-copy .copy-btn {
+      pointer-events: auto;
+      padding: 14px 24px;
+      font-size: 13px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(139, 241, 241, 0.2);
+      background: rgba(10, 14, 30, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .divider-glow {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139, 241, 241, 0.35), transparent);
+      margin: 0 auto;
+      width: 80%;
+    }
+
+    @media (max-width: 480px) {
+      .code-wrapper pre {
+        font-size: 12px;
+        padding: 56px 14px 18px 14px;
+        max-height: 380px;
+      }
+      .code-toolbar { padding: 10px; }
+      .copy-btn { padding: 7px 12px; font-size: 11px; }
+    }
+  </style>
+</head>
+<body class="bg-black min-h-screen font-sans overflow-x-hidden">
+
+  <!-- Background Image -->
+  <div class="fixed inset-0">
+    <img src="../../../assets/background.png" alt="" class="w-full h-full object-cover opacity-55 pointer-events-none">
+  </div>
+
+  <!-- Main Content -->
+  <div class="relative z-10 min-h-screen px-4 py-8 sm:py-12">
+
+    <div class="max-w-[760px] mx-auto">
+
+      <!-- Back -->
+      <div class="mb-6">
+        <a href="/live/pps/projects" class="back-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M15 6C15 6 9 10.4189 9 12C9 13.5812 15 18 15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Back to Projects</span>
+        </a>
+      </div>
+
+      <!-- Header -->
+      <div class="flex flex-col items-center gap-5 text-center mb-10">
+        <div class="tier-pill">
+          <span class="tier-dot"></span>
+          ChatGPT Project
+        </div>
+        <h1 class="gradient-title font-semibold text-[32px] sm:text-[44px] leading-[1.08] max-w-[600px]">
+          Prompt Architect for Claude Code
+        </h1>
+        <p class="text-white/70 text-[15px] sm:text-[17px] leading-relaxed max-w-[560px]">
+          Describe any software project. This instruction generates a complete, phased, paste-ready Claude Code implementation prompt &mdash; treating Claude as a senior full-stack engineer.
+        </p>
+      </div>
+
+      <!-- How to use -->
+      <div class="glass-card p-5 sm:p-7 mb-6">
+        <div class="text-[#8BF1F1] font-bold text-[13px] mb-2 tracking-wide uppercase" style="letter-spacing: 0.12em;">How to use</div>
+        <div class="how-step">
+          <div class="how-step-num">1</div>
+          <div class="how-step-body">Copy the instruction below.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-num">2</div>
+          <div class="how-step-body">In ChatGPT, open <strong>Projects</strong> &rarr; <strong>New project</strong>. Paste into the <strong>Instructions</strong> field.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-num">3</div>
+          <div class="how-step-body">In the project chat, write out your project description (stack, entities, flows, constraints). ChatGPT outputs a full Claude Code implementation prompt.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-step-num">4</div>
+          <div class="how-step-body">Paste that output into <strong>Claude Code</strong> or <strong>claude-flow</strong>. It ends with &ldquo;Begin implementation immediately with Phase 1.&rdquo;</div>
+        </div>
+      </div>
+
+      <!-- Instruction content -->
+      <div class="code-wrapper">
+        <div class="code-toolbar">
+          <span class="code-label">Project instruction</span>
+          <button type="button" class="copy-btn" data-copy-main aria-label="Copy instruction to clipboard">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+              <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
+              <path d="M5 15H4C2.9 15 2 14.1 2 13V4C2 2.9 2.9 2 4 2H13C14.1 2 15 2.9 15 4V5" stroke="currentColor" stroke-width="2"/>
+            </svg>
+            <span class="copy-label">Copy</span>
+          </button>
+        </div>
+        <pre id="prompt-content">You are a **prompt architect** for Claude Code and multi-agent systems.
+
+Your job:
+Given a software project description that I will provide at the end of this message, generate a **complete, production-focused implementation prompt** for Claude Code that:
+
+- Uses a **phased approach** (Phase 1, Phase 2, Phase 3, …)
+- Treats Claude Code as a **senior full-stack engineer** in the target ecosystem
+- Is ready to paste directly into Claude Code / claude-flow with **no further editing**
+- Ends EXACTLY with the sentence:
+  `Begin implementation immediately with Phase 1.`
+
+---
+
+## What you must produce
+
+You are NOT implementing the code.
+You are generating a **mega-prompt** that will *tell Claude Code what to build*.
+
+The output should be a **single prompt** that contains:
+
+1. **Role &amp; Context**
+   - Start with something like:
+     `You are a senior full-stack engineer working in the [SYSTEM / PRODUCT] ecosystem.`
+   - Brief overview of:
+     - What the product/system is
+     - Who the users are
+     - Why this project matters
+
+2. **OBJECTIVE**
+   - 1–3 tight paragraphs that clearly define:
+     - What we're building
+     - The end-to-end scope
+     - The key success criteria
+   - Explicitly mention that this will be done in **phases** and must be **production-ready**, not a demo.
+
+3. **CONTEXT &amp; CONSTRAINTS**
+   - Summarize:
+     - Domain overview (e.g., marketplace, CRM, trading, healthcare, etc.)
+     - Core entities (tasks, users, orders, jobs, etc.)
+     - Tech stack requirements (backend, frontend, DB, infra)
+     - Libraries / frameworks we prefer or require
+   - Include any hard constraints from the project description:
+     - Performance targets
+     - Compliance / security constraints
+     - Integration assumptions (APIs, webhooks, MCP, queues, etc.)
+
+4. **ARCHITECTURE SPECIFICATION**
+   - Break the system into clear components (3–7 major ones), for example:
+     - Core domain / service layer
+     - API / transport layer (REST, WebSockets, MCP, etc.)
+     - Frontend / UI layer
+     - Background jobs / schedulers
+     - Integrations / adapters
+   - For each component, describe:
+     - Responsibilities
+     - Boundaries
+     - Key interfaces
+     - Where it lives in the repo (paths like `packages/...`, `apps/web/...`)
+
+5. **DATA MODELS &amp; TYPES**
+   - Define the **canonical types/entities** the system needs:
+     - E.g., `Task`, `User`, `Order`, `Workflow`, `Event`, `IntegrationSource`, etc.
+   - Specify:
+     - Fields
+     - Relationships
+     - Validation rules
+   - If appropriate, require:
+     - TypeScript + Zod (or similar) for runtime validation
+     - Clear separation between DTOs, domain models, and persistence models
+
+6. **DATA FLOW REQUIREMENTS**
+   - Spell out **end-to-end flows** the system must support (at least 3):
+     - Example patterns:
+       - External → System (ingestion)
+       - System → External (dispatch / webhooks)
+       - User / UI → API → Domain → Persistence
+       - AI agent via MCP → tools → domain layer
+   - For each flow, define:
+     - Steps
+     - Error handling expectations
+     - Logging / observability requirements
+     - Idempotency or retry behavior where relevant
+
+7. **IMPLEMENTATION PLAN (PHASED)**
+   - This is critical: design a **step-by-step phased plan**.
+   - Minimum phases:
+     - **Phase 1: Foundation**
+       Types, core domain services, validation, minimal happy-path flows.
+     - **Phase 2: Interfaces &amp; Protocols**
+       APIs, MCP tools, adapters, config, environment wiring.
+     - **Phase 3: UI / UX Layer**
+       Next.js / React views, forms, dashboards, playgrounds, logs.
+     - **Phase 4: Integration &amp; Hardening**
+       End-to-end tests, error handling, logging, performance, security.
+   - For each phase:
+     - List concrete tasks and target files/paths
+     - Call out what "done" means for that phase
+     - Keep them specific enough that Claude Code can start coding immediately
+
+8. **FILE &amp; FOLDER STRUCTURE EXPECTATIONS**
+   - Ask Claude Code to:
+     - Propose and then implement a clear directory structure
+     - Use monorepo-friendly layout if relevant (e.g., `apps/`, `packages/`, `docs/`)
+   - Specify that **each file** in the plan should later be given as:
+     - A heading with full path
+     - A complete code block (no pseudocode)
+
+9. **OUTPUT FORMAT REQUIREMENTS (FOR CLAUDE CODE)**
+   - Instruct Claude Code that when it acts on this future prompt, it must respond in this structure:
+
+   1. **IMPLEMENTATION PLAN**
+      - Bullet list of what will be built and where.
+   2. **FILE &amp; FOLDER STRUCTURE**
+      - Tree of new/modified files with descriptions.
+   3. **COMPLETE CODE IMPLEMENTATION**
+      - For each file: full path + full code block, production-ready.
+   4. **CONFIGURATION &amp; SETUP**
+      - Env vars, package.json scripts, infra notes.
+   5. **USAGE EXAMPLES**
+      - How to call APIs, use UI, trigger flows, use MCP tools.
+   6. **NEXT STEPS**
+      - Improvements, known gaps, roadmap.
+
+10. **CRITICAL REQUIREMENTS**
+    - Explicitly instruct Claude Code to:
+      - **Not** ask clarifying questions; make reasonable assumptions and document them
+      - **Not** use pseudocode or placeholders
+      - Fully type everything (TypeScript, schemas, etc.)
+      - Implement real error handling, loading states, and validation
+      - Follow the specified framework conventions (e.g., Next.js App Router, React hooks, etc.)
+    - Require:
+      - Production-level code quality
+      - Clean separation of concerns
+      - Logically structured commits (even if just implied)
+
+11. **CRITIQUE AGENT INSTRUCTIONS**
+
+Once complete, perform an "ultrathink" review and rate the result from 1–100, listing pros, cons, improvements, and optimizations. For each improvement, indicate how many points it adds toward reaching 100. Propose one out-of-the-box idea that almost no one would think of to significantly improve this system or how we build it. If the work does not reach 100, list exactly what is missing and what is needed to get there, then report those items back to me for a decision, including your out-of-the-box idea. Reiterate the goal of getting as close to 100 as possible.
+
+12. **FINAL LINE REQUIREMENT**
+    - The **very last line** of the entire prompt you generate must be exactly:
+
+      `Begin implementation immediately with Phase 1.`
+
+---
+
+## How you should respond
+
+- Take the **project description** I provide below.
+- Infer reasonable:
+  - Entities
+  - Data flows
+  - Components
+  - Phases
+- Then output **one single, self-contained prompt** that I can paste into Claude Code or claude-flow.
+
+Do **not** explain what you're doing.
+Do **not** add meta commentary.
+Just output the final Claude Code implementation prompt.
+
+---
+
+### PROJECT DESCRIPTION
+(Insert the specific project/system description here. Use everything in this section as the basis for the Claude Code prompt you generate.)</pre>
+      </div>
+
+      <!-- Sticky copy button for mobile -->
+      <div class="sticky-copy">
+        <button type="button" class="copy-btn" data-copy-main aria-label="Copy instruction to clipboard">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="2"/>
+            <path d="M5 15H4C2.9 15 2 14.1 2 13V4C2 2.9 2.9 2 4 2H13C14.1 2 15 2.9 15 4V5" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span class="copy-label">Copy instruction</span>
+        </button>
+      </div>
+
+      <!-- Footer -->
+      <div class="flex flex-col items-center gap-5 text-center py-12">
+        <div class="divider-glow mb-2"></div>
+        <p class="text-white/40 text-[12px]">
+          An <a href="https://endlesswinning.com" class="text-[#8BF1F1] hover:underline">Endless Winning</a> resource
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const sourceEl = document.getElementById('prompt-content');
+
+      function fallbackCopy(text) {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.top = '-1000px';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try {
+          document.execCommand('copy');
+        } finally {
+          document.body.removeChild(ta);
+        }
+      }
+
+      function flashCopied(btn) {
+        const label = btn.querySelector('.copy-label');
+        const original = label.textContent;
+        btn.classList.add('copied');
+        label.textContent = 'Copied!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          label.textContent = original;
+        }, 2000);
+      }
+
+      function copyAll() {
+        const text = sourceEl ? sourceEl.textContent : '';
+        return navigator.clipboard && navigator.clipboard.writeText
+          ? navigator.clipboard.writeText(text)
+          : Promise.resolve(fallbackCopy(text));
+      }
+
+      document.querySelectorAll('[data-copy-main]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          try {
+            await copyAll();
+            document.querySelectorAll('[data-copy-main]').forEach(flashCopied);
+          } catch (err) {
+            try {
+              fallbackCopy(sourceEl.textContent);
+              document.querySelectorAll('[data-copy-main]').forEach(flashCopied);
+            } catch (_) {
+              console.error('Copy failed:', err);
+            }
+          }
+        });
+      });
+    })();
+  </script>
+
+  <script src="/live/assets/live-gate.js" defer></script>
+</body>
+</html>

@@ -3,34 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>School of AI — Live Session Resources</title>
-  <meta name="description" content="Your live session resources from the School of AI. Prompts, projects, and more — from Endless Winning.">
+  <title>The School of AI — PPS Library</title>
+  <meta name="description" content="Projects, Prompts, and Skills — the PPS Library from Endless Winning's School of AI.">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @font-face {
       font-family: 'Gilroy';
-      src: url('../assets/fonts/gilroy-regular.woff2') format('woff2');
+      src: url('../../assets/fonts/gilroy-regular.woff2') format('woff2');
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Gilroy';
-      src: url('../assets/fonts/gilroy-regular.woff2') format('woff2');
+      src: url('../../assets/fonts/gilroy-regular.woff2') format('woff2');
       font-weight: 500;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Gilroy';
-      src: url('../assets/fonts/gilroy-bold.woff2') format('woff2');
+      src: url('../../assets/fonts/gilroy-bold.woff2') format('woff2');
       font-weight: 600;
       font-style: normal;
       font-display: swap;
     }
     @font-face {
       font-family: 'Gilroy';
-      src: url('../assets/fonts/gilroy-bold.woff2') format('woff2');
+      src: url('../../assets/fonts/gilroy-bold.woff2') format('woff2');
       font-weight: 700;
       font-style: normal;
       font-display: swap;
@@ -55,7 +55,7 @@
       background-clip: text;
     }
 
-    .welcome-pill {
+    .tier-pill {
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -70,7 +70,7 @@
       color: #8BF1F1;
     }
 
-    .welcome-dot {
+    .tier-dot {
       width: 8px;
       height: 8px;
       border-radius: 9999px;
@@ -147,6 +147,21 @@
       transition: transform 0.2s, color 0.2s;
     }
 
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover {
+      color: #8BF1F1;
+    }
+
     .divider-glow {
       height: 1px;
       background: linear-gradient(90deg, transparent, rgba(139, 241, 241, 0.35), transparent);
@@ -159,80 +174,68 @@
 
   <!-- Background Image -->
   <div class="fixed inset-0">
-    <img src="../assets/background.png" alt="" class="w-full h-full object-cover opacity-55 pointer-events-none">
+    <img src="../../assets/background.png" alt="" class="w-full h-full object-cover opacity-55 pointer-events-none">
   </div>
 
   <!-- Main Content -->
-  <div class="relative z-10 min-h-screen px-4 py-12 sm:py-16">
+  <div class="relative z-10 min-h-screen px-4 py-8 sm:py-12">
 
     <div class="max-w-[720px] mx-auto">
 
+      <!-- Back to hub -->
+      <div class="mb-6">
+        <a href="/live" class="back-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M15 6C15 6 9 10.4189 9 12C9 13.5812 15 18 15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Back to hub</span>
+        </a>
+      </div>
+
       <!-- Header -->
       <div class="flex flex-col items-center gap-5 text-center mb-10">
-        <div class="welcome-pill">
-          <span class="welcome-dot"></span>
-          Welcome to the School of AI
+        <div class="tier-pill">
+          <span class="tier-dot"></span>
+          PPS Library
         </div>
         <h1 class="gradient-title font-semibold text-[34px] sm:text-[48px] leading-[1.05] max-w-[600px]">
-          Your Live Session Resources
+          Projects, Prompts &amp; Skills
         </h1>
         <p class="text-white/70 text-[15px] sm:text-[17px] leading-relaxed max-w-[520px]">
-          Everything from today's session — plus what comes next.
+          Everything you need to ship with AI — organized by how you use it.
         </p>
       </div>
 
-      <!-- Linktree Buttons -->
+      <!-- Category buttons -->
       <div class="flex flex-col gap-3">
 
-        <a href="/vocab" class="link-row">
-          <div class="link-icon">📘</div>
+        <a href="/live/pps/projects" class="link-row">
+          <div class="link-icon">🧱</div>
           <div class="link-text">
-            <div class="link-title">AI Vocab Sheet</div>
-            <div class="link-sub">The language of AI, tiered by level</div>
+            <div class="link-title">Projects</div>
+            <div class="link-sub">ChatGPT + Claude project instructions</div>
           </div>
           <svg class="link-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path d="M9 6C9 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
 
-        <a href="/live/pps" class="link-row">
-          <div class="link-icon">📚</div>
+        <a href="/live/pps/prompts" class="link-row">
+          <div class="link-icon">💬</div>
           <div class="link-text">
-            <div class="link-title">PPS Library</div>
-            <div class="link-sub">Projects, prompts &amp; skills for any AI</div>
+            <div class="link-title">Prompts</div>
+            <div class="link-sub">Copy-paste prompts ready for any AI</div>
           </div>
           <svg class="link-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path d="M9 6C9 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </a>
 
-        <a href="/live/portfolio" class="link-row">
-          <div class="link-icon">🎯</div>
+        <a href="/live/pps/skills" class="link-row">
+          <div class="link-icon">🧩</div>
           <div class="link-text">
-            <div class="link-title">Portfolio of Ideas</div>
-            <div class="link-sub">AI use cases, real examples</div>
-          </div>
-          <svg class="link-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M9 6C9 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-
-        <a href="/live/book/cfo" class="link-row">
-          <div class="link-icon">📊</div>
-          <div class="link-text">
-            <div class="link-title">CFO + Power Bookkeeping</div>
-            <div class="link-sub">Get your finance AI system</div>
-          </div>
-          <svg class="link-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M9 6C9 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-
-        <a href="/live/book/audit" class="link-row">
-          <div class="link-icon">🔍</div>
-          <div class="link-text">
-            <div class="link-title">AI Audit</div>
-            <div class="link-sub">Discover your top AI opportunities</div>
+            <div class="link-title">Skills</div>
+            <div class="link-sub">Installable Claude Code skills (public GitHub)</div>
           </div>
           <svg class="link-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none">
             <path d="M9 6C9 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

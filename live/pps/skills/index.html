@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The School of AI — Skills Library</title>
+  <meta name="description" content="Installable Claude Code skills — the public skills library from Endless Winning's School of AI.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @font-face { font-family: 'Gilroy'; src: url('../../../assets/fonts/gilroy-regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'Gilroy'; src: url('../../../assets/fonts/gilroy-regular.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+    @font-face { font-family: 'Gilroy'; src: url('../../../assets/fonts/gilroy-bold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
+    @font-face { font-family: 'Gilroy'; src: url('../../../assets/fonts/gilroy-bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+  </style>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Gilroy', 'system-ui', 'sans-serif'] } } } }
+  </script>
+  <style>
+    .gradient-title {
+      background: linear-gradient(4.67deg, #389ABF 4.69%, #8BF1F1 51.21%, #5FFCC0 95.94%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .tier-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px; border-radius: 9999px;
+      font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em;
+      background: linear-gradient(135deg, rgba(139,241,241,0.15), rgba(95,252,192,0.15));
+      border: 1px solid rgba(139,241,241,0.3); color: #8BF1F1;
+    }
+    .tier-dot { width: 8px; height: 8px; border-radius: 9999px; background: #8BF1F1; box-shadow: 0 0 8px rgba(139,241,241,0.8); }
+    .glass-card {
+      background: rgba(12,16,32,0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid transparent;
+      border-top-color: rgba(255,255,255,0.22); border-left-color: rgba(255,255,255,0.1);
+      border-right-color: rgba(255,255,255,0.04); border-bottom-color: rgba(255,255,255,0.02);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.28); border-radius: 22px;
+    }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: rgba(255,255,255,0.55); font-size: 13px; font-weight: 500;
+      text-decoration: none; transition: color 0.2s;
+    }
+    .back-link:hover { color: #8BF1F1; }
+    .divider-glow {
+      height: 1px; background: linear-gradient(90deg, transparent, rgba(139,241,241,0.35), transparent);
+      margin: 0 auto; width: 80%;
+    }
+    .gh-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 20px; border-radius: 9999px;
+      background: rgba(139,241,241,0.15); border: 1px solid rgba(139,241,241,0.4);
+      color: #8BF1F1; font-size: 13px; font-weight: 700; letter-spacing: 0.05em;
+      text-decoration: none; transition: background 0.2s, transform 0.15s;
+    }
+    .gh-btn:hover { background: rgba(139,241,241,0.22); transform: translateY(-1px); }
+  </style>
+</head>
+<body class="bg-black min-h-screen font-sans overflow-x-hidden">
+
+  <div class="fixed inset-0">
+    <img src="../../../assets/background.png" alt="" class="w-full h-full object-cover opacity-55 pointer-events-none">
+  </div>
+
+  <div class="relative z-10 min-h-screen px-4 py-8 sm:py-12">
+    <div class="max-w-[720px] mx-auto">
+
+      <div class="mb-6">
+        <a href="/live/pps" class="back-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+            <path d="M15 6C15 6 9 10.4189 9 12C9 13.5812 15 18 15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Back to PPS Library</span>
+        </a>
+      </div>
+
+      <div class="flex flex-col items-center gap-5 text-center mb-10">
+        <div class="tier-pill">
+          <span class="tier-dot"></span>
+          Skills
+        </div>
+        <h1 class="gradient-title font-semibold text-[34px] sm:text-[48px] leading-[1.05] max-w-[560px]">
+          Claude Code Skills
+        </h1>
+        <p class="text-white/70 text-[15px] sm:text-[17px] leading-relaxed max-w-[560px]">
+          Installable skills that extend Claude Code with repeatable expertise &mdash; voice fingerprints, prompt reviewers, research workflows, and more.
+        </p>
+      </div>
+
+      <div class="glass-card p-6 sm:p-8 text-center">
+        <div class="text-[44px] mb-3">🧩</div>
+        <div class="text-white text-[18px] font-bold mb-2">Library launching soon</div>
+        <p class="text-white/65 text-[14px] leading-relaxed max-w-[480px] mx-auto">
+          First skills to land here: the Vocal Fingerprint, the Iteration Partner, and the Prompt Architect. Until then, everything lives back at the hub.
+        </p>
+        <div class="mt-6">
+          <a href="/live" class="gh-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M15 6C15 6 9 10.4189 9 12C9 13.5812 15 18 15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back to the hub
+          </a>
+        </div>
+      </div>
+
+      <div class="flex flex-col items-center gap-5 text-center py-12">
+        <div class="divider-glow mb-2"></div>
+        <p class="text-white/40 text-[12px]">
+          An <a href="https://endlesswinning.com" class="text-[#8BF1F1] hover:underline">Endless Winning</a> resource
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="/live/assets/live-gate.js" defer></script>
+</body>
+</html>
