@@ -6,7 +6,6 @@
   <title>Scan to Join — School of AI</title>
   <meta name="description" content="Scan to join the School of AI — your AI resource library from Endless Winning.">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <style>
     @font-face { font-family: 'Gilroy'; src: url('../assets/fonts/gilroy-regular.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
     @font-face { font-family: 'Gilroy'; src: url('../assets/fonts/gilroy-regular.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
@@ -108,11 +107,12 @@
       box-shadow: 0 12px 48px rgba(0, 0, 0, 0.55);
     }
 
-    #qr-canvas {
+    .qr-img {
       display: block;
       width: 100%;
       height: auto;
       image-rendering: pixelated;
+      image-rendering: crisp-edges;
     }
 
     .url-pill {
@@ -173,8 +173,8 @@
     </div>
 
     <!-- Headline -->
-    <h1 class="gradient-title headline-responsive font-semibold text-center leading-[1.0]" style="font-size: clamp(40px, 6vw, 68px);">
-      Scan. Join. Win.
+    <h1 class="gradient-title headline-responsive font-semibold text-center leading-[1.05]" style="font-size: clamp(40px, 6vw, 68px);">
+      Scan. Join.<br>Win at Life.
     </h1>
 
     <!-- Subtitle -->
@@ -188,7 +188,7 @@
         <div class="qr-glow-outer"></div>
         <div class="qr-card">
           <div class="qr-glow-border"></div>
-          <canvas id="qr-canvas"></canvas>
+          <img class="qr-img" alt="QR code — school.endlesswinning.com" src="https://api.qrserver.com/v1/create-qr-code/?size=800x800&data=https%3A%2F%2Fschool.endlesswinning.com&color=0C1020&bgcolor=FFFFFF&margin=10&ecc=H&qzone=1">
         </div>
       </div>
     </div>
@@ -200,27 +200,6 @@
     </div>
 
   </div>
-
-  <script>
-    (function () {
-      const url = 'https://school.endlesswinning.com';
-      const canvas = document.getElementById('qr-canvas');
-
-      // Render QR at high resolution (scales down crisply for any screen)
-      QRCode.toCanvas(canvas, url, {
-        errorCorrectionLevel: 'H',
-        margin: 2,
-        width: 1200,
-        color: { dark: '#0C1020', light: '#ffffff' }
-      }, function (err) {
-        if (err) {
-          console.error('QR render failed:', err);
-          canvas.insertAdjacentHTML('afterend',
-            '<div style="color:#ff4d4d;text-align:center;padding:40px;">QR render failed. Go to ' + url + '</div>');
-        }
-      });
-    })();
-  </script>
 
 </body>
 </html>
