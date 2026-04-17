@@ -153,6 +153,158 @@
       margin: 0 auto;
       width: 80%;
     }
+
+    /* ── Signup form with rainbow glow ── */
+    .form-glow-wrapper {
+      position: relative;
+      border-radius: 28px;
+    }
+
+    .form-glow-outer {
+      position: absolute;
+      inset: -4px;
+      border-radius: 32px;
+      background: conic-gradient(from 180deg,
+        #AF52DE 0deg, #FF2D92 52deg, #FF6482 82deg, #FF9500 94deg,
+        #FFD60A 124deg, #30D158 180deg, #2EC4B6 236deg, #40CBF0 266deg,
+        #007AFF 278deg, #5856D6 308deg, #AF52DE 360deg);
+      filter: blur(22px);
+      opacity: 0.45;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .form-glow-border {
+      position: absolute;
+      inset: 0;
+      border-radius: 28px;
+      padding: 1.5px;
+      background: conic-gradient(from 180deg,
+        #AF52DE 0deg, #FF2D92 52deg, #FF6482 82deg, #FF9500 94deg,
+        #FFD60A 124deg, #30D158 180deg, #2EC4B6 236deg, #40CBF0 266deg,
+        #007AFF 278deg, #5856D6 308deg, #AF52DE 360deg);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .form-card {
+      position: relative;
+      z-index: 1;
+      border-radius: 28px;
+      padding: 32px 28px;
+      background: rgba(12, 16, 32, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    @media (min-width: 640px) {
+      .form-card { padding: 40px 44px; }
+    }
+
+    .field-input {
+      background: transparent;
+      border: 1px solid transparent;
+      border-top-color: rgba(255, 255, 255, 0.3);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.12), inset 1px 0 2px rgba(255, 255, 255, 0.05), inset -1px 0 2px rgba(0, 0, 0, 0.08);
+      border-left-color: rgba(255, 255, 255, 0.1);
+      border-right-color: rgba(255, 255, 255, 0.04);
+      border-bottom-color: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 16px;
+      color: white;
+      width: 100%;
+      height: 56px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .field-input::placeholder { color: rgba(255, 255, 255, 0.75); }
+    .field-input:focus { border-color: rgba(139, 241, 241, 0.6); }
+    .field-input.error { border-color: #ff4d4d; }
+
+    .error-message { color: #ff4d4d; font-size: 12px; margin-top: 4px; display: none; }
+    .error-message.visible { display: block; }
+
+    .phone-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: transparent;
+      border: 1px solid transparent;
+      border-top-color: rgba(255, 255, 255, 0.3);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.1), inset 0 -1px 2px rgba(0, 0, 0, 0.12), inset 1px 0 2px rgba(255, 255, 255, 0.05), inset -1px 0 2px rgba(0, 0, 0, 0.08);
+      border-left-color: rgba(255, 255, 255, 0.1);
+      border-right-color: rgba(255, 255, 255, 0.04);
+      border-bottom-color: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      height: 56px;
+      transition: border-color 0.2s;
+    }
+
+    .phone-wrapper:focus-within { border-color: rgba(139, 241, 241, 0.6); }
+    .phone-wrapper.error { border-color: #ff4d4d; }
+    .phone-prefix { display: flex; align-items: center; padding-left: 12px; flex-shrink: 0; }
+
+    .country-select {
+      appearance: none; -webkit-appearance: none; background: transparent;
+      border: none; color: rgba(255, 255, 255, 0.8); font-size: 16px;
+      font-family: inherit; cursor: pointer; outline: none; padding: 0 4px 0 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='12' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18 9C18 9 13.5811 15 12 15C10.4188 15 6 9 6 9' stroke='rgba(255,255,255,0.8)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right center; padding-right: 16px;
+    }
+
+    .country-select option { background: #1a1a2e; color: white; }
+
+    .phone-input {
+      background: transparent; border: none; padding: 16px 16px 16px 8px;
+      font-size: 16px; color: white; width: 100%; height: 100%; outline: none;
+    }
+    .phone-input::placeholder { color: rgba(255, 255, 255, 0.75); }
+
+    .submit-glow-wrapper { position: relative; width: 100%; }
+
+    .submit-glow-outer {
+      position: absolute; inset: -3px; border-radius: 9999px;
+      background: conic-gradient(from 180deg, #AF52DE 0deg, #FF2D92 52deg, #FF6482 82deg, #FF9500 94deg, #FFD60A 124deg, #30D158 180deg, #2EC4B6 236deg, #40CBF0 266deg, #007AFF 278deg, #5856D6 308deg, #AF52DE 360deg);
+      filter: blur(14px); opacity: 0.44; pointer-events: none; z-index: 0;
+    }
+
+    .submit-glow-wrapper:hover .submit-glow-outer { opacity: 0.6; filter: blur(18px); }
+
+    .submit-glow {
+      position: relative; z-index: 1; border: none !important;
+      width: 100%; height: 56px; border-radius: 9999px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: rgba(10, 14, 30, 0.55);
+      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      cursor: pointer; transition: transform 0.15s;
+      color: white; font-weight: 600; font-size: 18px;
+    }
+
+    .submit-glow:active { transform: scale(0.98); }
+
+    .submit-glow::before {
+      content: ''; position: absolute; inset: 0; border-radius: 9999px; padding: 1px;
+      background: conic-gradient(from 180deg, #AF52DE 0deg, #FF2D92 52deg, #FF6482 82deg, #FF9500 94deg, #FFD60A 124deg, #30D158 180deg, #2EC4B6 236deg, #40CBF0 266deg, #007AFF 278deg, #5856D6 308deg, #AF52DE 360deg);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+    }
+
+    .form-feature-row {
+      display: flex; align-items: center; gap: 10px;
+      color: rgba(255, 255, 255, 0.82); font-size: 13px;
+    }
+    .form-feature-check { color: #5FFCC0; font-weight: 700; flex-shrink: 0; }
+
+    .form-success {
+      display: none; flex-direction: column; align-items: center;
+      text-align: center; padding: 16px 0;
+    }
+    .form-success.visible { display: flex; }
   </style>
 </head>
 <body class="bg-black min-h-screen font-sans overflow-x-hidden">
@@ -241,6 +393,96 @@
 
       </div>
 
+      <!-- Signup Form Section -->
+      <div class="mt-14 sm:mt-16">
+        <div class="form-glow-wrapper">
+          <div class="form-glow-outer"></div>
+          <div class="form-card">
+            <div class="form-glow-border"></div>
+
+            <div id="form-content">
+              <div class="flex flex-col items-center gap-4 text-center mb-6">
+                <div class="welcome-pill">
+                  <span class="welcome-dot"></span>
+                  Sign Up
+                </div>
+                <h2 class="gradient-title font-semibold text-[26px] sm:text-[32px] leading-tight">
+                  Join the School of AI
+                </h2>
+                <p class="text-white/70 text-[14px] sm:text-[15px] leading-relaxed max-w-[440px]">
+                  The full video course is coming. Drop your info for early access, founding-member pricing, and the next resource drop.
+                </p>
+              </div>
+
+              <div class="flex flex-col gap-[8px] mb-6">
+                <div class="form-feature-row"><span class="form-feature-check">✓</span> Short-form, bingeable lessons</div>
+                <div class="form-feature-row"><span class="form-feature-check">✓</span> Personalized AI opportunity report</div>
+                <div class="form-feature-row"><span class="form-feature-check">✓</span> Master prompts + starter pack</div>
+                <div class="form-feature-row"><span class="form-feature-check">✓</span> Early access + founding-member pricing</div>
+              </div>
+
+              <form id="course-signup-form" class="flex flex-col gap-[14px]" novalidate>
+                <div class="flex flex-col sm:flex-row gap-[14px]">
+                  <div class="flex-1">
+                    <input type="text" name="firstName" class="field-input" placeholder="First Name" required>
+                    <div class="error-message">First name is required</div>
+                  </div>
+                  <div class="flex-1">
+                    <input type="text" name="lastName" class="field-input" placeholder="Last Name" required>
+                    <div class="error-message">Last name is required</div>
+                  </div>
+                </div>
+
+                <div>
+                  <input type="email" name="email" class="field-input" placeholder="Email Address" required>
+                  <div class="error-message">Please enter a valid email address</div>
+                </div>
+
+                <div>
+                  <input type="text" name="organization" class="field-input" placeholder="Organization (optional)">
+                </div>
+
+                <div>
+                  <div class="phone-wrapper" id="course-phone-wrapper">
+                    <div class="phone-prefix">
+                      <select id="course-country-code" class="country-select" aria-label="Country code"></select>
+                    </div>
+                    <input type="tel" name="phone" class="phone-input" placeholder="Phone Number" required>
+                  </div>
+                  <div class="error-message" id="course-phone-error">Please enter a valid phone number</div>
+                </div>
+
+                <div class="h-[8px]"></div>
+
+                <div class="submit-glow-wrapper">
+                  <div class="submit-glow-outer"></div>
+                  <button type="submit" id="course-submit-btn" class="submit-glow">
+                    <span>Get Early Access</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path d="M9 6C9 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+
+                <p class="text-white/50 text-[11px] text-center mt-2">
+                  By continuing I agree with the
+                  <a href="#" class="text-[#8BF1F1] hover:underline">Terms</a>
+                  and
+                  <a href="#" class="text-[#8BF1F1] hover:underline">Privacy Policy</a>
+                </p>
+              </form>
+            </div>
+
+            <div id="form-success" class="form-success">
+              <div class="text-[42px] mb-2" style="color: #5FFCC0;">✓</div>
+              <h3 class="gradient-title font-semibold text-[24px] sm:text-[28px] mb-2">You're In!</h3>
+              <p class="text-white text-[15px] mb-2">Welcome to the School of AI.</p>
+              <p class="text-white/60 text-[13px] max-w-[340px]">Check your email — we'll send the first resources and course updates your way.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Footer -->
       <div class="flex flex-col items-center gap-5 text-center py-12">
         <div class="divider-glow"></div>
@@ -253,5 +495,137 @@
   </div>
 
   <script src="/live/assets/live-gate.js" defer></script>
+
+  <script>
+    (function () {
+      const ENDPOINT = 'https://lrwvooucggciazmzxqlb.supabase.co/functions/v1/school-of-ai-course-signup';
+
+      const form = document.getElementById('course-signup-form');
+      if (!form) return;
+
+      const submitBtn = document.getElementById('course-submit-btn');
+      const phoneWrapper = document.getElementById('course-phone-wrapper');
+      const phoneError = document.getElementById('course-phone-error');
+      const countrySelect = document.getElementById('course-country-code');
+      const phoneInput = form.querySelector('input[name="phone"]');
+
+      function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+      function isValidPhone(p) { const d = p.replace(/\D/g, ''); return d.length >= 7 && d.length <= 15; }
+
+      function showError(input) {
+        input.classList.add('error');
+        const errorDiv = input.closest('div').querySelector('.error-message') ||
+                         (input.name === 'phone' ? phoneError : null);
+        if (errorDiv) errorDiv.classList.add('visible');
+        if (input.name === 'phone') phoneWrapper.classList.add('error');
+      }
+
+      function clearError(input) {
+        input.classList.remove('error');
+        const errorDiv = input.closest('div').querySelector('.error-message') ||
+                         (input.name === 'phone' ? phoneError : null);
+        if (errorDiv) errorDiv.classList.remove('visible');
+        if (input.name === 'phone') phoneWrapper.classList.remove('error');
+      }
+
+      form.querySelectorAll('input').forEach(i => i.addEventListener('input', () => clearError(i)));
+
+      const countryCodes = [
+        { code: '+1', label: '🇺🇸 +1' }, { code: '+1', label: '🇨🇦 +1' }, { code: '+44', label: '🇬🇧 +44' },
+        { code: '+61', label: '🇦🇺 +61' }, { code: '+49', label: '🇩🇪 +49' }, { code: '+33', label: '🇫🇷 +33' },
+        { code: '+91', label: '🇮🇳 +91' }, { code: '+81', label: '🇯🇵 +81' }, { code: '+86', label: '🇨🇳 +86' },
+        { code: '+82', label: '🇰🇷 +82' }, { code: '+55', label: '🇧🇷 +55' }, { code: '+52', label: '🇲🇽 +52' },
+        { code: '+234', label: '🇳🇬 +234' }, { code: '+27', label: '🇿🇦 +27' }, { code: '+254', label: '🇰🇪 +254' },
+        { code: '+971', label: '🇦🇪 +971' }, { code: '+65', label: '🇸🇬 +65' }, { code: '+31', label: '🇳🇱 +31' },
+        { code: '+34', label: '🇪🇸 +34' }, { code: '+39', label: '🇮🇹 +39' }, { code: '+41', label: '🇨🇭 +41' },
+        { code: '+48', label: '🇵🇱 +48' }, { code: '+63', label: '🇵🇭 +63' }, { code: '+60', label: '🇲🇾 +60' },
+        { code: '+66', label: '🇹🇭 +66' }, { code: '+62', label: '🇮🇩 +62' }, { code: '+84', label: '🇻🇳 +84' },
+        { code: '+353', label: '🇮🇪 +353' }, { code: '+64', label: '🇳🇿 +64' }, { code: '+972', label: '🇮🇱 +972' },
+      ];
+
+      countryCodes.forEach((c, i) => {
+        const opt = document.createElement('option');
+        opt.value = c.code;
+        opt.textContent = c.label;
+        if (i === 0) opt.selected = true;
+        countrySelect.appendChild(opt);
+      });
+
+      phoneInput.addEventListener('input', (e) => {
+        let digits = e.target.value.replace(/\D/g, '');
+        if (countrySelect.value === '+1') {
+          if (digits.length > 10) digits = digits.slice(0, 10);
+          if (digits.length >= 7) e.target.value = `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`;
+          else if (digits.length >= 4) e.target.value = `(${digits.slice(0,3)}) ${digits.slice(3)}`;
+          else if (digits.length > 0) e.target.value = digits;
+        } else {
+          if (digits.length > 15) digits = digits.slice(0, 15);
+          e.target.value = digits;
+        }
+      });
+
+      function getReferralCode() {
+        const fromUrl = new URLSearchParams(window.location.search).get('ref');
+        if (fromUrl) return fromUrl;
+        const cookieMatch = document.cookie.match(/school_ai_ref=([^;]+)/);
+        if (cookieMatch) return decodeURIComponent(cookieMatch[1]);
+        return localStorage.getItem('school_ai_ref');
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        let valid = true;
+
+        const firstName = form.querySelector('input[name="firstName"]');
+        const lastName = form.querySelector('input[name="lastName"]');
+        const email = form.querySelector('input[name="email"]');
+        const phone = form.querySelector('input[name="phone"]');
+        const organization = form.querySelector('input[name="organization"]');
+
+        if (!firstName.value.trim()) { showError(firstName); valid = false; }
+        if (!lastName.value.trim()) { showError(lastName); valid = false; }
+        if (!email.value.trim() || !isValidEmail(email.value)) { showError(email); valid = false; }
+        if (!phone.value.trim() || !isValidPhone(phone.value)) { showError(phone); valid = false; }
+
+        if (!valid) return;
+
+        const original = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>Submitting...</span>';
+
+        const phoneDigits = phone.value.replace(/\D/g, '');
+        const refCode = getReferralCode();
+
+        const payload = {
+          firstName: firstName.value.trim(),
+          lastName: lastName.value.trim(),
+          name: `${firstName.value.trim()} ${lastName.value.trim()}`,
+          email: email.value.trim(),
+          phone: `${countrySelect.value}${phoneDigits}`,
+          companyName: organization.value.trim(),
+          source: 'School of AI Hub Signup',
+          tags: ['school of ai - form', 'school of ai - course'],
+          ...(refCode ? { referralCode: refCode } : {})
+        };
+
+        try {
+          const res = await fetch(ENDPOINT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (!res.ok) throw new Error('Submission failed');
+
+          document.getElementById('form-content').style.display = 'none';
+          document.getElementById('form-success').classList.add('visible');
+        } catch (err) {
+          console.error('Course signup error:', err);
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = original;
+          alert('Something went wrong. Please try again.');
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
