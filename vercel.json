@@ -1,10 +1,33 @@
 {
   "rewrites": [
     { "source": "/ref/:code", "destination": "/?ref=:code" },
-    { "source": "/foundation-one", "destination": "/foundation/foundation-one/index.html" },
-    { "source": "/foundation-one/:path*", "destination": "/foundation/foundation-one/:path*" },
-    { "source": "/foundation-survey", "destination": "/foundation/foundation-survey/index.html" },
-    { "source": "/foundation-survey/:path*", "destination": "/foundation/foundation-survey/:path*" },
+
+    { "source": "/course", "destination": "/pages/course/index.html" },
+    { "source": "/course/", "destination": "/pages/course/index.html" },
+
+    { "source": "/dianas-prayer", "destination": "/pages/dianas-prayer/index.html" },
+    { "source": "/dianas-prayer/", "destination": "/pages/dianas-prayer/index.html" },
+
+    { "source": "/vocab", "destination": "/pages/vocab/index.html" },
+    { "source": "/vocab/", "destination": "/pages/vocab/index.html" },
+
+    { "source": "/starter-kit", "destination": "/pages/starter-kit/index.html" },
+    { "source": "/starter-kit/", "destination": "/pages/starter-kit/index.html" },
+
+    { "source": "/survey", "destination": "/pages/survey/index.html" },
+    { "source": "/survey/", "destination": "/pages/survey/index.html" },
+
+    { "source": "/scan", "destination": "/pages/scan/index.html" },
+    { "source": "/scan/", "destination": "/pages/scan/index.html" },
+
+    { "source": "/foundation-one", "destination": "/pages/foundation-one/index.html" },
+    { "source": "/foundation-one/", "destination": "/pages/foundation-one/index.html" },
+    { "source": "/foundation-one/:path*", "destination": "/pages/foundation-one/:path*" },
+
+    { "source": "/foundation-survey", "destination": "/pages/foundation-survey/index.html" },
+    { "source": "/foundation-survey/", "destination": "/pages/foundation-survey/index.html" },
+    { "source": "/foundation-survey/:path*", "destination": "/pages/foundation-survey/:path*" },
+
     { "source": "/live", "destination": "/live/index.html" },
     { "source": "/live/", "destination": "/live/index.html" },
     { "source": "/live/prompts", "destination": "/live/prompts/index.html" },
@@ -19,14 +42,8 @@
     { "source": "/live/pps/prompts/", "destination": "/live/pps/prompts/index.html" },
     { "source": "/live/pps/skills", "destination": "/live/pps/skills/index.html" },
     { "source": "/live/pps/skills/", "destination": "/live/pps/skills/index.html" },
-    { "source": "/dianas-prayer", "destination": "/dianas-prayer/index.html" },
-    { "source": "/dianas-prayer/", "destination": "/dianas-prayer/index.html" },
     { "source": "/live/portfolio", "destination": "/live/portfolio/index.html" },
     { "source": "/live/book/cfo", "destination": "/live/book/cfo/index.html" },
-    { "source": "/live/book/audit", "destination": "/live/book/audit/index.html" },
-    { "source": "/course", "destination": "/course/index.html" },
-    { "source": "/course/", "destination": "/course/index.html" },
-    { "source": "/scan", "destination": "/scan/index.html" },
-    { "source": "/scan/", "destination": "/scan/index.html" }
+    { "source": "/live/book/audit", "destination": "/live/book/audit/index.html" }
   ]
 }

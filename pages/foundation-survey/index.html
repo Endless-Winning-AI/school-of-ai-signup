@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Foundation Ep 1 Survey — School of AI</title>
+  <style>
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../assets/fonts/gilroy-regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../assets/fonts/gilroy-bold.woff2') format('woff2');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../assets/fonts/gilroy-bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      /* Fix mobile Safari 100vh issue */
+      height: -webkit-fill-available;
+    }
+
+    body {
+      font-family: 'Gilroy', system-ui, sans-serif;
+      background: #000;
+      color: #fff;
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    /* Background */
+    .bg-image {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+    .bg-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #AF52DE, #FF2D92, #FF9500, #FFD60A, #30D158, #2EC4B6, #40CBF0, #007AFF, #5856D6);
+      transition: width 0.4s ease;
+      z-index: 100;
+    }
+
+    /* Main container */
+    .survey-container {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      min-height: -webkit-fill-available;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 24px 12px;
+      padding-top: max(24px, env(safe-area-inset-top, 0px));
+      padding-bottom: max(24px, env(safe-area-inset-bottom, 0px));
+    }
+
+    /* Center card vertically on tall viewports */
+    @media (min-height: 700px) {
+      .survey-container { align-items: center; }
+    }
+
+    /* Glass card */
+    .survey-card {
+      width: 100%;
+      max-width: 600px;
+      border-radius: 20px;
+      overflow: hidden;
+      padding: 32px 20px;
+      background: rgba(12, 16, 32, 0.35);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid transparent;
+      border-top-color: rgba(255, 255, 255, 0.25);
+      border-left-color: rgba(255, 255, 255, 0.14);
+      border-right-color: rgba(255, 255, 255, 0.05);
+      border-bottom-color: rgba(255, 255, 255, 0.02);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      position: relative;
+    }
+
+    @media (min-width: 640px) {
+      .survey-card { padding: 48px 44px; border-radius: 24px; }
+    }
+
+    /* Form texture overlay */
+    .survey-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('../assets/form-texture.png') center / cover no-repeat;
+      opacity: 0.05;
+      pointer-events: none;
+      border-radius: 24px;
+    }
+
+    /* Question slides */
+    .question-slide {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      position: relative;
+      z-index: 1;
+    }
+    .question-slide.active {
+      display: block;
+    }
+    .question-slide.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Question number */
+    .q-number {
+      font-size: 12px;
+      font-weight: 700;
+      color: #8BF1F1;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 12px;
+    }
+
+    /* Question text */
+    .q-text {
+      font-size: 20px;
+      font-weight: 600;
+      line-height: 1.4;
+      margin-bottom: 24px;
+      background: linear-gradient(4.67deg, #389ABF 4.69%, #8BF1F1 51.21%, #5FFCC0 95.94%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    @media (min-width: 640px) {
+      .q-text { font-size: 26px; margin-bottom: 32px; }
+    }
+
+    /* Option buttons (single select) */
+    .option-btn {
+      display: block;
+      width: 100%;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      background: rgba(10, 14, 30, 0.5);
+      border: 1px solid rgba(139, 241, 241, 0.1);
+      border-radius: 12px;
+      color: rgba(255, 255, 255, 0.85);
+      font-family: 'Gilroy', system-ui, sans-serif;
+      font-size: 16px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      line-height: 1.5;
+      /* Minimum 44px touch target (iOS HIG) */
+      min-height: 48px;
+    }
+    /* Only hover on devices that support it (no sticky hover on touch) */
+    @media (hover: hover) {
+      .option-btn:hover {
+        border-color: rgba(139, 241, 241, 0.3);
+        background: rgba(10, 14, 30, 0.7);
+      }
+    }
+    .option-btn:active {
+      border-color: rgba(139, 241, 241, 0.3);
+      background: rgba(10, 14, 30, 0.7);
+    }
+    .option-btn.selected {
+      border-color: #8BF1F1;
+      background: rgba(139, 241, 241, 0.08);
+      color: #fff;
+    }
+
+    @media (min-width: 640px) {
+      .option-btn { padding: 16px 20px; margin-bottom: 12px; }
+    }
+
+    /* Multi-select checkbox options */
+    .multi-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 12px 16px;
+      margin-bottom: 8px;
+      background: rgba(10, 14, 30, 0.5);
+      border: 1px solid rgba(139, 241, 241, 0.1);
+      border-radius: 12px;
+      color: rgba(255, 255, 255, 0.85);
+      font-family: 'Gilroy', system-ui, sans-serif;
+      font-size: 15px;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      line-height: 1.4;
+      min-height: 48px;
+    }
+    @media (hover: hover) {
+      .multi-option:hover {
+        border-color: rgba(139, 241, 241, 0.3);
+      }
+    }
+    .multi-option:active {
+      border-color: rgba(139, 241, 241, 0.3);
+    }
+    .multi-option.selected {
+      border-color: #8BF1F1;
+      background: rgba(139, 241, 241, 0.08);
+      color: #fff;
+    }
+
+    @media (min-width: 640px) {
+      .multi-option { padding: 14px 20px; margin-bottom: 10px; font-size: 16px; line-height: 1.5; }
+    }
+    .multi-check {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      border: 2px solid rgba(139, 241, 241, 0.3);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .multi-option.selected .multi-check {
+      background: #8BF1F1;
+      border-color: #8BF1F1;
+    }
+    .multi-check svg {
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .multi-option.selected .multi-check svg {
+      opacity: 1;
+    }
+
+    /* Textarea */
+    .q-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 14px 16px;
+      background: rgba(10, 14, 30, 0.5);
+      border: 1px solid rgba(139, 241, 241, 0.1);
+      border-radius: 12px;
+      color: #fff;
+      font-family: 'Gilroy', system-ui, sans-serif;
+      /* 16px minimum prevents iOS auto-zoom on focus */
+      font-size: 16px;
+      line-height: 1.6;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.2s;
+      /* Prevent iOS inner shadow */
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .q-textarea::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .q-textarea:focus {
+      border-color: rgba(139, 241, 241, 0.5);
+    }
+
+    @media (min-width: 640px) {
+      .q-textarea { min-height: 120px; padding: 16px 20px; }
+    }
+
+    /* Navigation */
+    .nav-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+      gap: 12px;
+    }
+
+    @media (min-width: 640px) {
+      .nav-row { margin-top: 32px; }
+    }
+
+    .nav-btn {
+      padding: 12px 24px;
+      border-radius: 9999px;
+      font-family: 'Gilroy', system-ui, sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      min-height: 48px;
+    }
+
+    @media (min-width: 640px) {
+      .nav-btn { padding: 12px 28px; }
+    }
+
+    .nav-back {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.7);
+    }
+    @media (hover: hover) {
+      .nav-back:hover {
+        border-color: rgba(255, 255, 255, 0.3);
+        color: #fff;
+      }
+    }
+    .nav-back:active {
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+
+    /* Next / Submit button with rainbow glow */
+    .nav-next-wrapper {
+      position: relative;
+    }
+    .nav-next-glow {
+      position: absolute;
+      inset: -2px;
+      border-radius: 9999px;
+      background: conic-gradient(from 180deg,
+        #AF52DE 0deg, #FF2D92 52deg, #FF6482 82deg, #FF9500 94deg,
+        #FFD60A 124deg, #30D158 180deg, #2EC4B6 236deg, #40CBF0 266deg,
+        #007AFF 278deg, #5856D6 308deg, #AF52DE 360deg
+      );
+      filter: blur(10px);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .nav-next {
+      position: relative;
+      z-index: 1;
+      background: rgba(10, 14, 30, 0.6);
+      color: #fff;
+      padding: 12px 36px;
+    }
+    .nav-next::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      padding: 1px;
+      background: conic-gradient(from 180deg,
+        #AF52DE 0deg, #FF2D92 52deg, #FF6482 82deg, #FF9500 94deg,
+        #FFD60A 124deg, #30D158 180deg, #2EC4B6 236deg, #40CBF0 266deg,
+        #007AFF 278deg, #5856D6 308deg, #AF52DE 360deg
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+    @media (hover: hover) {
+      .nav-next:hover { background: rgba(10, 14, 30, 0.8); }
+    }
+    .nav-next:active {
+      background: rgba(10, 14, 30, 0.8);
+    }
+    .nav-next:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Keyboard hint — hidden on touch devices */
+    .key-hint {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.3);
+      display: none;
+    }
+    /* Only show on devices with a real pointer (desktop/laptop) */
+    @media (hover: hover) and (pointer: fine) {
+      .key-hint { display: block; }
+    }
+    .key-hint kbd {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      font-family: inherit;
+      font-size: 11px;
+      margin: 0 2px;
+    }
+
+    /* Thank you screen */
+    .thank-you {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .thank-you .gradient-title {
+      font-size: 30px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 16px;
+      background: linear-gradient(4.67deg, #389ABF 4.69%, #8BF1F1 51.21%, #5FFCC0 95.94%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    @media (min-width: 640px) {
+      .thank-you .gradient-title { font-size: 36px; }
+    }
+    .thank-you .subtitle {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    .thank-you .checkmark {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: rgba(95, 252, 192, 0.1);
+      border: 2px solid #5FFCC0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    /* Error overlay */
+    .error-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+    .error-overlay.visible { display: flex; }
+    .error-overlay .inner {
+      text-align: center;
+      padding: 32px;
+    }
+    .error-overlay .gradient-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: linear-gradient(4.67deg, #389ABF 4.69%, #8BF1F1 51.21%, #5FFCC0 95.94%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .retry-btn {
+      margin-top: 20px;
+      padding: 12px 32px;
+      border-radius: 9999px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: #fff;
+      font-weight: 600;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+      font-family: 'Gilroy', system-ui, sans-serif;
+    }
+
+    /* Welcome screen */
+    .welcome-greeting {
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 8px;
+      background: linear-gradient(4.67deg, #389ABF 4.69%, #8BF1F1 51.21%, #5FFCC0 95.94%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+    }
+    @media (min-width: 640px) {
+      .welcome-greeting { font-size: 32px; }
+    }
+    .welcome-subtitle {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 15px;
+      line-height: 1.6;
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    @media (min-width: 640px) {
+      .welcome-subtitle { font-size: 16px; margin-bottom: 32px; }
+    }
+    .welcome-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .welcome-row {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    @media (min-width: 480px) {
+      .welcome-row { flex-direction: row; }
+    }
+    .welcome-field {
+      flex: 1;
+    }
+    .welcome-label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: #8BF1F1;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 6px;
+    }
+    .welcome-input {
+      width: 100%;
+      padding: 14px 16px;
+      background: rgba(10, 14, 30, 0.5);
+      border: 1px solid rgba(139, 241, 241, 0.1);
+      border-radius: 12px;
+      color: #fff;
+      font-family: 'Gilroy', system-ui, sans-serif;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+      min-height: 48px;
+    }
+    .welcome-input::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .welcome-input:focus {
+      border-color: rgba(139, 241, 241, 0.5);
+    }
+    .welcome-input.has-value {
+      border-color: rgba(139, 241, 241, 0.25);
+      background: rgba(139, 241, 241, 0.04);
+    }
+    .field-error {
+      color: #ff4d4d;
+      font-size: 12px;
+      margin-top: 4px;
+      display: none;
+    }
+    .field-error.visible {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background -->
+  <div class="bg-image">
+    <img src="../assets/background.png" alt="">
+  </div>
+
+  <!-- Progress bar -->
+  <div class="progress-bar" id="progress-bar" style="width: 10%"></div>
+
+  <!-- Survey -->
+  <div class="survey-container">
+    <div class="survey-card">
+
+      <!-- Welcome -->
+      <div class="question-slide active" data-q="welcome" data-type="welcome">
+        <div class="welcome-greeting" id="welcome-greeting">Welcome!</div>
+        <p style="color: rgba(255,255,255,0.5); font-size: 13px; text-align: center; margin-bottom: 20px; letter-spacing: 0.5px;">8 questions &middot; 60 seconds</p>
+        <p class="welcome-subtitle">Make sure we have your info so we can send you freebies, updates, and news as we launch new resources.</p>
+        <div class="welcome-fields">
+          <div class="welcome-row">
+            <div class="welcome-field">
+              <label class="welcome-label" for="w-firstName">First Name</label>
+              <input type="text" id="w-firstName" class="welcome-input" placeholder="First name">
+              <div class="field-error" id="err-firstName">First name is required</div>
+            </div>
+            <div class="welcome-field">
+              <label class="welcome-label" for="w-lastName">Last Name</label>
+              <input type="text" id="w-lastName" class="welcome-input" placeholder="Last name">
+              <div class="field-error" id="err-lastName">Last name is required</div>
+            </div>
+          </div>
+          <div class="welcome-field">
+            <label class="welcome-label" for="w-email">Email</label>
+            <input type="email" id="w-email" class="welcome-input" placeholder="Email address">
+            <div class="field-error" id="err-email">Valid email is required</div>
+          </div>
+          <div class="welcome-field">
+            <label class="welcome-label" for="w-phone">Phone</label>
+            <input type="tel" id="w-phone" class="welcome-input" placeholder="Phone number">
+          </div>
+        </div>
+        <div class="nav-row">
+          <div></div>
+          <div class="nav-next-wrapper">
+            <div class="nav-next-glow"></div>
+            <button class="nav-btn nav-next" id="next-welcome">Let's Go</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q1 -->
+      <div class="question-slide" data-q="1" data-type="single" data-key="q1_setup_status">
+        <div class="q-number">Question 1 of 8</div>
+        <div class="q-text">Did you get your AI workshop set up during the session?</div>
+        <button class="option-btn" data-value="Yes — fully set up and running">Yes — fully set up and running</button>
+        <button class="option-btn" data-value="Partially — got some things working">Partially — got some things working</button>
+        <button class="option-btn" data-value="Not yet — still need help">Not yet — still need help</button>
+        <button class="option-btn" data-value="I was watching but didn't follow along live">I was watching but didn't follow along live</button>
+        <div class="nav-row">
+          <button class="nav-btn nav-back" data-go="welcome">Back</button>
+          <div class="nav-next-wrapper">
+            <div class="nav-next-glow"></div>
+            <button class="nav-btn nav-next" id="next-1">Next</button>
+          </div>
+        </div>
+        <div class="key-hint"><kbd>Enter</kbd> to continue &middot; <kbd>&larr;</kbd> to go back</div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="question-slide" data-q="2" data-type="multi" data-key="q2_most_valuable">
+        <div class="q-number">Question 2 of 8</div>
+        <div class="q-text">Which parts of tonight's session were most valuable?</div>
+        <div class="multi-option" data-value="IDE setup & terminal basics">
+          <div class="multi-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="#050810" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span>IDE setup & terminal basics</span>
+        </div>
+        <div class="multi-option" data-value="Files & folders walkthrough">
+          <div class="multi-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="#050810" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span>Files & folders walkthrough</span>
+        </div>
+        <div class="multi-option" data-value="Live demos (parallel agents, folder cleanup, website rebuild)">
+          <div class="multi-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="#050810" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span>Live demos (parallel agents, folder cleanup, website rebuild)</span>
+        </div>
+        <div class="multi-option" data-value="Sub-agents & context windows explanation">
+          <div class="multi-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="#050810" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span>Sub-agents & context windows explanation</span>
+        </div>
+        <div class="multi-option" data-value="API keys & Doppler setup">
+          <div class="multi-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="#050810" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span>API keys & Doppler setup</span>
+        </div>
+        <div class="multi-option" data-value="Q&A and group discussion">
+          <div class="multi-check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7" stroke="#050810" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <span>Q&A and group discussion</span>
+        </div>
+        <div class="nav-row">
+          <button class="nav-btn nav-back" data-go="1">Back</button>
+          <div class="nav-next-wrapper">
+            <div class="nav-next-glow"></div>
+            <button class="nav-btn nav-next" id="next-2">Next</button>
+          </div>
+        </div>
+        <div class="key-hint"><kbd>Enter</kbd> to continue &middot; <kbd>&larr;</kbd> to go back</div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="question-slide" data-q="3" data-type="text" data-key="q3_biggest_takeaway">
+        <div class="q-number">Question 3 of 8</div>
+        <div class="q-text">What was your biggest takeaway from tonight?</div>
+        <textarea class="q-textarea" placeholder="Share what stood out to you..." rows="4"></textarea>
+        <div class="nav-row">
+          <button class="nav-btn nav-back" data-go="2">Back</button>
+          <div class="nav-next-wrapper">
+            <div class="nav-next-glow"></div>
+            <button class="nav-btn nav-next" id="next-3">Next</button>
+          </div>
+        </div>
+        <div class="key-hint"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> to continue &middot; <kbd>&larr;</kbd> to go back</div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="question-slide" data-q="4" data-type="text" data-key="q4_confusing">
+        <div class="q-number">Question 4 of 8</div>
+        <div class="q-text">Was there anything that felt confusing, too fast, or hard to follow?</div>
+        <textarea class="q-textarea" placeholder="Be honest — this helps me improve..." rows="4"></textarea>
+        <div class="nav-row">
+          <button class="nav-btn nav-back" data-go="3">Back</button>
+          <div class="nav-next-wrapper">
+            <div class="nav-next-glow"></div>
+            <button class="nav-btn nav-next" id="next-4">Next</button>
+          </div>
+        </div>
+        <div class="key-hint"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> to continue &middot; <kbd>&larr;</kbd> to go back</div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="question-slide" data-q="5" data-type="single" data-key="q5_pace">
+        <div class="q-number">Question 5 of 8</div>
+        <div class="q-text">How was the pace of tonight's session?</div>
+        <button class="option-btn" data-value="Too fast — I got lost">Too fast — I got lost</button>
+        <button class="option-btn" data-value="Just right">Just right</button>
+        <button class="option-btn" data-value="A little slow — I wanted to move faster">A little slow — I wanted to move faster</button>
+        <div class="nav-row">
+          <button class="nav-btn nav-back" data-go="4">Back</button>
+          <div class="nav-next-wrapper">
+            <div class="nav-next-glow"></div>
+            <button class="nav-btn nav-next" id="next-5">Next</button>
+          </div>
+        </div>
+        <div class="key-hint"><kbd>Enter</kbd> to continue &middot; <kbd>&larr;</kbd> to go back</div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="question-slide" data-q="6" data-type="single" data-key="q6_confidence">
+        <div class="q-number">Question 6 of 8</div>
+        <div class="q-text">After tonight, how confident do you feel using Claude Code on your own?</div>
+        <button class="option-btn" data-value="Very confident — I'm ready to build">Very confident — I'm ready to build</button>
+        <button class="option-btn" data-value="Somewhat confident — I need a little more practice">Somewhat confident — I need a little more practice</button>
+        <button class="option-btn" data-value="Not confident yet — I need more guidance">Not confident yet — I need more guidance</button>
+        <div class="nav-row">
+          <button class="nav-btn nav-back" data-go="5">Back</button>
+          <div class="nav-next-wrapper">
+            <div class="nav-next-glow"></div>
+            <button class="nav-btn nav-next" id="next-6">Next</button>
+          </div>
+        </div>
+        <div class="key-hint"><kbd>Enter</kbd> to continue &middot; <kbd>&larr;</kbd> to go back</div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="question-slide" data-q="7" data-type="text" data-key="q7_next_build">
+        <div class="q-number">Question 7 of 8</div>
+        <div class="q-text">What's the first thing you want to build or try with your new setup?</div>
+        <textarea class="q-textarea" placeholder="Tell me what you're excited to create..." rows="4"></textarea>
+        <div class="nav-row">
+          <button class="nav-btn nav-back" data-go="6">Back</button>
+          <div class="nav-next-wrapper">
+            <div class="nav-next-glow"></div>
+            <button class="nav-btn nav-next" id="next-7">Next</button>
+          </div>
+        </div>
+        <div class="key-hint"><kbd>Ctrl</kbd>+<kbd>Enter</kbd> to continue &middot; <kbd>&larr;</kbd> to go back</div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="question-slide" data-q="8" data-type="single" data-key="q8_rating">
+        <div class="q-number">Question 8 of 8</div>
+        <div class="q-text">How would you rate tonight's session overall?</div>
+        <button class="option-btn" data-value="10 — Incredible">10 — Incredible</button>
+        <button class="option-btn" data-value="8-9 — Really solid">8-9 — Really solid</button>
+        <button class="option-btn" data-value="6-7 — Good but room to improve">6-7 — Good but room to improve</button>
+        <button class="option-btn" data-value="5 or below — Didn't meet expectations">5 or below — Didn't meet expectations</button>
+        <div class="nav-row">
+          <button class="nav-btn nav-back" data-go="7">Back</button>
+          <div class="nav-next-wrapper">
+            <div class="nav-next-glow"></div>
+            <button class="nav-btn nav-next" id="submit-btn">Submit</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thank You -->
+      <div class="question-slide" data-q="done">
+        <div class="thank-you">
+          <div class="checkmark">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path d="M5 12l5 5L20 7" stroke="#5FFCC0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="gradient-title">Thanks for the feedback!</div>
+          <p class="subtitle">Your feedback shapes what comes next.<br>See you at the next Foundation Series session!</p>
+
+          <!-- Share Section (populated from localStorage if available) -->
+          <div id="share-section" style="display:none; margin-top: 32px; padding: 24px; border-radius: 16px; background: rgba(12, 16, 32, 0.6); border: 1px solid rgba(139, 241, 241, 0.1);">
+            <p style="color: #8BF1F1; font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 12px;">Share with a friend</p>
+            <div style="display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.4); border-radius: 9999px; padding: 12px 16px;">
+              <input id="share-link" type="text" readonly style="background: transparent; color: #fff; font-size: 14px; flex: 1; outline: none; border: none; min-width: 0; font-family: inherit;" value="">
+              <button id="copy-btn" onclick="copyShareLink()" style="background: none; border: none; color: #5FFCC0; font-size: 14px; font-weight: 700; white-space: nowrap; cursor: pointer; font-family: inherit;">Copy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Error overlay -->
+  <div class="error-overlay" id="error-overlay">
+    <div class="inner">
+      <div style="font-size: 48px; margin-bottom: 16px;">&#9888;</div>
+      <div class="gradient-title">Something Went Wrong</div>
+      <p style="color: rgba(255,255,255,0.85); font-size: 16px;">Your submission didn't go through. Please try again.</p>
+      <button class="retry-btn" id="retry-btn">Try Again</button>
+    </div>
+  </div>
+
+  <script>
+    // Capture all URL params from GHL merge fields
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramEmail = urlParams.get('email') || '';
+    const paramFirstName = urlParams.get('firstName') || '';
+    const paramLastName = urlParams.get('lastName') || '';
+    const paramPhone = urlParams.get('phone') || '';
+
+    // Pre-fill welcome fields
+    const wFirstName = document.getElementById('w-firstName');
+    const wLastName = document.getElementById('w-lastName');
+    const wEmail = document.getElementById('w-email');
+    const wPhone = document.getElementById('w-phone');
+
+    if (paramFirstName) { wFirstName.value = paramFirstName; wFirstName.classList.add('has-value'); }
+    if (paramLastName) { wLastName.value = paramLastName; wLastName.classList.add('has-value'); }
+    if (paramEmail) { wEmail.value = paramEmail; wEmail.classList.add('has-value'); }
+    if (paramPhone) { wPhone.value = paramPhone; wPhone.classList.add('has-value'); }
+
+    // Personalized greeting
+    const greetingEl = document.getElementById('welcome-greeting');
+    if (paramFirstName) {
+      greetingEl.textContent = `Great to have you, ${paramFirstName}!`;
+    }
+
+    // Clear field errors on input
+    [wFirstName, wLastName, wEmail, wPhone].forEach(input => {
+      input.addEventListener('input', () => {
+        input.classList.remove('welcome-input-error');
+        const errEl = input.parentElement.querySelector('.field-error');
+        if (errEl) errEl.classList.remove('visible');
+      });
+    });
+
+    const TOTAL = 8;
+    let current = 'welcome';
+    const answers = {};
+
+    const slides = document.querySelectorAll('.question-slide');
+    const progressBar = document.getElementById('progress-bar');
+
+    function showSlide(n) {
+      slides.forEach(s => {
+        s.classList.remove('active', 'visible');
+      });
+      const target = document.querySelector(`[data-q="${n}"]`);
+      if (!target) return;
+      target.classList.add('active');
+      // Scroll card into view on mobile (content may overflow)
+      target.closest('.survey-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Trigger reflow then animate in
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          target.classList.add('visible');
+        });
+      });
+      // Update progress (welcome = 0%, questions 1-10, done = 100%)
+      if (n === 'done') {
+        progressBar.style.width = '100%';
+      } else if (n === 'welcome') {
+        progressBar.style.width = '0%';
+      } else {
+        progressBar.style.width = `${(n / TOTAL) * 100}%`;
+      }
+      current = n;
+      // Focus textarea if text question (only on desktop — avoids keyboard popup on mobile)
+      const ta = target.querySelector('.q-textarea');
+      if (ta && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        ta.focus();
+      }
+    }
+
+    // Initialize first slide (welcome)
+    progressBar.style.width = '0%';
+    requestAnimationFrame(() => {
+      slides[0].classList.add('visible');
+    });
+
+    // Single select: click an option
+    document.querySelectorAll('.option-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const slide = btn.closest('.question-slide');
+        slide.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        const key = slide.dataset.key;
+        answers[key] = btn.dataset.value;
+      });
+    });
+
+    // Multi select: click to toggle
+    document.querySelectorAll('.multi-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        opt.classList.toggle('selected');
+        const slide = opt.closest('.question-slide');
+        const key = slide.dataset.key;
+        const selected = Array.from(slide.querySelectorAll('.multi-option.selected'))
+          .map(o => o.dataset.value);
+        answers[key] = selected;
+      });
+    });
+
+    // Collect text answer from current slide
+    function collectText(slide) {
+      const ta = slide.querySelector('.q-textarea');
+      if (ta) {
+        answers[slide.dataset.key] = ta.value.trim();
+      }
+    }
+
+    const EDGE_URL = 'https://lrwvooucggciazmzxqlb.supabase.co/functions/v1/school-of-ai-survey';
+
+    // Fire-and-forget save — runs in background, never blocks the UI
+    function saveProgress(data) {
+      fetch(EDGE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }).catch(err => console.error('Auto-save error:', err));
+    }
+
+    // Welcome validation
+    function validateWelcome() {
+      let valid = true;
+      const fn = wFirstName.value.trim();
+      const ln = wLastName.value.trim();
+      const em = wEmail.value.trim();
+
+      if (!fn) {
+        document.getElementById('err-firstName').classList.add('visible');
+        valid = false;
+      }
+      if (!ln) {
+        document.getElementById('err-lastName').classList.add('visible');
+        valid = false;
+      }
+      if (!em || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) {
+        document.getElementById('err-email').classList.add('visible');
+        valid = false;
+      }
+      return valid;
+    }
+
+    // Next buttons
+    document.querySelectorAll('.nav-next').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const slide = btn.closest('.question-slide');
+        const q = slide.dataset.q;
+
+        // Welcome slide — validate, save contact info, go to Q1
+        if (q === 'welcome') {
+          if (!validateWelcome()) return;
+          saveProgress({
+            email: wEmail.value.trim(),
+            firstName: wFirstName.value.trim(),
+            lastName: wLastName.value.trim(),
+            phone: wPhone.value.trim(),
+            lastQuestion: 0
+          });
+          showSlide(1);
+          return;
+        }
+
+        collectText(slide);
+        const qNum = parseInt(q);
+
+        if (btn.id === 'submit-btn') {
+          await submitSurvey(btn);
+          return;
+        }
+
+        // Save this question's answer progressively
+        const key = slide.dataset.key;
+        if (key && answers[key] !== undefined) {
+          saveProgress({
+            email: wEmail.value.trim(),
+            responses: { [key]: answers[key] },
+            lastQuestion: qNum
+          });
+        }
+
+        showSlide(qNum + 1);
+      });
+    });
+
+    // Back buttons
+    document.querySelectorAll('.nav-back').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const slide = btn.closest('.question-slide');
+        collectText(slide);
+        const dest = btn.dataset.go;
+        showSlide(dest === 'welcome' ? 'welcome' : parseInt(dest));
+      });
+    });
+
+    // Keyboard nav
+    document.addEventListener('keydown', (e) => {
+      if (current === 'done') return;
+      const slide = document.querySelector(`[data-q="${current}"]`);
+      if (!slide) return;
+      const type = slide.dataset.type;
+
+      if (e.key === 'Enter') {
+        if (type === 'welcome') {
+          e.preventDefault();
+          slide.querySelector('.nav-next').click();
+        } else if (type === 'text') {
+          if (e.ctrlKey || e.metaKey) {
+            e.preventDefault();
+            slide.querySelector('.nav-next').click();
+          }
+        } else {
+          e.preventDefault();
+          slide.querySelector('.nav-next').click();
+        }
+      }
+
+      if (e.key === 'ArrowLeft' && !e.target.matches('textarea, input')) {
+        const backBtn = slide.querySelector('.nav-back');
+        if (backBtn) backBtn.click();
+      }
+    });
+
+    // Final submit — marks completed
+    async function submitSurvey(btn) {
+      const originalText = btn.textContent;
+      btn.textContent = 'Submitting...';
+      btn.disabled = true;
+
+      // Collect Q10's answer
+      const slide = btn.closest('.question-slide');
+      const key = slide.dataset.key;
+      if (key) {
+        const selected = slide.querySelector('.option-btn.selected');
+        if (selected) answers[key] = selected.dataset.value;
+      }
+
+      const payload = {
+        email: wEmail.value.trim(),
+        firstName: wFirstName.value.trim(),
+        lastName: wLastName.value.trim(),
+        phone: wPhone.value.trim(),
+        responses: answers,
+        completed: true,
+        lastQuestion: 8,
+        submitted_at: new Date().toISOString()
+      };
+
+      try {
+        const res = await fetch(EDGE_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('Failed');
+        showSlide('done');
+        showShareLink();
+      } catch (err) {
+        console.error('Submit error:', err);
+        document.getElementById('error-overlay').classList.add('visible');
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    // Retry
+    document.getElementById('retry-btn').addEventListener('click', () => {
+      document.getElementById('error-overlay').classList.remove('visible');
+    });
+
+    // Show share link on thank-you screen if we have a referral code
+    function showShareLink() {
+      const myCode = localStorage.getItem('school_ai_my_code');
+      if (myCode) {
+        const shareUrl = `https://school.endlesswinning.com?ref=${myCode}`;
+        document.getElementById('share-link').value = shareUrl;
+        document.getElementById('share-section').style.display = 'block';
+      }
+    }
+
+    function copyShareLink() {
+      const input = document.getElementById('share-link');
+      navigator.clipboard.writeText(input.value);
+      document.getElementById('copy-btn').textContent = 'Copied!';
+      setTimeout(() => document.getElementById('copy-btn').textContent = 'Copy', 2000);
+    }
+
+  </script>
+</body>
+</html>

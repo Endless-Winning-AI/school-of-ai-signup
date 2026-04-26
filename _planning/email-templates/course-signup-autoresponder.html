@@ -1,0 +1,262 @@
+<!--
+===============================================================================
+School of AI — Course Signup Auto-Responder Email
+===============================================================================
+USAGE: Copy the entire HTML below (from <!DOCTYPE html> to </html>)
+       and paste into GHL's email template HTML editor.
+
+TRIGGER: Fire on the "school of ai - course" tag being added to a contact.
+
+MERGE FIELDS: Uses GHL standard {{contact.first_name}}.
+              Replace or remove if your GHL setup uses different syntax.
+
+TESTED IN: Gmail (desktop + iOS), Apple Mail, Outlook 365, dark mode respected.
+===============================================================================
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark light">
+  <meta name="supported-color-schemes" content="dark light">
+  <title>Welcome to the School of AI</title>
+  <style>
+    /* Email client resets */
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; }
+    body { margin: 0 !important; padding: 0 !important; width: 100% !important; }
+    a { text-decoration: none; }
+
+    /* Gradient title (Webkit clients only — falls back to mint color) */
+    .gradient-title {
+      background: linear-gradient(135deg, #8BF1F1 0%, #5FFCC0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: #5FFCC0; /* Fallback */
+    }
+
+    /* Mobile tweaks */
+    @media screen and (max-width: 600px) {
+      .email-container { width: 100% !important; }
+      .padding-mobile { padding-left: 20px !important; padding-right: 20px !important; }
+      .h1-mobile { font-size: 28px !important; line-height: 1.2 !important; }
+      .h2-mobile { font-size: 20px !important; }
+      .button-mobile { width: 100% !important; }
+      .stack-mobile { display: block !important; width: 100% !important; }
+    }
+  </style>
+</head>
+<body style="margin: 0; padding: 0; background-color: #000000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;">
+
+  <!-- Preheader (hidden, shows in inbox preview) -->
+  <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">
+    You're in. The School of AI just opened its doors — here's what's waiting for you.
+  </div>
+
+  <!-- Outer wrapper -->
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color: #000000;">
+    <tr>
+      <td align="center" style="padding: 32px 16px;">
+
+        <!-- Email container -->
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" class="email-container" style="max-width: 600px; width: 100%; background-color: #0C1020; border-radius: 24px; overflow: hidden; border-top: 1px solid rgba(255, 255, 255, 0.25); border-left: 1px solid rgba(255, 255, 255, 0.14);">
+
+          <!-- Top accent bar (gradient) -->
+          <tr>
+            <td style="height: 4px; background: linear-gradient(90deg, #389ABF 0%, #8BF1F1 50%, #5FFCC0 100%); font-size: 0; line-height: 0;">&nbsp;</td>
+          </tr>
+
+          <!-- Hero section -->
+          <tr>
+            <td class="padding-mobile" style="padding: 48px 48px 24px 48px; text-align: center;">
+
+              <!-- Welcome pill -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin: 0 auto 24px auto;">
+                <tr>
+                  <td style="padding: 6px 16px; background-color: rgba(139, 241, 241, 0.12); border: 1px solid rgba(139, 241, 241, 0.3); border-radius: 999px; color: #8BF1F1; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
+                    Welcome
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Main headline -->
+              <h1 class="h1-mobile gradient-title" style="margin: 0 0 16px 0; font-size: 38px; line-height: 1.15; font-weight: 700; color: #5FFCC0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; letter-spacing: -0.02em;">
+                You're In.
+              </h1>
+
+              <!-- Subhead -->
+              <p style="margin: 0; font-size: 17px; line-height: 1.5; color: rgba(255, 255, 255, 0.75); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
+                Welcome to the School of AI, {{contact.first_name}}.
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Body copy -->
+          <tr>
+            <td class="padding-mobile" style="padding: 0 48px 32px 48px;">
+
+              <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.6; color: rgba(255, 255, 255, 0.88); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
+                You just saved your seat for the video course — a short-form, bingeable series built for business owners who know AI matters and want to actually use it.
+              </p>
+
+              <p style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.6; color: rgba(255, 255, 255, 0.88); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
+                While we put the finishing touches on the course, here's what's already waiting for you:
+              </p>
+
+              <!-- Feature list -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 0 0 24px 0;">
+                <tr>
+                  <td style="padding: 10px 0; vertical-align: top;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="padding-right: 12px; vertical-align: top;">
+                          <span style="display: inline-block; color: #5FFCC0; font-size: 18px; font-weight: 700; line-height: 1.4;">✓</span>
+                        </td>
+                        <td style="vertical-align: top;">
+                          <span style="font-size: 15px; line-height: 1.5; color: rgba(255, 255, 255, 0.88); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
+                            <strong style="color: #8BF1F1;">AI Vocab Sheet</strong> — the language of AI, tiered by skill level
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px 0; vertical-align: top;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="padding-right: 12px; vertical-align: top;">
+                          <span style="display: inline-block; color: #5FFCC0; font-size: 18px; font-weight: 700; line-height: 1.4;">✓</span>
+                        </td>
+                        <td style="vertical-align: top;">
+                          <span style="font-size: 15px; line-height: 1.5; color: rgba(255, 255, 255, 0.88); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
+                            <strong style="color: #8BF1F1;">Prompt Library</strong> — copy-paste prompts you can use today
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px 0; vertical-align: top;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="padding-right: 12px; vertical-align: top;">
+                          <span style="display: inline-block; color: #5FFCC0; font-size: 18px; font-weight: 700; line-height: 1.4;">✓</span>
+                        </td>
+                        <td style="vertical-align: top;">
+                          <span style="font-size: 15px; line-height: 1.5; color: rgba(255, 255, 255, 0.88); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
+                            <strong style="color: #8BF1F1;">Project Library</strong> — ready-made ChatGPT + Claude projects
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding: 10px 0; vertical-align: top;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="padding-right: 12px; vertical-align: top;">
+                          <span style="display: inline-block; color: #5FFCC0; font-size: 18px; font-weight: 700; line-height: 1.4;">✓</span>
+                        </td>
+                        <td style="vertical-align: top;">
+                          <span style="font-size: 15px; line-height: 1.5; color: rgba(255, 255, 255, 0.88); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
+                            <strong style="color: #8BF1F1;">AI Audit + CFO booking</strong> — when you're ready for real help
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA Button (bulletproof button pattern) -->
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="margin: 16px 0 8px 0;">
+                <tr>
+                  <td align="center">
+                    <!--[if mso]>
+                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://school.endlesswinning.com/live" style="height:56px;v-text-anchor:middle;width:280px;" arcsize="100%" strokecolor="#8BF1F1" fillcolor="#0C1020">
+                      <w:anchorlock/>
+                      <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;">Explore the Resource Library</center>
+                    </v:roundrect>
+                    <![endif]-->
+                    <!--[if !mso]><!-- -->
+                    <a href="https://school.endlesswinning.com/live" class="button-mobile" style="display: inline-block; padding: 18px 36px; background: linear-gradient(135deg, #8BF1F1 0%, #5FFCC0 100%); color: #0C1020 !important; font-size: 16px; font-weight: 700; text-decoration: none; border-radius: 999px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; letter-spacing: -0.01em;">
+                      Explore the Resource Library →
+                    </a>
+                    <!--<![endif]-->
+                  </td>
+                </tr>
+              </table>
+
+              <p style="margin: 24px 0 0 0; font-size: 14px; line-height: 1.6; color: rgba(255, 255, 255, 0.6); text-align: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
+                Or go straight to it: <a href="https://school.endlesswinning.com/live" style="color: #8BF1F1; text-decoration: underline;">school.endlesswinning.com/live</a>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Divider -->
+          <tr>
+            <td class="padding-mobile" style="padding: 0 48px;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <tr>
+                  <td style="height: 1px; background-color: rgba(139, 241, 241, 0.15); font-size: 0; line-height: 0;">&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Troy's sign-off -->
+          <tr>
+            <td class="padding-mobile" style="padding: 28px 48px 40px 48px;">
+
+              <p style="margin: 0 0 16px 0; font-size: 15px; line-height: 1.6; color: rgba(255, 255, 255, 0.8); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
+                The video course drops soon — you'll be one of the first to know. Until then, dig into the library. The vocab sheet alone will change how you talk about AI by the time you're done with it.
+              </p>
+
+              <p style="margin: 0; font-size: 15px; line-height: 1.6; color: rgba(255, 255, 255, 0.8); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
+                Talk soon,<br>
+                <strong style="color: #8BF1F1;">Troy Brave</strong><br>
+                <span style="color: rgba(255, 255, 255, 0.55); font-size: 13px;">Founder, Endless Winning</span>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- Bottom accent bar -->
+          <tr>
+            <td style="height: 4px; background: linear-gradient(90deg, #5FFCC0 0%, #8BF1F1 50%, #389ABF 100%); font-size: 0; line-height: 0;">&nbsp;</td>
+          </tr>
+
+        </table>
+
+        <!-- Footer -->
+        <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" class="email-container" style="max-width: 600px; width: 100%;">
+          <tr>
+            <td class="padding-mobile" style="padding: 24px 48px; text-align: center;">
+
+              <p style="margin: 0 0 12px 0; font-size: 13px; line-height: 1.5; color: rgba(255, 255, 255, 0.5); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
+                An <a href="https://endlesswinning.com" style="color: #8BF1F1; text-decoration: none;">Endless Winning</a> resource.
+              </p>
+
+              <p style="margin: 0; font-size: 12px; line-height: 1.5; color: rgba(255, 255, 255, 0.35); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;">
+                You're receiving this because you signed up for the School of AI.<br>
+                {{location.unsubscribe_link}}
+              </p>
+
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

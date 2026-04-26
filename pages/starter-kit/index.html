@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Prompt Starter Kit - School of AI</title>
+  <meta name="description" content="Free AI Prompt Starter Kit from School of AI. The Oracle Prompt, Pre-Prompt Checklist, and the best free AI tools to get started.">
+  <style>
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../assets/fonts/gilroy-regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../assets/fonts/gilroy-bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Gilroy', system-ui, sans-serif;
+      background: #000;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Background */
+    .bg-image {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+    .bg-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.4;
+    }
+
+    /* Layout */
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* Wordmark */
+    .wordmark {
+      text-align: center;
+      margin-bottom: 12px;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 5px;
+      color: #fff;
+      text-transform: uppercase;
+      text-shadow:
+        -5px -3px 14px #AF52DE,
+        -3px -5px 12px #FF2D92,
+        3px -5px 12px #FF9500,
+        5px -3px 12px #FFD60A,
+        5px 3px 12px #30D158,
+        3px 5px 12px #2EC4B6,
+        -3px 5px 12px #40CBF0,
+        -5px 3px 12px #007AFF,
+        0 0 30px rgba(88,86,214,0.35);
+    }
+
+    /* Title */
+    .page-title {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 8px;
+      background: linear-gradient(4.67deg, #389ABF 4.69%, #8BF1F1 51.21%, #5FFCC0 95.94%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-subtitle {
+      text-align: center;
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 40px;
+    }
+
+    /* Glass Card */
+    .card {
+      background: rgba(12, 16, 32, 0.5);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-radius: 20px;
+      border: 1px solid rgba(139, 241, 241, 0.08);
+      padding: 36px 32px;
+      margin-bottom: 24px;
+    }
+
+    .card-number {
+      display: inline-block;
+      font-size: 11px;
+      color: #8BF1F1;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      background: rgba(139, 241, 241, 0.08);
+      border: 1px solid rgba(139, 241, 241, 0.15);
+      border-radius: 20px;
+      padding: 4px 14px;
+      margin-bottom: 16px;
+    }
+
+    .card h2 {
+      color: #5FFCC0;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .card p {
+      margin-bottom: 16px;
+    }
+
+    .card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Prompt Block */
+    .prompt-block {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid rgba(139, 241, 241, 0.1);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 20px 0;
+      position: relative;
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.9);
+      white-space: pre-wrap;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(139, 241, 241, 0.1);
+      border: 1px solid rgba(139, 241, 241, 0.2);
+      color: #8BF1F1;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 6px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .copy-btn:hover {
+      background: rgba(139, 241, 241, 0.2);
+    }
+
+    /* Comparison */
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    @media (max-width: 560px) {
+      .comparison { grid-template-columns: 1fr; }
+    }
+    .comparison-bad, .comparison-good {
+      border-radius: 12px;
+      padding: 20px;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .comparison-bad {
+      background: rgba(255, 59, 48, 0.08);
+      border: 1px solid rgba(255, 59, 48, 0.2);
+    }
+    .comparison-good {
+      background: rgba(95, 252, 192, 0.06);
+      border: 1px solid rgba(95, 252, 192, 0.15);
+    }
+    .comparison-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .comparison-bad .comparison-label { color: #FF3B30; }
+    .comparison-good .comparison-label { color: #5FFCC0; }
+
+    /* Checklist */
+    .checklist {
+      list-style: none;
+      margin: 20px 0;
+    }
+    .checklist li {
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(139, 241, 241, 0.06);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist .num {
+      color: #8BF1F1;
+      font-weight: 700;
+      font-size: 18px;
+      flex-shrink: 0;
+      width: 28px;
+    }
+    .checklist strong { color: #fff; }
+
+    /* Tool Grid */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    @media (max-width: 560px) {
+      .tool-grid { grid-template-columns: 1fr; }
+    }
+    .tool-card {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(139, 241, 241, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      text-decoration: none;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .tool-card:hover {
+      border-color: rgba(139, 241, 241, 0.25);
+      transform: translateY(-2px);
+    }
+    .tool-card .tool-name {
+      color: #fff;
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .tool-card .tool-desc {
+      color: rgba(255,255,255,0.6);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .tool-card .tool-price {
+      color: #5FFCC0;
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    /* Bonus Card */
+    .bonus-card {
+      background: linear-gradient(135deg, rgba(175, 82, 222, 0.08), rgba(64, 203, 240, 0.08));
+      border: 1px solid rgba(175, 82, 222, 0.2);
+    }
+    .bonus-card h2 {
+      background: linear-gradient(90deg, #AF52DE, #40CBF0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* CTA Button */
+    .cta-wrapper {
+      text-align: center;
+      margin: 32px 0 20px;
+    }
+    .cta-outer {
+      display: inline-block;
+      border-radius: 9999px;
+      background: linear-gradient(90deg, #AF52DE, #FF2D92, #FF6482, #FF9500, #FFD60A, #30D158, #2EC4B6, #40CBF0, #007AFF, #5856D6, #AF52DE);
+      padding: 1px;
+      box-shadow: 0 0 14px rgba(175, 82, 222, 0.3), 0 0 14px rgba(255, 45, 146, 0.15), 0 0 14px rgba(48, 209, 88, 0.12), 0 0 14px rgba(64, 203, 240, 0.15);
+    }
+    .cta-btn {
+      display: block;
+      padding: 16px 48px;
+      border-radius: 9999px;
+      background: #0a0e1e;
+      color: #fff;
+      font-size: 17px;
+      font-weight: 700;
+      text-decoration: none;
+      text-align: center;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .cta-btn:hover {
+      background: #0f1428;
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(139, 241, 241, 0.1);
+      margin: 28px 0;
+    }
+
+    /* Key quote */
+    .key-quote {
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      padding: 20px 0;
+    }
+
+    /* Formula */
+    .formula {
+      text-align: center;
+      padding: 24px;
+      margin: 20px 0;
+      background: rgba(95, 252, 192, 0.04);
+      border: 1px solid rgba(95, 252, 192, 0.12);
+      border-radius: 12px;
+    }
+    .formula span {
+      font-size: 20px;
+      font-weight: 700;
+      color: #5FFCC0;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px 0 0;
+      color: rgba(255,255,255,0.3);
+      font-size: 12px;
+    }
+    .footer a {
+      color: #8BF1F1;
+      text-decoration: underline;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .page { padding: 32px 16px 60px; }
+      .card { padding: 28px 20px; }
+      .page-title { font-size: 26px; }
+      .prompt-block { padding: 20px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-image">
+    <img src="../assets/background.png" alt="">
+  </div>
+
+  <div class="page">
+
+    <!-- Wordmark -->
+    <div class="wordmark">SCHOOL OF AI</div>
+
+    <!-- Title -->
+    <h1 class="page-title">AI Prompt Starter Kit</h1>
+    <p class="page-subtitle">Everything you need to start getting real results from AI today.</p>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- CARD 1: The Oracle Prompt -->
+    <!-- ═══════════════════════════════════ -->
+    <div class="card">
+      <span class="card-number">01</span>
+      <h2>The Oracle Prompt</h2>
+      <p>This single prompt gives you $500/hour expert advice for free. Copy it, paste it into ChatGPT or Claude, and replace the brackets with your situation.</p>
+
+      <div class="prompt-block" id="oracle-prompt">
+        <button class="copy-btn" onclick="copyText('oracle-prompt')">Copy</button>
+You are a [expert type] from the future with 50 years of experience looking back at this exact moment in time.
+
+I'm going to describe my situation. I want you to:
+1. Ask the questions a true expert would ask before giving advice
+2. Share one counterintuitive insight that most people in my position miss
+3. Tell me the ONE thing that will matter most 5 years from now
+4. Give me my next 3 actions, in order of priority
+
+My situation: [describe your situation here]</div>
+
+      <p><strong style="color: #fff;">How to use it:</strong> Replace <code style="color: #8BF1F1; background: rgba(139,241,241,0.08); padding: 2px 6px; border-radius: 4px;">[expert type]</code> with the kind of advisor you need (business strategist, marketing expert, financial planner, etc.) and <code style="color: #8BF1F1; background: rgba(139,241,241,0.08); padding: 2px 6px; border-radius: 4px;">[describe your situation]</code> with your actual situation. Be specific.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- CARD 2: Pre-Prompt Checklist -->
+    <!-- ═══════════════════════════════════ -->
+    <div class="card">
+      <span class="card-number">02</span>
+      <h2>The Pre-Prompt Checklist</h2>
+      <p>Before every prompt, answer these 4 questions. Takes 30 seconds. Saves 10 minutes of back-and-forth.</p>
+
+      <ol class="checklist">
+        <li>
+          <span class="num">1.</span>
+          <div><strong>What do I actually want?</strong><br>Be specific. Not "help with marketing" but "5 Instagram post ideas for my painting business targeting homeowners in Tampa."</div>
+        </li>
+        <li>
+          <span class="num">2.</span>
+          <div><strong>What context does AI need?</strong><br>Who are you? What's the situation? "I'm a barber shop owner with 3 chairs in downtown Orlando targeting men 25-40."</div>
+        </li>
+        <li>
+          <span class="num">3.</span>
+          <div><strong>What does "good" look like?</strong><br>Format, tone, length. "I want a professional email under 200 words with a friendly tone."</div>
+        </li>
+        <li>
+          <span class="num">4.</span>
+          <div><strong>What constraints exist?</strong><br>What to avoid, must-haves. "Don't use slang. Must include a call to action."</div>
+        </li>
+      </ol>
+
+      <div class="formula">
+        <span>Skill + Tool Selection = Results</span>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- CARD 3: Weak vs Strong -->
+    <!-- ═══════════════════════════════════ -->
+    <div class="card">
+      <span class="card-number">03</span>
+      <h2>Weak vs Strong Prompts</h2>
+      <p>Same AI. Same free account. The difference is the input.</p>
+
+      <div class="comparison">
+        <div class="comparison-bad">
+          <div class="comparison-label">Weak Prompt</div>
+          "Write me a marketing email"
+        </div>
+        <div class="comparison-good">
+          <div class="comparison-label">Strong Prompt</div>
+          "Write a marketing email for my auto detailing business in Tampa targeting luxury car owners. Tone: professional but friendly. Include a limited-time offer for ceramic coating. Keep it under 200 words."
+        </div>
+      </div>
+
+      <p class="key-quote">"Garbage in, garbage out. Your input determines your output."</p>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- CARD 4: Free AI Tools -->
+    <!-- ═══════════════════════════════════ -->
+    <div class="card">
+      <span class="card-number">04</span>
+      <h2>Free AI Tools to Start With</h2>
+      <p>You don't need to pay for anything. Start here.</p>
+
+      <div class="tool-grid">
+        <a href="https://chat.openai.com" target="_blank" class="tool-card">
+          <div class="tool-name">ChatGPT</div>
+          <div class="tool-desc">General purpose, brainstorming, writing, conversation</div>
+          <div class="tool-price">Free</div>
+        </a>
+        <a href="https://claude.ai" target="_blank" class="tool-card">
+          <div class="tool-name">Claude</div>
+          <div class="tool-desc">Documents, long writing, analysis, nuanced reasoning</div>
+          <div class="tool-price">Free</div>
+        </a>
+        <a href="https://perplexity.ai" target="_blank" class="tool-card">
+          <div class="tool-name">Perplexity</div>
+          <div class="tool-desc">Research with real sources and citations</div>
+          <div class="tool-price">Free</div>
+        </a>
+      </div>
+
+      <p style="text-align: center; color: rgba(255,255,255,0.5); font-size: 14px; margin-top: 8px;">Try the same prompt in all three. Compare. Each has strengths.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- CARD 5: Bonus - Wispr Flow -->
+    <!-- ═══════════════════════════════════ -->
+    <div class="card bonus-card">
+      <span class="card-number">Bonus</span>
+      <h2>The Secret Weapon: Talk to AI Instead of Typing</h2>
+      <p>The fastest way to give AI great context is to <strong style="color: #fff;">talk to it</strong>. You can explain your situation in 30 seconds of speech faster than 5 minutes of typing.</p>
+
+      <p><strong style="color: #fff;">Wispr Flow</strong> is a voice dictation tool that turns your speech into text anywhere on your computer &mdash; in ChatGPT, Claude, emails, documents, anywhere. You speak naturally and it types for you with remarkable accuracy.</p>
+
+      <p>This is the tool I personally use every day. It changes how fast you can work with AI.</p>
+
+      <div class="cta-wrapper">
+        <div class="cta-outer">
+          <a href="https://wisprflow.ai/r?TROY97" target="_blank" class="cta-btn">
+            Try Wispr Flow Free &rsaquo;
+          </a>
+        </div>
+      </div>
+
+      <p style="text-align: center; color: rgba(255,255,255,0.4); font-size: 12px;">Free to try. I use this every single day.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════ -->
+    <!-- CARD 6: Your Homework -->
+    <!-- ═══════════════════════════════════ -->
+    <div class="card">
+      <span class="card-number">Your Homework</span>
+      <h2>What to Do Right Now</h2>
+
+      <ol class="checklist">
+        <li>
+          <span class="num">1.</span>
+          <div><strong>Use the Oracle Prompt</strong> on your biggest business challenge. Copy it from above, paste it into ChatGPT or Claude, and replace the brackets.</div>
+        </li>
+        <li>
+          <span class="num">2.</span>
+          <div><strong>Try one more prompt</strong> using the Pre-Prompt Checklist. Answer all 4 questions before you type anything.</div>
+        </li>
+        <li>
+          <span class="num">3.</span>
+          <div><strong>Pick ONE weekly task</strong> you already do and try using AI for it this week. 15 minutes a day. That's it.</div>
+        </li>
+      </ol>
+
+      <hr class="divider">
+
+      <p class="key-quote">"AI won't take your job. Someone who knows how to use AI will."</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>School of AI &bull; <a href="https://school.endlesswinning.com">school.endlesswinning.com</a></p>
+      <p style="margin-top: 8px;">Endless Winning &bull; 1309 Coffeen Avenue STE 1200, Sheridan, WY 82801</p>
+    </div>
+
+  </div>
+
+  <script>
+    function copyText(id) {
+      const block = document.getElementById(id);
+      // Get just the prompt text, not the button text
+      const text = block.innerText.replace(/^Copy\n?/, '').trim();
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = block.querySelector('.copy-btn');
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    }
+  </script>
+
+</body>
+</html>

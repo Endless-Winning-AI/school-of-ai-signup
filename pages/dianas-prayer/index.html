@@ -65,6 +65,37 @@
       .prayer-body { font-size: 17px; line-height: 1.85; }
     }
 
+    .section-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 36px 0 22px;
+      color: rgba(139, 241, 241, 0.65);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.32em;
+    }
+    .section-label::before,
+    .section-label::after {
+      content: '';
+      flex: 0 1 56px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139, 241, 241, 0.35), transparent);
+    }
+    .section-label:first-child { margin-top: 0; }
+    .section-label .roman {
+      color: rgba(139, 241, 241, 0.85);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+    }
+    @media (min-width: 640px) {
+      .section-label { font-size: 12px; margin: 44px 0 26px; }
+      .section-label::before,
+      .section-label::after { flex-basis: 72px; }
+    }
+
     .download-btn {
       display: inline-flex; align-items: center; gap: 8px;
       padding: 14px 22px; border-radius: 9999px;
@@ -120,9 +151,20 @@
 
       <div class="glass-card p-6 sm:p-10">
         <div class="prayer-body">
-          <p>Good morning Holy Spirit — you say in the book of James that you are <em>yearning</em> for me to welcome you in to every part of my decision-making day, that you have an intense longing and intense desire and craving for me to welcome you, to be acknowledged daily. You have said it is your sincere willingness, your great willingness, that will move to action, will make come alive and produce my deepest thoughts and deepest desires. That you are pouring out your kindness, your tenderness, your affection and love upon me. Your great grace!!! <em>Great grace, great grace</em> — unprecedented favor in ways that I have never known, never tasted before. I come to receive this. I come to receive fresh abilities, empowerments, capabilities that I have never had before or never known before. I thank you Holy Spirit, I thank you for this great grace, this great grace!</p>
+
+          <div class="section-label"><span class="roman">I</span><span>The Invitation</span></div>
+
+          <p>Good morning Holy Spirit — you say in the book of James that you are <em>yearning</em> for me to welcome you in to every part of my decision-making day, that you have an intense longing and intense desire and craving for me to welcome you, to be acknowledged daily.</p>
+
+          <p>You have said it is your sincere willingness, your great willingness, that will move to action, will make come alive and produce my deepest thoughts and deepest desires. That you are pouring out your kindness, your tenderness, your affection and love upon me. Your great grace!!! <em>Great grace, great grace</em> — unprecedented favor in ways that I have never known, never tasted before.</p>
+
+          <p>I come to receive this. I come to receive fresh abilities, empowerments, capabilities that I have never had before or never known before. I thank you Holy Spirit, I thank you for this great grace, this great grace!</p>
+
+          <div class="section-label"><span class="roman">II</span><span>The Surrender</span></div>
 
           <p>Therefore Holy Spirit, I welcome you today! I give you my free will and boldly say: <em>take over my mind!</em> Have your full and entire way within me today! Give me clear, clear direction today and fresh inspiration! Help me make the right choices today!</p>
+
+          <div class="section-label"><span class="roman">III</span><span>The Thanksgiving</span></div>
 
           <p>I thank you that you are directing, you are ordering my steps with great clarity! I yield to you with great excitement knowing that you have ordained me to be an astounding success. I stand in awe of your great grace! I thank you God that my latter will be much greater, supernaturally above my former!</p>
 

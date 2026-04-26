@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The School of AI — Vocab Sheet</title>
+  <meta name="description" content="The essential AI vocabulary — tiered by where you are on your journey. From Endless Winning's School of AI.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../assets/fonts/gilroy-regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../assets/fonts/gilroy-regular.woff2') format('woff2');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../assets/fonts/gilroy-bold.woff2') format('woff2');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../assets/fonts/gilroy-bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Gilroy', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    .gradient-title {
+      background: linear-gradient(4.67deg, #389ABF 4.69%, #8BF1F1 51.21%, #5FFCC0 95.94%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tier-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      background: linear-gradient(135deg, rgba(139, 241, 241, 0.15), rgba(95, 252, 192, 0.15));
+      border: 1px solid rgba(139, 241, 241, 0.3);
+      color: #8BF1F1;
+    }
+
+    .tier-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      background: #8BF1F1;
+      box-shadow: 0 0 8px rgba(139, 241, 241, 0.8);
+    }
+
+    .glass-card {
+      background: rgba(12, 16, 32, 0.35);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid transparent;
+      border-top-color: rgba(255, 255, 255, 0.25);
+      border-left-color: rgba(255, 255, 255, 0.14);
+      border-right-color: rgba(255, 255, 255, 0.05);
+      border-bottom-color: rgba(255, 255, 255, 0.02);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      border-radius: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('../assets/form-texture.png');
+      background-size: cover;
+      opacity: 0.05;
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    .term-card {
+      background: rgba(10, 14, 30, 0.4);
+      border: 1px solid transparent;
+      border-top-color: rgba(255, 255, 255, 0.14);
+      border-left-color: rgba(255, 255, 255, 0.08);
+      border-right-color: rgba(255, 255, 255, 0.03);
+      border-bottom-color: rgba(255, 255, 255, 0.02);
+      border-radius: 16px;
+      padding: 18px 20px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .term-card:hover {
+      border-top-color: rgba(139, 241, 241, 0.4);
+      transform: translateY(-2px);
+    }
+
+    .term-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #8BF1F1;
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+
+    .term-abbr {
+      color: rgba(255, 255, 255, 0.5);
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .term-def {
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .term-best {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(139, 241, 241, 0.12);
+      color: rgba(95, 252, 192, 0.9);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .best-label {
+      display: inline-block;
+      color: rgba(255, 255, 255, 0.45);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 10px;
+      margin-right: 8px;
+      transform: translateY(-1px);
+    }
+
+    .divider-glow {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139, 241, 241, 0.35), transparent);
+      margin: 0 auto;
+      width: 80%;
+    }
+
+    .btn-glow-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .btn-glow-outer {
+      position: absolute;
+      inset: -3px;
+      border-radius: 9999px;
+      background: conic-gradient(from 180deg,
+        #AF52DE 0deg,
+        #FF2D92 52deg,
+        #FF6482 82deg,
+        #FF9500 94deg,
+        #FFD60A 124deg,
+        #30D158 180deg,
+        #2EC4B6 236deg,
+        #40CBF0 266deg,
+        #007AFF 278deg,
+        #5856D6 308deg,
+        #AF52DE 360deg
+      );
+      filter: blur(14px);
+      opacity: 0.44;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .btn-glow-wrapper:hover .btn-glow-outer {
+      opacity: 0.56;
+      filter: blur(18px);
+    }
+
+    .btn-glow {
+      position: relative;
+      z-index: 1;
+      border: none !important;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 32px;
+      border-radius: 9999px;
+      background: rgba(10, 14, 30, 0.55);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      text-decoration: none;
+      transition: transform 0.15s;
+    }
+
+    .btn-glow:active {
+      transform: scale(0.98);
+    }
+
+    .btn-glow::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 9999px;
+      padding: 1px;
+      background: conic-gradient(from 180deg,
+        #AF52DE 0deg,
+        #FF2D92 52deg,
+        #FF6482 82deg,
+        #FF9500 94deg,
+        #FFD60A 124deg,
+        #30D158 180deg,
+        #2EC4B6 236deg,
+        #40CBF0 266deg,
+        #007AFF 278deg,
+        #5856D6 308deg,
+        #AF52DE 360deg
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .tier-number {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: rgba(255, 255, 255, 0.4);
+      text-transform: uppercase;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .toc-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 9999px;
+      background: rgba(10, 14, 30, 0.5);
+      border: 1px solid transparent;
+      border-top-color: rgba(255, 255, 255, 0.18);
+      border-left-color: rgba(255, 255, 255, 0.08);
+      border-right-color: rgba(255, 255, 255, 0.03);
+      border-bottom-color: rgba(255, 255, 255, 0.02);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.85);
+      transition: transform 0.15s, border-color 0.2s, background 0.2s, color 0.2s;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .toc-pill:hover {
+      transform: translateY(-2px);
+      border-top-color: rgba(139, 241, 241, 0.5);
+      color: #8BF1F1;
+      background: rgba(10, 14, 30, 0.7);
+    }
+
+    .toc-pill-num {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: rgba(139, 241, 241, 0.9);
+      text-transform: uppercase;
+    }
+
+    .toc-pill-sep {
+      width: 1px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.15);
+    }
+  </style>
+</head>
+<body class="bg-black min-h-screen font-sans overflow-x-hidden">
+
+  <!-- Background Image -->
+  <div class="fixed inset-0">
+    <img src="../assets/background.png" alt="" class="w-full h-full object-cover opacity-55 pointer-events-none">
+  </div>
+
+  <!-- Main Content -->
+  <div class="relative z-10 min-h-screen px-4 py-12 sm:py-16">
+
+    <div class="max-w-[720px] mx-auto">
+
+      <!-- Header -->
+      <div class="flex flex-col items-center gap-5 text-center mb-12">
+        <div class="tier-pill">
+          <span class="tier-dot"></span>
+          Vocab Sheet
+        </div>
+        <h1 class="gradient-title font-semibold text-[36px] sm:text-[52px] leading-[1.05] max-w-[560px]">
+          Speak the Language of AI
+        </h1>
+        <p class="text-white/70 text-[15px] sm:text-[17px] leading-relaxed max-w-[520px]">
+          The terms you need — tiered by where you are in your journey. Start at the top. Work your way down.
+        </p>
+
+        <!-- Table of Contents -->
+        <div class="flex flex-wrap justify-center gap-2 mt-3">
+          <a href="#tier-1" class="toc-pill">
+            <span class="toc-pill-num">01</span>
+            <span class="toc-pill-sep"></span>
+            <span>Core Vocabulary</span>
+          </a>
+          <a href="#tier-2" class="toc-pill">
+            <span class="toc-pill-num">02</span>
+            <span class="toc-pill-sep"></span>
+            <span>Your Toolbox</span>
+          </a>
+          <a href="#tier-3" class="toc-pill">
+            <span class="toc-pill-num">03</span>
+            <span class="toc-pill-sep"></span>
+            <span>The Plumbing</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- TIER 1 -->
+      <section id="tier-1" class="mb-10 scroll-mt-8">
+        <div class="flex items-center gap-3 mb-5 px-2">
+          <span class="tier-number">Tier 01</span>
+          <div class="flex-1 h-px bg-gradient-to-r from-white/20 to-transparent"></div>
+        </div>
+        <div class="glass-card p-6 sm:p-8">
+          <div class="relative z-10">
+            <div class="mb-6">
+              <h2 class="gradient-title font-semibold text-[24px] sm:text-[28px] mb-2">Core Vocabulary</h2>
+              <p class="text-white/60 text-[14px]">The landscape. Enough to hold any conversation about AI.</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-3">
+              <div class="term-card">
+                <div class="term-name">AI <span class="term-abbr">/ Artificial Intelligence</span></div>
+                <div class="term-def">Machines performing tasks that normally require human intelligence — reasoning, writing, seeing, deciding.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">ML <span class="term-abbr">/ Machine Learning</span></div>
+                <div class="term-def">How AI learns by finding patterns in data rather than being hand-coded step-by-step.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">LLM <span class="term-abbr">/ Large Language Model</span></div>
+                <div class="term-def">An AI trained on massive amounts of text to understand and generate human language. ChatGPT is built on one.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">GPT</div>
+                <div class="term-def">"Generative Pre-trained Transformer" — the family of models powering ChatGPT. GPT-4, GPT-5, etc.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Model</div>
+                <div class="term-def">The actual AI "brain" that takes your input and produces a response. Different models have different strengths.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Prompt</div>
+                <div class="term-def">What you type to the AI. The instructions, questions, or context you give it to get a response.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Token</div>
+                <div class="term-def">The building block of AI text — roughly ¾ of a word. AI reads and writes in tokens, not words.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Context Window</div>
+                <div class="term-def">How much the AI can "remember" in a single conversation. Bigger window = longer memory.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Hallucination</div>
+                <div class="term-def">When AI confidently makes something up that isn't true. Always verify important facts.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Agent</div>
+                <div class="term-def">AI that doesn't just respond — it takes actions for you. Browses the web, writes files, runs tools.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Chatbot</div>
+                <div class="term-def">A conversational AI interface. ChatGPT, Claude, and Gemini are chatbots built on LLMs.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Training Data</div>
+                <div class="term-def">The text, images, and examples the AI learned from before it ever met you.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TIER 2 -->
+      <section id="tier-2" class="mb-10 scroll-mt-8">
+        <div class="flex items-center gap-3 mb-5 px-2">
+          <span class="tier-number">Tier 02</span>
+          <div class="flex-1 h-px bg-gradient-to-r from-white/20 to-transparent"></div>
+        </div>
+        <div class="glass-card p-6 sm:p-8">
+          <div class="relative z-10">
+            <div class="mb-6">
+              <h2 class="gradient-title font-semibold text-[24px] sm:text-[28px] mb-2">Your Toolbox</h2>
+              <p class="text-white/60 text-[14px]">The platforms and workspace you'll actually use day-to-day.</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-3">
+              <div class="term-card">
+                <div class="term-name">ChatGPT</div>
+                <div class="term-def">OpenAI's flagship assistant. The best all-rounder with the deepest ecosystem.</div>
+                <div class="term-best"><span class="best-label">Best for</span>Everyday tasks, brainstorming, and all-purpose AI work</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Claude</div>
+                <div class="term-def">Anthropic's AI. Excels at writing, analysis, and long documents.</div>
+                <div class="term-best"><span class="best-label">Best for</span>Long-form writing, deep analysis, and coding</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Gemini</div>
+                <div class="term-def">Google's AI. Native to Gmail, Drive, and Docs — lives inside your Google workspace.</div>
+                <div class="term-best"><span class="best-label">Best for</span>Anything inside Google — Gmail, Docs, Drive, Sheets</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Grok</div>
+                <div class="term-def">xAI's model. Real-time data from X (Twitter) and fewer guardrails.</div>
+                <div class="term-best"><span class="best-label">Best for</span>Real-time news, trends, and unfiltered takes from X</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Perplexity</div>
+                <div class="term-def">An AI search engine. Answers questions by scanning the live web and citing its sources.</div>
+                <div class="term-best"><span class="best-label">Best for</span>Web searching, research, and scraping info from live sites</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Nano Banana</div>
+                <div class="term-def">Google's viral image-editing model inside Gemini. Edit a photo by describing the change.</div>
+                <div class="term-best"><span class="best-label">Best for</span>Image creation, editing, and photo processing</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Higgsfield</div>
+                <div class="term-def">AI video generation. Turn a photo or prompt into a cinematic clip.</div>
+                <div class="term-best"><span class="best-label">Best for</span>Generating short videos, motion shots, and b-roll</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">IDE <span class="term-abbr">/ Integrated Dev Environment</span></div>
+                <div class="term-def">The editor where code and AI live together. Zed is the one we use.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">CLI <span class="term-abbr">/ Command Line Interface</span></div>
+                <div class="term-def">Typing commands directly to your computer. Claude Code runs here. Less scary than it looks.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Project</div>
+                <div class="term-def">A persistent workspace in ChatGPT or Claude that remembers context across every chat inside it.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Master Prompt</div>
+                <div class="term-def">A seeded, high-quality prompt that sets the stage for every conversation in a Project.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Plan Mode</div>
+                <div class="term-def">ChatGPT's "architect first, execute second" mode. Write the plan, review it, then run it.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">System Prompt</div>
+                <div class="term-def">The hidden instructions shaping how the AI behaves before you say anything.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TIER 3 -->
+      <section id="tier-3" class="mb-12 scroll-mt-8">
+        <div class="flex items-center gap-3 mb-5 px-2">
+          <span class="tier-number">Tier 03</span>
+          <div class="flex-1 h-px bg-gradient-to-r from-white/20 to-transparent"></div>
+        </div>
+        <div class="glass-card p-6 sm:p-8">
+          <div class="relative z-10">
+            <div class="mb-6">
+              <h2 class="gradient-title font-semibold text-[24px] sm:text-[28px] mb-2">The Plumbing</h2>
+              <p class="text-white/60 text-[14px]">How it all connects underneath. The builder's layer.</p>
+            </div>
+
+            <div class="grid grid-cols-1 gap-3">
+              <div class="term-card">
+                <div class="term-name">API <span class="term-abbr">/ App Programming Interface</span></div>
+                <div class="term-def">How software talks to software. The outlet AI plugs into.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">MCP <span class="term-abbr">/ Model Context Protocol</span></div>
+                <div class="term-def">The USB-C of AI — one standard for any AI to talk to any tool.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">n8n</div>
+                <div class="term-def">Drag-and-drop automation platform for wiring AI into the rest of your stack.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Antigravity</div>
+                <div class="term-def">Google's new AI-native coding IDE. Fast, smart, and built around AI pair-programming.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Automation</div>
+                <div class="term-def">Chained actions that run without you — AI + triggers + tools working together.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Webhook</div>
+                <div class="term-def">A real-time notification from one app to another: "hey, something just happened."</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Integration</div>
+                <div class="term-def">A connection between two apps so they share data automatically.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">RAG <span class="term-abbr">/ Retrieval-Augmented Generation</span></div>
+                <div class="term-def">Giving AI access to your documents so its answers stay grounded in your data.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Embedding</div>
+                <div class="term-def">Turning text into numbers so AI can measure how similar two ideas are.</div>
+              </div>
+
+              <div class="term-card">
+                <div class="term-name">Fine-tuning</div>
+                <div class="term-def">Extra training on your data to turn a general AI into a specialized one.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <div class="flex flex-col items-center gap-5 text-center py-8">
+        <div class="divider-glow mb-2"></div>
+        <p class="text-white/70 text-[15px] max-w-[460px]">
+          This is just the vocabulary. The course teaches you to use it.
+        </p>
+        <div class="btn-glow-wrapper">
+          <div class="btn-glow-outer"></div>
+          <a href="https://school.endlesswinning.com" class="btn-glow">
+            <span>Join the School of AI</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+              <path d="M9 6C9 6 15 10.4189 15 12C15 13.5812 9 18 9 18" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+        <p class="text-white/40 text-[12px] mt-4">
+          An <a href="https://endlesswinning.com" class="text-[#8BF1F1] hover:underline">Endless Winning</a> resource
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foundation One — The School of AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../assets/fonts/gilroy-regular.woff2') format('woff2');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../assets/fonts/gilroy-bold.woff2') format('woff2');
+      font-weight: 600;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Gilroy';
+      src: url('../assets/fonts/gilroy-bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Gilroy', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    .gradient-title {
+      background: linear-gradient(4.67deg, #389ABF 4.69%, #8BF1F1 51.21%, #5FFCC0 95.94%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .gradient-accent {
+      background: linear-gradient(135deg, #8BF1F1, #5FFCC0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .glass-card {
+      background: rgba(12, 16, 32, 0.45);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid transparent;
+      border-top-color: rgba(255, 255, 255, 0.18);
+      border-left-color: rgba(255, 255, 255, 0.10);
+      border-right-color: rgba(255, 255, 255, 0.04);
+      border-bottom-color: rgba(255, 255, 255, 0.02);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    }
+
+    .glass-card-inner {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .tool-card {
+      background: rgba(12, 16, 32, 0.6);
+      border: 1px solid rgba(139, 241, 241, 0.12);
+      transition: all 0.3s ease;
+    }
+
+    .tool-card:hover {
+      border-color: rgba(139, 241, 241, 0.3);
+      box-shadow: 0 0 20px rgba(139, 241, 241, 0.08);
+    }
+
+    .section-number {
+      background: linear-gradient(135deg, rgba(139, 241, 241, 0.15), rgba(95, 252, 192, 0.15));
+      border: 1px solid rgba(139, 241, 241, 0.3);
+      color: #8BF1F1;
+    }
+
+    .pill {
+      background: linear-gradient(135deg, rgba(139, 241, 241, 0.12), rgba(95, 252, 192, 0.12));
+      border: 1px solid rgba(139, 241, 241, 0.25);
+      color: #8BF1F1;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(139, 241, 241, 0.2), transparent);
+    }
+
+    .rainbow-line {
+      height: 2px;
+      background: conic-gradient(from 180deg,
+        #AF52DE 0deg, #FF2D92 52deg, #FF6482 82deg,
+        #FF9500 94deg, #FFD60A 124deg, #30D158 180deg,
+        #2EC4B6 236deg, #40CBF0 266deg, #007AFF 278deg,
+        #5856D6 308deg, #AF52DE 360deg
+      );
+      border-radius: 2px;
+    }
+
+    .timeline-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #8BF1F1;
+      box-shadow: 0 0 12px rgba(139, 241, 241, 0.4);
+      flex-shrink: 0;
+    }
+
+    .timeline-line {
+      width: 2px;
+      background: linear-gradient(180deg, rgba(139, 241, 241, 0.3), rgba(95, 252, 192, 0.1));
+      flex-shrink: 0;
+    }
+
+    .icon-circle {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(139, 241, 241, 0.12), rgba(95, 252, 192, 0.08));
+      border: 1px solid rgba(139, 241, 241, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .analogy-tag {
+      background: rgba(255, 149, 0, 0.12);
+      border: 1px solid rgba(255, 149, 0, 0.25);
+      color: #FFB340;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Readable descriptive text — high contrast on dark bg */
+    .text-desc {
+      color: rgba(255, 255, 255, 0.82);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8), 0 0 8px rgba(0, 0, 0, 0.4);
+    }
+    .text-desc-light {
+      color: rgba(255, 255, 255, 0.72);
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8), 0 0 8px rgba(0, 0, 0, 0.4);
+    }
+  </style>
+</head>
+<body class="bg-black min-h-screen font-sans overflow-x-hidden text-white">
+
+  <!-- Background -->
+  <div class="fixed inset-0">
+    <img src="../assets/background.png" alt="" class="w-full h-full object-cover opacity-40 pointer-events-none">
+  </div>
+
+  <!-- Content -->
+  <div class="relative z-10">
+
+    <!-- ════════════════ HERO ════════════════ -->
+    <header class="flex items-start justify-center px-4 pt-10 pb-8">
+      <div class="max-w-3xl w-full text-center">
+        <!-- Pill -->
+        <div class="inline-block pill px-4 py-1.5 rounded-full text-[13px] font-bold uppercase tracking-[0.18em] mb-6">
+          Foundation Class
+        </div>
+
+        <!-- Title -->
+        <h1 class="gradient-title font-bold text-[40px] sm:text-[56px] md:text-[64px] leading-[1.1] mb-6">
+          Setting Up Your<br>AI Workshop
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="text-white/70 text-[18px] sm:text-[20px] max-w-xl mx-auto mb-8 leading-relaxed">
+          What an IDE is, how folders and files work,<br class="hidden sm:block">
+          and an introduction to Claude Code skills.
+        </p>
+
+        <!-- Details Row -->
+        <div class="flex flex-wrap items-center justify-center gap-6 text-desc text-[16px] mb-10">
+          <div class="flex items-center gap-2">
+            <svg class="w-[18px] h-[18px] opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <path d="M16 2v4M8 2v4M3 10h18"/>
+            </svg>
+            <span>Tonight — March 19, 2026</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-[18px] h-[18px] opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+            <span>7:00 PM EST</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-[18px] h-[18px] opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 8v4M12 16h.01"/>
+            </svg>
+            <span>60 Minutes</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none">
+              <rect width="24" height="24" rx="5" fill="#2D8CFF"/>
+              <path d="M5 8.5C5 7.67 5.67 7 6.5 7H13.5C14.33 7 15 7.67 15 8.5V15.5C15 16.33 14.33 17 13.5 17H6.5C5.67 17 5 16.33 5 15.5V8.5Z" fill="white"/>
+              <path d="M15.5 10L19 7.5V16.5L15.5 14V10Z" fill="white"/>
+            </svg>
+            <span>Live on Zoom</span>
+          </div>
+        </div>
+
+        <!-- Two Parts Split -->
+        <div class="flex flex-col sm:flex-row gap-3 w-full max-w-xl mx-auto mt-4 mb-2">
+          <!-- Part 1 -->
+          <div class="flex-1 rounded-2xl p-5 text-center" style="background: linear-gradient(135deg, rgba(139, 241, 241, 0.12), rgba(56, 154, 191, 0.12)); border: 1px solid rgba(139, 241, 241, 0.2);">
+            <p class="text-[#8BF1F1] font-bold text-[16px] uppercase tracking-[0.15em] mb-2">Part 1</p>
+            <p class="text-white font-semibold text-[18px] mb-3">Your AI Workshop</p>
+            <p class="text-white/70 text-[16px] leading-relaxed">What an IDE is<br>Files & folders<br>Live setup + demos</p>
+          </div>
+          <!-- Part 2 -->
+          <div class="flex-1 rounded-2xl p-5 text-center" style="background: linear-gradient(135deg, rgba(255, 149, 0, 0.12), rgba(255, 100, 130, 0.12)); border: 1px solid rgba(255, 149, 0, 0.2);">
+            <p class="text-[#FFB340] font-bold text-[16px] uppercase tracking-[0.15em] mb-2">Part 2</p>
+            <p class="text-white font-semibold text-[18px] mb-3">Claude Skills</p>
+            <p class="text-white/70 text-[16px] leading-relaxed">What skills are<br>How they work<br>Spotting where to build them</p>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+
+    <!-- ════════════════ THE 3 PIECES ════════════════ -->
+    <section class="px-4 py-8 max-w-3xl mx-auto">
+      <div class="glass-card rounded-[24px] p-8 sm:p-10">
+        <h2 class="text-[28px] sm:text-[32px] font-bold text-center mb-3 leading-tight">
+          Three Things You Need
+        </h2>
+        <p class="text-desc text-center text-[16px] leading-relaxed max-w-lg mx-auto mb-8">
+          Claude Code + an IDE + your files and folders. That's the whole setup.
+        </p>
+
+        <!-- Stacked Items -->
+        <div class="flex flex-col gap-4">
+          <div class="glass-card-inner rounded-2xl p-6 flex items-start gap-5">
+            <div class="icon-circle">
+              <svg class="w-5 h-5 text-[#8BF1F1]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a5 5 0 015 5c0 2.76-5 8-5 8s-5-5.24-5-8a5 5 0 015-5z"/>
+                <circle cx="12" cy="7" r="1.5"/>
+                <path d="M5 20h14"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-semibold text-[18px] mb-1">Claude Code</p>
+              <p class="text-desc text-[16px] leading-relaxed">Your AI assistant. It lives inside the IDE, reads your files, writes code, and runs commands — all from a single prompt.</p>
+            </div>
+          </div>
+
+          <div class="glass-card-inner rounded-2xl p-6 flex items-start gap-5">
+            <div class="icon-circle">
+              <svg class="w-5 h-5 text-[#8BF1F1]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2"/>
+                <path d="M8 21h8M12 17v4"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-semibold text-[18px] mb-1">The IDE</p>
+              <p class="text-desc text-[16px] leading-relaxed">IDE stands for Integrated Development Environment. It's the program where you and AI can see the same files at the same time — like a shared workspace.</p>
+            </div>
+          </div>
+
+          <div class="glass-card-inner rounded-2xl p-6 flex items-start gap-5">
+            <div class="icon-circle">
+              <svg class="w-5 h-5 text-[#8BF1F1]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="font-semibold text-[18px] mb-1">Files & Folders</p>
+              <p class="text-desc text-[16px] leading-relaxed">Your project is just a folder with files in it. When you open that folder in an IDE, Claude can see everything inside — that's how it knows what to work with.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ════════════════ CLASS TIMELINE ════════════════ -->
+    <section class="px-4 py-8 max-w-3xl mx-auto">
+      <div class="text-center mb-8">
+        <span class="pill px-4 py-1.5 rounded-full text-[13px] font-bold uppercase tracking-[0.18em]">Class Outline</span>
+        <h2 class="gradient-title font-bold text-[32px] sm:text-[40px] mt-6 mb-3">Tonight's Roadmap</h2>
+        <p class="text-desc text-[16px]">60 minutes from zero to your first AI-powered workspace</p>
+      </div>
+
+      <!-- Timeline -->
+      <div class="flex flex-col gap-0">
+
+        <!-- BLOCK 1: What Is An IDE? -->
+        <div class="flex gap-4 sm:gap-6">
+          <div class="flex flex-col items-center">
+            <div class="timeline-dot"></div>
+            <div class="timeline-line flex-1 min-h-[20px]"></div>
+          </div>
+          <div class="pb-6 flex-1">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="section-number px-2.5 py-0.5 rounded-full text-[14px] font-bold">8 min</span>
+              <h3 class="font-bold text-[20px]">What Is an IDE?</h3>
+            </div>
+            <div class="glass-card rounded-2xl p-6">
+              <p class="text-desc text-[16px] mb-5">IDE stands for <span class="text-white font-semibold">Integrated Development Environment</span>. But you don't need to "develop" to use one. Think of it as a program where you and AI can see the same files at the same time.</p>
+
+              <div class="space-y-3">
+                <div class="glass-card-inner rounded-xl p-4 flex items-center gap-4">
+                  <span class="text-[24px]">📂</span>
+                  <div>
+                    <p class="font-semibold text-[16px]">File Explorer (Sidebar)</p>
+                    <p class="text-desc-light text-[16px]">The left panel — shows all your files and folders so you can navigate your project</p>
+                  </div>
+                </div>
+                <div class="glass-card-inner rounded-xl p-4 flex items-center gap-4">
+                  <span class="text-[24px]">⌨️</span>
+                  <div>
+                    <p class="font-semibold text-[16px]">Terminal (Center Area)</p>
+                    <p class="text-desc-light text-[16px]">The main area where you open a terminal and run Claude Code — this is where the conversation happens</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-5 p-4 rounded-xl" style="background: rgba(255, 149, 0, 0.08); border: 1px solid rgba(255, 149, 0, 0.15);">
+                <p class="text-[#FFB340] text-[13px] font-semibold mb-1">IDEs We'll Mention</p>
+                <p class="text-desc-light text-[16px]">Zed (Mac) &bull; Cursor (Mac + Windows) &bull; Antigravity &bull; VS Code (Mac + Windows)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOCK 3: Folders & Files -->
+        <div class="flex gap-4 sm:gap-6">
+          <div class="flex flex-col items-center">
+            <div class="timeline-dot"></div>
+            <div class="timeline-line flex-1 min-h-[20px]"></div>
+          </div>
+          <div class="pb-6 flex-1">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="section-number px-2.5 py-0.5 rounded-full text-[14px] font-bold">7 min</span>
+              <h3 class="font-bold text-[20px]">Folders & Files — How Claude Sees Your Project</h3>
+            </div>
+            <div class="glass-card rounded-2xl p-6">
+              <p class="text-desc text-[16px] mb-5">When you open a folder in an IDE, you're handing Claude a box and saying <span class="text-white italic">"everything you need is in here."</span></p>
+
+              <div class="space-y-3 mb-5">
+                <div class="glass-card-inner rounded-xl p-4">
+                  <p class="font-semibold text-[16px] mb-1">Project Folder</p>
+                  <p class="text-desc-light text-[16px]">A box you hand Claude — "everything you need is in here"</p>
+                </div>
+                <div class="glass-card-inner rounded-xl p-4">
+                  <p class="font-semibold text-[16px] mb-1">Subfolders</p>
+                  <p class="text-desc-light text-[16px]">Drawers inside the box — keeps things organized</p>
+                </div>
+                <div class="glass-card-inner rounded-xl p-4">
+                  <p class="font-semibold text-[16px] mb-1">File Types</p>
+                  <p class="text-desc-light text-[16px]">.txt, .html, .md, .csv — different materials for different jobs</p>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-xl" style="background: rgba(255, 45, 146, 0.08); border: 1px solid rgba(255, 45, 146, 0.15);">
+                <p class="text-[#FF6482] text-[13px] font-semibold">#1 Mistake</p>
+                <p class="text-desc-light text-[16px] mt-1">Asking Claude about files it can't see. If it's not in the folder, it's not on the workbench.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOCK 4: Live Setup -->
+        <div class="flex gap-4 sm:gap-6">
+          <div class="flex flex-col items-center">
+            <div class="timeline-dot"></div>
+            <div class="timeline-line flex-1 min-h-[20px]"></div>
+          </div>
+          <div class="pb-6 flex-1">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="section-number px-2.5 py-0.5 rounded-full text-[14px] font-bold">10 min</span>
+              <h3 class="font-bold text-[20px]">Live Setup — Building Your Workshop</h3>
+            </div>
+            <div class="glass-card rounded-2xl p-6">
+              <p class="text-desc text-[16px] mb-5">Follow along or watch — either way, you'll have this set up before our next session. Tap each step for details.</p>
+
+              <div class="space-y-3">
+
+                <!-- Step 1: Get a Claude Account -->
+                <details class="group">
+                  <summary class="flex items-center gap-3 glass-card-inner rounded-xl p-4 cursor-pointer list-none">
+                    <span class="text-[#8BF1F1] font-bold text-[18px] w-8 text-center flex-shrink-0">1</span>
+                    <p class="text-[16px] flex-1">Get a Claude Pro or Max account</p>
+                    <svg class="w-4 h-4 text-white/30 transition-transform group-open:rotate-180 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                  </summary>
+                  <div class="mt-2 ml-11 p-4 rounded-xl glass-card-inner space-y-3">
+                    <p class="text-desc text-[16px]">Claude Code requires a paid Anthropic account. Go to claude.ai and sign up for Pro ($20/mo) or Max ($100/mo).</p>
+                    <a href="https://claude.ai" target="_blank" class="inline-block text-[#8BF1F1] text-[16px] font-semibold hover:underline">→ Sign up at claude.ai</a>
+                  </div>
+                </details>
+
+                <!-- Step 2: Install Node.js -->
+                <details class="group">
+                  <summary class="flex items-center gap-3 glass-card-inner rounded-xl p-4 cursor-pointer list-none">
+                    <span class="text-[#8BF1F1] font-bold text-[18px] w-8 text-center flex-shrink-0">2</span>
+                    <p class="text-[16px] flex-1">Install Node.js</p>
+                    <svg class="w-4 h-4 text-white/30 transition-transform group-open:rotate-180 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                  </summary>
+                  <div class="mt-2 ml-11 p-4 rounded-xl glass-card-inner space-y-3">
+                    <p class="text-desc text-[16px]">Claude Code runs on Node.js — you need to install it first.</p>
+                    <div class="space-y-2 mt-2">
+                      <div class="p-3 rounded-lg" style="background: rgba(139, 241, 241, 0.06); border: 1px solid rgba(139, 241, 241, 0.12);">
+                        <p class="text-[#8BF1F1] text-[16px] font-semibold mb-1">Mac + Windows</p>
+                        <p class="text-desc text-[16px]">Go to <a href="https://nodejs.org" target="_blank" class="text-[#8BF1F1] font-semibold hover:underline">nodejs.org</a>, click the big green LTS button, and run the installer. Follow the prompts — the defaults are fine.</p>
+                      </div>
+                    </div>
+                    <p class="text-desc-light text-[16px] mt-2">To verify it installed, open a terminal and type: <code class="text-[#8BF1F1] font-mono">node --version</code> — you should see a version number.</p>
+                  </div>
+                </details>
+
+                <!-- Step 3: Install Claude Code -->
+                <details class="group">
+                  <summary class="flex items-center gap-3 glass-card-inner rounded-xl p-4 cursor-pointer list-none">
+                    <span class="text-[#8BF1F1] font-bold text-[18px] w-8 text-center flex-shrink-0">3</span>
+                    <p class="text-[16px] flex-1">Install Claude Code</p>
+                    <svg class="w-4 h-4 text-white/30 transition-transform group-open:rotate-180 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                  </summary>
+                  <div class="mt-2 ml-11 p-4 rounded-xl glass-card-inner space-y-3">
+                    <p class="text-desc text-[16px]">Open a terminal and paste this command:</p>
+                    <div class="space-y-2">
+                      <div class="p-3 rounded-lg" style="background: rgba(139, 241, 241, 0.06); border: 1px solid rgba(139, 241, 241, 0.12);">
+                        <p class="text-[#8BF1F1] text-[16px] font-semibold mb-1">Mac</p>
+                        <p class="text-desc text-[16px] mb-2">Open <strong>Terminal</strong> (search "Terminal" in Spotlight or find it in Applications → Utilities)</p>
+                        <code class="block bg-black/40 text-[#8BF1F1] text-[16px] px-3 py-2 rounded-lg font-mono">npm install -g @anthropic-ai/claude-code</code>
+                      </div>
+                      <div class="p-3 rounded-lg" style="background: rgba(139, 241, 241, 0.06); border: 1px solid rgba(139, 241, 241, 0.12);">
+                        <p class="text-[#8BF1F1] text-[16px] font-semibold mb-1">Windows</p>
+                        <p class="text-desc text-[16px] mb-2">Open <strong>PowerShell</strong> (search "PowerShell" in the Start menu)</p>
+                        <code class="block bg-black/40 text-[#8BF1F1] text-[16px] px-3 py-2 rounded-lg font-mono">npm install -g @anthropic-ai/claude-code</code>
+                      </div>
+                    </div>
+                    <p class="text-desc-light text-[16px]">This installs Claude Code globally on your computer so you can use it from any folder.</p>
+                  </div>
+                </details>
+
+                <!-- Step 4: Download an IDE -->
+                <details class="group">
+                  <summary class="flex items-center gap-3 glass-card-inner rounded-xl p-4 cursor-pointer list-none">
+                    <span class="text-[#8BF1F1] font-bold text-[18px] w-8 text-center flex-shrink-0">4</span>
+                    <p class="text-[16px] flex-1">Download an IDE</p>
+                    <svg class="w-4 h-4 text-white/30 transition-transform group-open:rotate-180 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                  </summary>
+                  <div class="mt-2 ml-11 p-4 rounded-xl glass-card-inner space-y-3">
+                    <p class="text-desc text-[16px]">Pick one and download it. They all work with Claude Code.</p>
+                    <div class="space-y-2">
+                      <a href="https://zed.dev/download" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors">
+                        <span class="text-[#8BF1F1] font-bold text-[16px] w-28 flex-shrink-0">Zed</span>
+                        <span class="text-desc-light text-[16px]">Fast, lightweight, built for AI (Mac only)</span>
+                      </a>
+                      <a href="https://www.antigravity.dev/" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors">
+                        <span class="text-[#8BF1F1] font-bold text-[16px] w-28 flex-shrink-0">Antigravity</span>
+                        <span class="text-desc-light text-[16px]">AI-native IDE, designed for agents</span>
+                      </a>
+                      <a href="https://www.cursor.com/" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors">
+                        <span class="text-[#8BF1F1] font-bold text-[16px] w-28 flex-shrink-0">Cursor</span>
+                        <span class="text-desc-light text-[16px]">AI-first code editor (Mac + Windows)</span>
+                      </a>
+                      <a href="https://code.visualstudio.com/download" target="_blank" class="flex items-center gap-3 p-3 rounded-lg hover:bg-white/5 transition-colors">
+                        <span class="text-[#8BF1F1] font-bold text-[16px] w-28 flex-shrink-0">VS Code</span>
+                        <span class="text-desc-light text-[16px]">Free, widely used (Mac + Windows)</span>
+                      </a>
+                    </div>
+                  </div>
+                </details>
+
+                <!-- Step 5: Open a folder and run Claude -->
+                <details class="group">
+                  <summary class="flex items-center gap-3 glass-card-inner rounded-xl p-4 cursor-pointer list-none">
+                    <span class="text-[#8BF1F1] font-bold text-[18px] w-8 text-center flex-shrink-0">5</span>
+                    <p class="text-[16px] flex-1">Open a folder and run Claude Code</p>
+                    <svg class="w-4 h-4 text-white/30 transition-transform group-open:rotate-180 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                  </summary>
+                  <div class="mt-2 ml-11 p-4 rounded-xl glass-card-inner space-y-3">
+                    <p class="text-desc text-[16px]">In your IDE, go to <strong>File → Open Folder</strong> and pick any folder on your computer — documents, notes, anything. You don't need code.</p>
+                    <p class="text-desc text-[16px]">Then open the terminal inside your IDE and type:</p>
+                    <code class="block bg-black/40 text-[#8BF1F1] text-[16px] px-3 py-2 rounded-lg font-mono">claude</code>
+                    <p class="text-desc-light text-[16px]">That's it. Claude Code is now running and can see everything in your folder.</p>
+                    <div class="space-y-2 mt-2">
+                      <div class="p-3 rounded-lg" style="background: rgba(139, 241, 241, 0.06); border: 1px solid rgba(139, 241, 241, 0.12);">
+                        <p class="text-[#8BF1F1] text-[16px] font-semibold mb-1">How to open the terminal</p>
+                        <p class="text-desc text-[16px]"><strong>Mac:</strong> In most IDEs, press <code class="text-[#8BF1F1] font-mono">Ctrl + `</code> (backtick) or go to View → Terminal</p>
+                        <p class="text-desc text-[16px] mt-1"><strong>Windows:</strong> Same shortcut — <code class="text-[#8BF1F1] font-mono">Ctrl + `</code> or View → Terminal</p>
+                      </div>
+                    </div>
+                  </div>
+                </details>
+
+                <!-- Step 6: Your first prompt -->
+                <details class="group">
+                  <summary class="flex items-center gap-3 glass-card-inner rounded-xl p-4 cursor-pointer list-none">
+                    <span class="text-[#8BF1F1] font-bold text-[18px] w-8 text-center flex-shrink-0">6</span>
+                    <p class="text-[16px] flex-1">Your first prompt</p>
+                    <svg class="w-4 h-4 text-white/30 transition-transform group-open:rotate-180 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+                  </summary>
+                  <div class="mt-2 ml-11 p-4 rounded-xl glass-card-inner space-y-3">
+                    <p class="text-desc text-[16px]">Once Claude is running, try typing:</p>
+                    <code class="block bg-black/40 text-[#8BF1F1] text-[16px] px-3 py-2 rounded-lg font-mono">What files are in this folder and what are they about?</code>
+                    <p class="text-desc text-[16px]">Claude will read through your files and give you a summary. Then try:</p>
+                    <code class="block bg-black/40 text-[#8BF1F1] text-[16px] px-3 py-2 rounded-lg font-mono">Organize these files into folders by topic and rename them</code>
+                    <p class="text-desc-light text-[16px]">You'll see Claude read each file, create folders, and move things around — all from one sentence.</p>
+                  </div>
+                </details>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DEMO 1: Folder Cleanup -->
+        <div class="flex gap-4 sm:gap-6">
+          <div class="flex flex-col items-center">
+            <div class="timeline-dot"></div>
+            <div class="timeline-line flex-1 min-h-[20px]"></div>
+          </div>
+          <div class="pb-6 flex-1">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="section-number px-2.5 py-0.5 rounded-full text-[14px] font-bold">Live Demo</span>
+              <h3 class="font-bold text-[20px]">Messy Folder Cleanup</h3>
+            </div>
+            <div class="glass-card rounded-2xl p-5 sm:p-6">
+              <p class="text-desc text-[16px] mb-4">We'll take a folder full of random, unorganized files and ask Claude to sort them — live.</p>
+              <div class="space-y-3">
+                <div class="glass-card-inner rounded-xl p-4">
+                  <p class="font-semibold text-[16px] mb-1">What you'll see</p>
+                  <p class="text-desc-light text-[16px]">Claude reads each file, figures out what it's about, creates folders by topic, renames the files, and moves everything into place — all from one sentence.</p>
+                </div>
+                <div class="glass-card-inner rounded-xl p-4">
+                  <p class="font-semibold text-[16px] mb-1">The prompt</p>
+                  <code class="block bg-black/40 text-[#8BF1F1] text-[16px] px-3 py-2 rounded-lg font-mono mt-2">Look at all the files in this folder, organize them by topic into subfolders, and rename them so they make sense</code>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- DEMO 2: Website Scrape & Rebuild -->
+        <div class="flex gap-4 sm:gap-6">
+          <div class="flex flex-col items-center">
+            <div class="timeline-dot"></div>
+          </div>
+          <div class="pb-6 flex-1">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="section-number px-2.5 py-0.5 rounded-full text-[14px] font-bold">Live Demo</span>
+              <h3 class="font-bold text-[20px]">Website Scrape & Rebuild</h3>
+            </div>
+            <div class="glass-card rounded-2xl p-5 sm:p-6">
+              <p class="text-desc text-[16px] mb-4">We'll point Claude at a live website, have it pull down the content and assets, then rebuild a version right in front of your eyes.</p>
+              <div class="space-y-3">
+                <div class="glass-card-inner rounded-xl p-4">
+                  <p class="font-semibold text-[16px] mb-1">What you'll see</p>
+                  <p class="text-desc-light text-[16px]">Claude scrapes the website, downloads images and text, then creates HTML files that look like the original site — all inside your project folder.</p>
+                </div>
+                <div class="glass-card-inner rounded-xl p-4">
+                  <p class="font-semibold text-[16px] mb-1">Why this matters</p>
+                  <p class="text-desc-light text-[16px]">This is where it clicks — Claude isn't just answering questions. It's reading, writing, and building things. From one prompt.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ════════════════ PART 2 HEADER ════════════════ -->
+    <section class="px-4 py-8 max-w-3xl mx-auto">
+      <div class="rainbow-line mb-6"></div>
+      <div class="text-center mb-8">
+        <span class="px-4 py-1.5 rounded-full text-[13px] font-bold uppercase tracking-[0.18em] inline-block" style="background: rgba(255, 149, 0, 0.12); border: 1px solid rgba(255, 149, 0, 0.25); color: #FFB340;">Part 2</span>
+        <h2 class="font-bold text-[32px] sm:text-[40px] mt-6 mb-3" style="background: linear-gradient(135deg, #FFB340, #FF6482); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Claude Skills</h2>
+        <p class="text-desc text-[16px]">What skills are, how they work, and how to identify where to build them.</p>
+      </div>
+
+      <!-- Timeline (orange) -->
+      <div class="flex flex-col gap-0">
+
+        <!-- ═══ TOOLKIT (inside Part 2) ═══ -->
+        <div class="mb-8">
+          <h3 class="font-bold text-[20px] mb-4">The Tools You'll Use</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div class="tool-card rounded-xl p-4" style="border-color: rgba(255, 149, 0, 0.12);">
+              <p class="font-semibold text-[16px] mb-1">IDE</p>
+              <p class="text-desc-light text-[16px]">Your workspace — the program where you and AI work together.</p>
+              <p class="text-white/40 text-[16px] mt-1">Zed, VS Code, Cursor, Antigravity</p>
+            </div>
+            <div class="tool-card rounded-xl p-4" style="border-color: rgba(255, 149, 0, 0.12);">
+              <p class="font-semibold text-[16px] mb-1">Claude Code</p>
+              <p class="text-desc-light text-[16px]">Your AI assistant — lives inside the IDE, reads files, writes code, runs commands.</p>
+            </div>
+            <div class="tool-card rounded-xl p-4" style="border-color: rgba(255, 149, 0, 0.12);">
+              <p class="font-semibold text-[16px] mb-1">Vercel</p>
+              <p class="text-desc-light text-[16px]">Takes what you built and puts it on the internet for anyone to visit.</p>
+            </div>
+            <div class="tool-card rounded-xl p-4" style="border-color: rgba(255, 149, 0, 0.12);">
+              <p class="font-semibold text-[16px] mb-1">Supabase</p>
+              <p class="text-desc-light text-[16px]">The database — where your site remembers signups, submissions, and logins.</p>
+            </div>
+            <div class="tool-card rounded-xl p-4" style="border-color: rgba(255, 149, 0, 0.12);">
+              <p class="font-semibold text-[16px] mb-1">Node.js</p>
+              <p class="text-desc-light text-[16px]">The power outlet — some tools need it to run.</p>
+            </div>
+            <div class="tool-card rounded-xl p-4" style="border-color: rgba(255, 149, 0, 0.12);">
+              <p class="font-semibold text-[16px] mb-1">Git + GitHub</p>
+              <p class="text-desc-light text-[16px]">Saves snapshots of your work so you can always undo mistakes and go back.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ SKILLS TIMELINE (orange dots) ═══ -->
+
+        <!-- What Are Claude Skills? -->
+        <div class="flex gap-4 sm:gap-6">
+          <div class="flex flex-col items-center">
+            <div class="w-3 h-3 rounded-full bg-[#FF9500] shadow-[0_0_12px_rgba(255,149,0,0.4)] flex-shrink-0"></div>
+            <div class="w-[2px] flex-1 min-h-[20px]" style="background: linear-gradient(180deg, rgba(255,149,0,0.3), rgba(255,149,0,0.1));"></div>
+          </div>
+          <div class="pb-6 flex-1">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="section-number px-2.5 py-0.5 rounded-full text-[14px] font-bold" style="background: rgba(255,149,0,0.12); border-color: rgba(255,149,0,0.3); color: #FFB340;">10 min</span>
+              <h3 class="font-bold text-[20px]">What Are Claude Skills?</h3>
+            </div>
+            <div class="glass-card rounded-2xl p-5 sm:p-6">
+              <p class="text-desc text-[16px] mb-5">A skill is a <span class="text-white font-semibold">set of instructions you write down</span> so Claude can repeat a complex task without you explaining every step.</p>
+
+              <div class="space-y-4 mb-5">
+                <div class="flex items-start gap-3">
+                  <span class="text-[#FFB340] text-[14px] mt-0.5 flex-shrink-0">→</span>
+                  <div>
+                    <p class="font-semibold text-[16px]">Without a skill</p>
+                    <p class="text-desc-light text-[16px] mt-1">"Go to this website, copy the text, rewrite it for Instagram, make it 150 characters, add hashtags from this list, save it to this folder..."</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="text-[#FFB340] text-[14px] mt-0.5 flex-shrink-0">→</span>
+                  <div>
+                    <p class="font-semibold text-[16px]">With a skill</p>
+                    <p class="text-desc-light text-[16px] mt-1">"/create-social-post" — one command, same result every time.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-xl" style="background: rgba(255, 149, 0, 0.06); border: 1px solid rgba(255, 149, 0, 0.15);">
+                <p class="text-[#FFB340] text-[13px] font-semibold">The Recipe Analogy</p>
+                <p class="text-desc-light text-[16px] mt-1">You don't explain how to make cookies every time. You write the recipe once, and hand it to whoever's baking. Skills work the same way.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- How Skills Work -->
+        <div class="flex gap-4 sm:gap-6">
+          <div class="flex flex-col items-center">
+            <div class="w-3 h-3 rounded-full bg-[#FF9500] shadow-[0_0_12px_rgba(255,149,0,0.4)] flex-shrink-0"></div>
+            <div class="w-[2px] flex-1 min-h-[20px]" style="background: linear-gradient(180deg, rgba(255,149,0,0.3), rgba(255,149,0,0.1));"></div>
+          </div>
+          <div class="pb-6 flex-1">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="section-number px-2.5 py-0.5 rounded-full text-[14px] font-bold" style="background: rgba(255,149,0,0.12); border-color: rgba(255,149,0,0.3); color: #FFB340;">8 min</span>
+              <h3 class="font-bold text-[20px]">How Skills Work</h3>
+            </div>
+            <div class="glass-card rounded-2xl p-5 sm:p-6">
+              <p class="text-desc text-[16px] mb-5">A skill is just a text file with instructions. When you type a command, Claude reads it and follows it step by step.</p>
+
+              <div class="space-y-3">
+                <div class="glass-card-inner rounded-xl p-4 flex items-center gap-4">
+                  <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(255, 149, 0, 0.1);">
+                    <span class="text-[#FFB340] text-[14px] font-bold">1</span>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-[16px]">You type a command</p>
+                    <p class="text-desc-light text-[16px]">/my-skill-name</p>
+                  </div>
+                </div>
+                <div class="glass-card-inner rounded-xl p-4 flex items-center gap-4">
+                  <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(255, 149, 0, 0.1);">
+                    <span class="text-[#FFB340] text-[14px] font-bold">2</span>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-[16px]">Claude reads the instructions</p>
+                    <p class="text-desc-light text-[16px]">The recipe you wrote ahead of time</p>
+                  </div>
+                </div>
+                <div class="glass-card-inner rounded-xl p-4 flex items-center gap-4">
+                  <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(255, 149, 0, 0.1);">
+                    <span class="text-[#FFB340] text-[14px] font-bold">3</span>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-[16px]">Claude executes each step</p>
+                    <p class="text-desc-light text-[16px]">Reading files, writing content, running commands</p>
+                  </div>
+                </div>
+                <div class="glass-card-inner rounded-xl p-4 flex items-center gap-4">
+                  <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background: rgba(255, 149, 0, 0.1);">
+                    <span class="text-[#FFB340] text-[14px] font-bold">4</span>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-[16px]">You get the result</p>
+                    <p class="text-desc-light text-[16px]">Consistent output, every time</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Spotting Skill Opportunities -->
+        <div class="flex gap-4 sm:gap-6">
+          <div class="flex flex-col items-center">
+            <div class="w-3 h-3 rounded-full bg-[#FF9500] shadow-[0_0_12px_rgba(255,149,0,0.4)] flex-shrink-0"></div>
+            <div class="w-[2px] flex-1 min-h-[20px]" style="background: linear-gradient(180deg, rgba(255,149,0,0.3), rgba(255,149,0,0.1));"></div>
+          </div>
+          <div class="pb-6 flex-1">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="section-number px-2.5 py-0.5 rounded-full text-[14px] font-bold" style="background: rgba(255,149,0,0.12); border-color: rgba(255,149,0,0.3); color: #FFB340;">7 min</span>
+              <h3 class="font-bold text-[20px]">Spotting Skill Opportunities</h3>
+            </div>
+            <div class="glass-card rounded-2xl p-5 sm:p-6">
+              <p class="text-desc text-[16px] mb-5">If you find yourself explaining the same thing to AI more than twice, that's a skill waiting to be built.</p>
+
+              <div class="space-y-3 mb-5">
+                <div class="tool-card rounded-xl p-4" style="border-color: rgba(255,149,0,0.12);">
+                  <p class="text-[#FFB340] text-[14px] font-bold uppercase tracking-wider mb-1">Signal</p>
+                  <p class="text-[16px]">"I keep telling Claude the same thing..."</p>
+                  <p class="text-desc-light text-[16px] mt-1">If you're repeating instructions → that's a skill</p>
+                </div>
+                <div class="tool-card rounded-xl p-4" style="border-color: rgba(255,149,0,0.12);">
+                  <p class="text-[#FFB340] text-[14px] font-bold uppercase tracking-wider mb-1">Signal</p>
+                  <p class="text-[16px]">"This takes me 10 steps every time..."</p>
+                  <p class="text-desc-light text-[16px] mt-1">If there's a repeatable process → that's a skill</p>
+                </div>
+                <div class="tool-card rounded-xl p-4" style="border-color: rgba(255,149,0,0.12);">
+                  <p class="text-[#FFB340] text-[14px] font-bold uppercase tracking-wider mb-1">Signal</p>
+                  <p class="text-[16px]">"I wish I could just press a button..."</p>
+                  <p class="text-desc-light text-[16px] mt-1">If you want one-click automation → that's a skill</p>
+                </div>
+              </div>
+
+              <div class="p-4 rounded-xl" style="background: rgba(255, 149, 0, 0.06); border: 1px solid rgba(255, 149, 0, 0.15);">
+                <p class="text-[#FFB340] text-[13px] font-semibold mb-2">Examples by Industry</p>
+                <div class="space-y-2 text-[13px] text-desc-light">
+                  <p><span class="text-white/80">Real Estate →</span> /generate-listing from photos + details</p>
+                  <p><span class="text-white/80">Marketing →</span> /create-social-post from blog article</p>
+                  <p><span class="text-white/80">Finance →</span> /categorize-transactions from bank CSV</p>
+                  <p><span class="text-white/80">Church →</span> /publish-sermon-notes from transcript</p>
+                  <p><span class="text-white/80">Coaching →</span> /write-followup-email from session notes</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wrap & Q&A -->
+        <div class="flex gap-4 sm:gap-6">
+          <div class="flex flex-col items-center">
+            <div class="w-3 h-3 rounded-full bg-[#FF9500] shadow-[0_0_12px_rgba(255,149,0,0.4)] flex-shrink-0"></div>
+          </div>
+          <div class="pb-6 flex-1">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="section-number px-2.5 py-0.5 rounded-full text-[14px] font-bold" style="background: rgba(255,149,0,0.12); border-color: rgba(255,149,0,0.3); color: #FFB340;">5 min</span>
+              <h3 class="font-bold text-[20px]">Wrap Up + Q&A</h3>
+            </div>
+            <div class="glass-card rounded-2xl p-5 sm:p-6">
+              <div class="space-y-3">
+                <div class="flex items-start gap-3">
+                  <span class="text-[#FFB340] flex-shrink-0 mt-1">✓</span>
+                  <p class="text-desc text-[16px]">Recap: What we covered and what to remember</p>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="text-[#FFB340] flex-shrink-0 mt-1">✓</span>
+                  <p class="text-desc text-[16px]">Homework: Get Claude Code installed. Open a folder. Ask it one question.</p>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="text-[#FFB340] flex-shrink-0 mt-1">✓</span>
+                  <p class="text-desc text-[16px]">Next session: Connecting tools, live builds, and writing your first skill</p>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="text-[#FFB340] flex-shrink-0 mt-1">✓</span>
+                  <p class="text-desc text-[16px]">Open Q&A</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ════════════════ LIVE DEMOS ════════════════ -->
+    <section class="px-4 py-8 max-w-3xl mx-auto">
+      <div class="text-center mb-8">
+        <span class="pill px-4 py-1.5 rounded-full text-[13px] font-bold uppercase tracking-[0.18em]">Live Demos</span>
+        <h2 class="gradient-title font-bold text-[32px] sm:text-[40px] mt-6 mb-3">Built on the Call</h2>
+        <p class="text-desc text-[16px]">Real projects we built live during Episode 1</p>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4">
+        <!-- K Hart Website -->
+        <a href="https://khart.endlesswinning.com" target="_blank" class="flex-1 glass-card rounded-2xl p-6 hover:border-[rgba(139,241,241,0.3)] transition-all block">
+          <p class="text-[#8BF1F1] text-[13px] font-bold uppercase tracking-[0.15em] mb-2">Website Rebuild</p>
+          <p class="text-white font-semibold text-[18px] mb-2">K Hart — Contemporary Art</p>
+          <p class="text-white/60 text-[16px] leading-relaxed">Scraped an existing site, rebuilt it dark & modern. 20 minutes.</p>
+          <p class="text-[#5FFCC0] text-[14px] font-semibold mt-3">khart.endlesswinning.com &rsaquo;</p>
+        </a>
+
+        <!-- Mood Boards -->
+        <a href="https://moodboards.endlesswinning.com" target="_blank" class="flex-1 glass-card rounded-2xl p-6 hover:border-[rgba(139,241,241,0.3)] transition-all block">
+          <p class="text-[#8BF1F1] text-[13px] font-bold uppercase tracking-[0.15em] mb-2">Mood Boards</p>
+          <p class="text-white font-semibold text-[18px] mb-2">Curated Color Palettes</p>
+          <p class="text-white/60 text-[16px] leading-relaxed">Pinterest inspiration to deployed site with client selector. Minutes.</p>
+          <p class="text-[#5FFCC0] text-[14px] font-semibold mt-3">moodboards.endlesswinning.com &rsaquo;</p>
+        </a>
+      </div>
+    </section>
+
+
+    <!-- ════════════════ FOOTER ════════════════ -->
+    <footer class="px-4 py-12 text-center">
+      <div class="divider max-w-md mx-auto mb-8"></div>
+      <p class="gradient-title font-bold text-[20px] mb-2">The School of AI</p>
+      <p class="text-white/30 text-[16px]">Foundation One — Setting Up Your AI Workshop</p>
+      <p class="text-white/20 text-[12px] mt-4">school.endlesswinning.com</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
